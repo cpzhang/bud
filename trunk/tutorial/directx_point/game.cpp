@@ -42,10 +42,10 @@ bool WaitingForYou::foreRender()
 bool WaitingForYou::rendering()
 {
 	//
-	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Green, 1.0f, 0L);
+	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);
 	
-	//return true;
 	_modules->getRenderEngine()->getRenderSystem()->beginScene();
+
 	//
 	renderGeometry();
 
