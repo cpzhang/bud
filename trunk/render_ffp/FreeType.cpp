@@ -211,17 +211,21 @@ namespace Euclid
 		{
 			return;
 		}
-		_renderSystem->setTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+		_renderSystem->setRenderState(D3DRS_ALPHABLENDENABLE, true);
+		_renderSystem->setRenderState(D3DRS_SRCBLENDALPHA, D3DBLEND_SRCALPHA);
+		_renderSystem->setRenderState(D3DRS_DESTBLENDALPHA, D3DBLEND_INVSRCALPHA);
+
+		_renderSystem->setTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
 		_renderSystem->setTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 		_renderSystem->setTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 
-		_renderSystem->setTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		_renderSystem->setTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
 		_renderSystem->setTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-		_renderSystem->setTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);	
-
+		_renderSystem->setTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
 
 		//
-		static unsigned short i[6] = {0, 1, 3, 1, 2, 3};
+		//static unsigned short i[6] = {0, 1, 3, 1, 2, 3};
+		static unsigned short i[6] = {0, 1, 2, 0, 2, 3};
 
 	
 		// Fuck You!
@@ -232,16 +236,16 @@ namespace Euclid
 		{
 			//
 			POSITION_COLOR_TEXTURE(Vec3(_baseX + fft->_bearingX,					fft->_bearingY,					0.0f),
-			color, 10 * fft->_uv0),
+			color, fft->_uv0),
 
 			POSITION_COLOR_TEXTURE(Vec3(_baseX + fft->_bearingX + fft->_width,	fft->_bearingY,					0),
-			color, 10 * Vec2(fft->_uv2.x, fft->_uv0.y)),
+			color, Vec2(fft->_uv2.x, fft->_uv0.y)),
 
 			POSITION_COLOR_TEXTURE(Vec3(_baseX + fft->_bearingX + fft->_width,	-fft->_height + fft->_bearingY, 0),
-			color, 10 * fft->_uv2),
+			color, fft->_uv2),
 
 			POSITION_COLOR_TEXTURE(Vec3(_baseX + fft->_bearingX,					-fft->_height + fft->_bearingY, 0),
-			color, 10 * Vec2(fft->_uv0.x, fft->_uv2.y)),
+			color, Vec2(fft->_uv0.x, fft->_uv2.y)),
 		};
 
 		//

@@ -19,7 +19,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "/MD /Zi /Od")
 set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /machine:x86" )
 
 # project name
-project(Plato)
+project(bud)
 
 # subdirectory
 # base

@@ -63,19 +63,6 @@ private:
 	//
 private:
 	IModules*				_modules;
-	Euclid::IRenderSystem*	_renderSystem;
-	Euclid::ISceneManager*	_sceneManager;
-	Euclid::IBufferFactory*	_bufferManager;
-	Euclid::IFontFactory*	_fontManager;
-	Euclid::IZIPManager*	_zipManager;
-	Euclid::ITextureFactory* _texManager;
-	Euclid::IEffectFactory* _effectFactory;
-	Euclid::VertexBuffer*	_vb;
-	std::string				_freeTypeFont;
-	Euclid::EntityMD2*		_model;
-	Euclid::SceneNode*		_node;
-	Buddha::CSVReader<Euclid::ManualPara>* _blooding;
-	std::string				_csvPath;
 };
 
 #endif // __WaitingForYou_h__

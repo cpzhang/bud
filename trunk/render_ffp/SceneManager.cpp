@@ -217,7 +217,14 @@ namespace Euclid
 							}
 						}
 						//
-						_renderableObjects[index]->renderNormal();
+						if (1)
+						{
+							_renderableObjects[index]->renderNormal();
+						}
+						else
+						{
+							_renderableObjects[index]->renderWithEffect();
+						}
 					}
 					rs_last = rs_current;
 				}

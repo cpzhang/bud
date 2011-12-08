@@ -139,7 +139,7 @@ namespace Buddha
 		wc.hInstance = ::GetModuleHandle(NULL);
 		wc.hIcon = NULL;//::LoadIcon(0, IDI_APPLICATION);
 		wc.hCursor = ::LoadCursor(0, IDC_ARROW);
-		wc.hbrBackground = NULL;//static_cast<HBRUSH>(::GetStockObject(BLACK_BRUSH));
+		wc.hbrBackground = static_cast<HBRUSH>(::GetStockObject(BLACK_BRUSH));
 		wc.lpszMenuName = 0;
 		wc.lpszClassName = _windowName.c_str();
 
