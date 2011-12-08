@@ -26,6 +26,7 @@ namespace Euclid
 
 	// declearation classes
 	struct IRenderSystem;
+	struct Rect;
 }
 
 //

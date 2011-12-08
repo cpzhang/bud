@@ -1,27 +1,42 @@
 #include "RenderEngine.h"
+#include "RenderSystem.h"
 
 namespace Euclid
 {
 	bool RenderEngine::create()
 	{
+		new RenderSystem;
+		if (!RenderSystem::getInstancePtr()->create())
+		{
+			return false;
+		}
 		return true;
 	}
 
 
 	bool RenderEngine::destroy()
 	{
+		//
+		delete RenderEngineCreationParameters::getInstancePtr();
+
+		//
+		if (!RenderSystem::getInstancePtr()->destroy())
+		{
+			return false;
+		}
+		delete RenderSystem::getInstancePtr();
 		return true;
 	}
 
 	IRenderSystem* RenderEngine::getRenderSystem()
 	{
-		return 0;
+		return RenderSystem::getInstancePtr();
 	}
 
 
 	RenderEngine::RenderEngine()
 	{
-
+		new RenderEngineCreationParameters;
 	}
 
 	RenderEngine::~RenderEngine()
@@ -29,21 +44,18 @@ namespace Euclid
 
 	}
 
-	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine(HWND hwnd)
+	RenderEngineCreationParameters* RenderEngine::getCreationParameters()
+	{
+		return RenderEngineCreationParameters::getInstancePtr();
+	}
+
+	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine()
 	{
 		IRenderEngine* renderEngine = new RenderEngine;
 		if (NULL == renderEngine)
 		{
 			return NULL;
 		}
-
-		//
-		if (!renderEngine->create())
-		{
-			Error("Failed to create RenderEngine!");
-			return NULL;
-		}
-
 		//
 		return renderEngine;
 	}

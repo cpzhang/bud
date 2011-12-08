@@ -9,7 +9,8 @@ namespace Buddha
 
 	Game::Game()
 		: _windowName("Game_Window"), _windowTitle("Game"), _clientHeight(600),
-		_windowX(0), _windowY(0), _hwnd(0), _fps(0.0f), _inputMessageHandler(NULL)
+		_windowX(0), _windowY(0), _hwnd(0), _fps(0.0f), _inputMessageHandler(NULL),
+		_process(eProcess_Begin)
 	{
 		gGameClient = this;
 		_clientWidth = _clientHeight * static_cast<unsigned int>(WindowHelper::getInstancePtr()->getSceenWidthHeightRatio());
@@ -152,7 +153,7 @@ namespace Buddha
 		// Create the window
 		_hwnd = ::CreateWindow(_windowName.c_str(), _windowTitle.c_str(),
 			WS_OVERLAPPEDWINDOW,
-			_windowX, _windowY, _clientWidth, _clientHeight,
+			_windowX, _windowY, 640, 480,
 			GetDesktopWindow(), 0, ::GetModuleHandle(0), 0);
 		if (_hwnd ==0)
 		{
@@ -160,7 +161,7 @@ namespace Buddha
 		}
 
 		// Show the window
-		::ShowWindow(_hwnd, SW_NORMAL);
+		::ShowWindow(_hwnd, SW_SHOW);
 		// Update the window
 		::UpdateWindow(_hwnd);
 
@@ -183,7 +184,12 @@ namespace Buddha
 				//onSize(LOWORD(lParam), HIWORD(lParam),wParam);
 			}
 			break;
-
+// 
+// 		case WM_PAINT:
+// 			if (gGameClient && gGameClient->getProcess() >= eProcess_CreateModules)
+// 			{
+// 				//gGameClient->render();
+// 			}break;
 		default:
 			{
 				if (gGameClient && gGameClient->getInputMessageHandler() && gGameClient->getInputMessageHandler()->onInputMessage(hWnd, message, wParam, lParam))
@@ -312,6 +318,16 @@ namespace Buddha
 	void Game::setInputMessageHandler( IInputMessageHandler* handler )
 	{
 		_inputMessageHandler = handler;
+	}
+
+	Buddha::eProcess Game::getProcess()
+	{
+		return _process;
+	}
+
+	void Game::setProcess( eProcess e )
+	{
+		_process = e;
 	}
 
 	std::string Game::_dragDropFile("");

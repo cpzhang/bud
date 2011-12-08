@@ -16,6 +16,12 @@
 //
 namespace Buddha
 {
+	enum eProcess
+	{
+		eProcess_Begin,
+		eProcess_CreateModules,
+		eProcess_End,
+	};
 	class Game;
 	class _BUHHDA_EXPORT_ IInputMessageHandler
 	{
@@ -100,6 +106,9 @@ namespace Buddha
 		//
 		void setInputMessageHandler(IInputMessageHandler* handler);
 
+		//
+		eProcess getProcess();
+		void setProcess(eProcess e);
 	public:
 		// The window procedure, hands events the window receives
 		static LRESULT CALLBACK _wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -133,6 +142,9 @@ namespace Buddha
 		float			_fps;
 		//
 		IInputMessageHandler* _inputMessageHandler;				/// 消息处理器
+
+		//
+		eProcess		_process;
 	};
 }
 

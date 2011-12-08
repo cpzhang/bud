@@ -8,7 +8,7 @@
 #define __IRenderEngine_h__
 
 #include "Common.h"
-
+#include "RenderEngineCreationParameters.h"
 namespace Euclid
 {
 	class _EuclidExport_ IRenderEngine
@@ -27,10 +27,11 @@ namespace Euclid
 		virtual bool				create() = 0;
 		virtual bool				destroy() = 0;
 		virtual IRenderSystem*		getRenderSystem() = 0;
+		virtual RenderEngineCreationParameters* getCreationParameters() = 0;
 	};
 
 	// Factory function that creates instances of the IRenderEngine object.
-	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine(HWND hwnd);
+	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine();
 }
 
 #endif // __IRenderEngine_h__

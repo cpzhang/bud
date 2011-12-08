@@ -13,6 +13,7 @@ SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
 include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/external/freetype-2.4.4/include
+  ${CMAKE_SOURCE_DIR}/external/directx/Include
 )
 
 link_directories(
@@ -32,6 +33,7 @@ target_link_libraries(${ItemName}
   #"dxerr.lib"
   "d3d9.lib"
   "d3dx9.lib"
+  "dxerr.lib"
   "winmm"
   "freetype.lib"
   "Math.lib"
