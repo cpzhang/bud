@@ -8,6 +8,7 @@
 #define __RenderEngineCreationParameters_h__
 #include "base/Buddha.h"
 #include "external/directx/Include/d3d9.h"
+#include "math/Euler.h"
 namespace Euclid
 {
 	struct RenderEngineCreationParameters : public Buddha::SingletonEx<RenderEngineCreationParameters>
@@ -24,6 +25,72 @@ namespace Euclid
 		eClearFlags_Target = D3DCLEAR_TARGET,
 		eClearFlags_ZBuffer = D3DCLEAR_ZBUFFER,
 		eClearFlags_Stencil = D3DCLEAR_STENCIL,
+	};
+
+	enum eVertexDeclarationType
+	{
+		eVertexDeclarationType_Null,
+		eVertexDeclarationType_Position,
+		eVertexDeclarationType_PositionColor,
+		eVertexDeclarationType_Size,
+	};
+
+	//
+	struct sPosition
+	{
+		//
+		Vec3	position;
+	};
+
+	/* Pool types */
+	enum ePool
+	{
+		ePool_Default = D3DPOOL_DEFAULT,
+		ePool_Manager = D3DPOOL_MANAGED,
+		ePool_SystemMem = D3DPOOL_SYSTEMMEM,
+		ePool_Scratch = D3DPOOL_SCRATCH,
+		ePool_Size ,
+	};
+
+	// Usage
+	enum eUsage
+	{
+		eUsage_RenderTarget = D3DUSAGE_RENDERTARGET,
+		eUsage_DepthStencil = D3DUSAGE_DEPTHSTENCIL,
+		eUsage_Dynamic = D3DUSAGE_DYNAMIC,
+		eUsage_AutoGenMipmap = D3DUSAGE_AUTOGENMIPMAP,
+		eUsage_DMap = D3DUSAGE_DMAP,
+
+		/* Usages for Vertex/Index buffers */
+		eUsage_WriteOnly = D3DUSAGE_WRITEONLY,
+		eUsage_SoftwareProcessing = D3DUSAGE_SOFTWAREPROCESSING,
+		eUsage_DoNotClip = D3DUSAGE_DONOTCLIP,
+		eUsage_Points = D3DUSAGE_POINTS,
+		eUsage_RTPatches = D3DUSAGE_RTPATCHES,
+		eUsage_NPatches = D3DUSAGE_NPATCHES,
+	};
+
+	// lock
+	enum eLock
+	{
+		eLock_Null = 0, 
+		eLock_ReadOnly = D3DLOCK_READONLY,
+		eLock_Discard = D3DLOCK_DISCARD,
+		eLock_NoOverWrite = D3DLOCK_NOOVERWRITE,
+		eLock_NoSysLock = D3DLOCK_NOSYSLOCK,
+		eLock_DoNotWait = D3DLOCK_DONOTWAIT,
+		eLock_No_Dirty_Update = D3DLOCK_NO_DIRTY_UPDATE,
+	};
+
+	// Primitives supported by draw-primitive API
+	enum ePrimitive
+	{
+		ePrimitive_PointList = D3DPT_POINTLIST,
+		ePrimitive_LineList = D3DPT_LINELIST,
+		ePrimitive_LineStrip = D3DPT_LINESTRIP,
+		ePrimitive_TriangleList = D3DPT_TRIANGLELIST,
+		ePrimitive_TriangleStrip = D3DPT_TRIANGLESTRIP,
+		ePrimitive_TriangleFan = D3DPT_TRIANGLEFAN,
 	};
 }
 

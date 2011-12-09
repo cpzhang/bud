@@ -63,6 +63,8 @@ private:
 	//
 private:
 	IModules*				_modules;
+	Euclid::IMaterial*		_material;
+	Euclid::IBuffer*		_vb;
 };
 
 #endif // __WaitingForYou_h__

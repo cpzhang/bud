@@ -3,4 +3,5 @@
 # add_subdirectory(directx_initialization)
 # add_subdirectory(directx_empty)
 # add_subdirectory(CFont)
-add_subdirectory(directx_point)
+# add_subdirectory(directx_triangle)
+add_subdirectory(directx_fx)

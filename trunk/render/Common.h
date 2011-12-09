@@ -27,6 +27,12 @@ namespace Euclid
 	// declearation classes
 	struct IRenderSystem;
 	struct Rect;
+	class IMaterial;
+	class IMaterialManager;
+	class IBuffer;
+	class VertexBuffer;
+	class IndexBuffer;
+	class BufferManager;
 }
 
 //

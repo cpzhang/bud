@@ -9,7 +9,7 @@
 
 #include "Common.h"
 #include "Color.h"
-
+#include "RenderEngineCreationParameters.h"
 namespace Euclid
 {
 	struct IRenderSystem
@@ -34,7 +34,21 @@ namespace Euclid
 			const Rect *pDestRect,
 			HWND hDestWindowOverride
 			) = 0;
-
+		//
+		virtual bool setVertexDeclaration(eVertexDeclarationType e) = 0;
+		//
+		virtual bool setStreamSource(
+			u32 StreamNumber,
+			IBuffer *pStreamData,
+			u32 OffsetInBytes,
+			u32 Stride
+			) = 0;
+		//
+		virtual bool drawPrimitive(
+			ePrimitive PrimitiveType,
+			u32 StartVertex,
+			u32 PrimitiveCount
+			) = 0;
 	};
 }
 

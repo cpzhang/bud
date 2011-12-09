@@ -3,6 +3,7 @@
 #include "Rect.h"
 #include "external/directx/Include/d3dx9.h"
 #include "external/directx/Include/DxErr.h"
+#include "Buffer.h"
 namespace Euclid
 {
 	bool RenderSystem::create()
@@ -83,7 +84,8 @@ namespace Euclid
 		}
 
 		// 这里可以清除IDirect3D9，此时PIX无法使用
-		if (0 && _d3d9)
+/*
+		if (_d3d9)
 		{
 			ULONG reference_count = _d3d9->Release();
 			if (reference_count > 0)
@@ -92,11 +94,24 @@ namespace Euclid
 			}
 			_d3d9 = 0;
 		}
+*/
+		// init vertex declaration
+		initVertexDeclarations();
 		return true;
 	}
 
 	bool RenderSystem::destroy()
 	{
+		//
+		for (unsigned char i = eVertexDeclarationType_Null; i != eVertexDeclarationType_Size; ++i)
+		{
+			if (_vertexDeclarations[i])
+			{
+				_vertexDeclarations[i]->Release();
+				_vertexDeclarations[i] = 0;
+			}
+		}
+
 		if (_device)
 		{
 			ULONG reference_count = _device->Release();
@@ -196,9 +211,126 @@ namespace Euclid
 			return false;
 		}
 
+		return true;
+	}
 
-		D3DVIEWPORT9 pViewport;
-		_device->GetViewport(&pViewport);
+	void RenderSystem::initVertexDeclarations()
+	{
+		//
+		D3DVERTEXELEMENT9 ve[eVertexDeclarationType_Size][4] = 
+		{
+			//	VD_NULL
+			{
+				D3DDECL_END()
+			},
+
+			//	VD_POSITION
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				D3DDECL_END()
+			},
+
+			//	VD_POSITION_COLOR
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{0,		12,	D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
+				D3DDECL_END()
+			},
+/*
+			//	VD_TPOSITION_COLOR
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},
+				{0,		16,	D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
+				D3DDECL_END()
+			},
+
+			//	VD_POSITION_NORMAL
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{0,		12,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,		0},
+				D3DDECL_END()
+			},
+			//	VD_POSITION_TEXTURE
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{0,		12,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				D3DDECL_END()
+			},
+
+			//	VD_TPOSITION_TEXTURE
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},
+				{0,		16,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				D3DDECL_END()
+			},
+
+			//	VD_POSITION_COLOR_TEXTURE
+			{
+				{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{ 0,	12, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
+				{ 0,	16, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				D3DDECL_END()
+			},
+
+			//	VD_TPOSITION_COLOR_TEXTURE
+			{
+				{ 0,	0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},
+				{ 0,	16, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
+				{ 0,	20, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				D3DDECL_END()
+			},
+
+			//	VD_POSITION_NORMAL_TEXTURE
+			{
+				{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{ 0,	12, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,		0},
+				{ 0,	24, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				D3DDECL_END()
+			},
+*/
+		};
+
+		//
+		for (unsigned char i = eVertexDeclarationType_Null; i != eVertexDeclarationType_Size; ++i)
+		{
+			_device->CreateVertexDeclaration(ve[i], _vertexDeclarations + i);
+		}
+	}
+
+	bool RenderSystem::setVertexDeclaration( eVertexDeclarationType e )
+	{
+		if (e >= eVertexDeclarationType_Null || e < eVertexDeclarationType_Size)
+		{
+			_device->SetVertexDeclaration(_vertexDeclarations[e]);
+			return true;
+		}
+		return false;
+	}
+
+	IDirect3DDevice9* RenderSystem::getDevice()
+	{
+		return _device;
+	}
+
+	bool RenderSystem::setStreamSource( u32 StreamNumber, IBuffer *pStreamData, u32 OffsetInBytes, u32 Stride )
+	{
+		HRESULT r = _device->SetStreamSource(StreamNumber, pStreamData->getVertexBuffer(), OffsetInBytes, Stride);
+		if (D3D_OK != r)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool RenderSystem::drawPrimitive( ePrimitive PrimitiveType, u32 StartVertex, u32 PrimitiveCount )
+	{
+		HRESULT r = _device->DrawPrimitive((D3DPRIMITIVETYPE)PrimitiveType, StartVertex, PrimitiveCount);
+		if (D3D_OK != r)
+		{
+			return false;
+		}
+
 		return true;
 	}
 

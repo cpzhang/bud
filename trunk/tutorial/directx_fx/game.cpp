@@ -42,7 +42,7 @@ bool WaitingForYou::foreRender()
 bool WaitingForYou::rendering()
 {
 	//
-	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);
+	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Green, 1.0f, 0L);
 	
 	_modules->getRenderEngine()->getRenderSystem()->beginScene();
 
@@ -124,29 +124,31 @@ bool WaitingForYou::update(u32 current, u32 delta)
 bool WaitingForYou::setViewport()
 {
 	//
-// 	D3DVIEWPORT9 v;
-// 	v.X = 0;
-// 	v.Y = 0;
-// 	v.Width = Buddha::WindowHelper::getInstancePtr()->getClientWidth(_hwnd);
-// 	v.Height = Buddha::WindowHelper::getInstancePtr()->getClientHeight(_hwnd);
-// 	v.MinZ = 0.0f;
-// 	v.MaxZ = 1.0f;
-// 
-// 	//
-// 	if (!_modules->getRenderEngine()->getRenderSystem()->setViewport(&v))
-// 	{
-// 		return false;
-// 	}
-
-	//
 	return true;
 }
+
 bool WaitingForYou::_initAxis()
 {
 	return true;
 }
+
 bool WaitingForYou::initGeometry()
 {
+	//
+	_material = _modules->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_Vertex);
+	if (_material)
+	{
+		_material->setVertexDeclaration(Euclid::eVertexDeclarationType_Position);
+	}
+	//
+	Euclid::sPosition vertices[3];
+	vertices[0].position = Vec3(-1.0f, 0.0f, 0.0f);
+	vertices[1].position = Vec3(0.0f, 1.0f, 0.0f);
+	vertices[2].position = Vec3(1.0f, 0.0f, 0.0f);
+	_vb = _modules->getRenderEngine()->getBufferManager()->createVertexBuffer(3 * sizeof(Euclid::sPosition), Euclid::eUsage_WriteOnly, Euclid::ePool_Default);
+	void* data = _vb->lock(0, 0, Euclid::eLock_Null);
+	memcpy(data, vertices, 3 * sizeof(Euclid::sPosition));
+	_vb->unLock();
 	//
 	return _initAxis();
 
@@ -156,7 +158,9 @@ bool WaitingForYou::initGeometry()
 
 void WaitingForYou::renderGeometry()
 {
-	
+	_modules->getRenderEngine()->getRenderSystem()->setStreamSource(0, _vb, 0, sizeof(Euclid::sPosition));
+	_material->apply();
+	_modules->getRenderEngine()->getRenderSystem()->drawPrimitive(Euclid::ePrimitive_TriangleList, 0, 1);
 }
 
 bool WaitingForYou::createFonts()
@@ -185,6 +189,20 @@ bool WaitingForYou::destroy()
 		_inputMessageHandler = NULL;
 	}
 
+	//
+	if (_material)
+	{
+		delete _material;
+		_material = 0;
+	}
+	//
+	if (_vb)
+	{
+		_vb->destroy();
+		delete _vb;
+		_vb = NULL;
+	}
+	//
 	if (_modules)
 	{
 		_modules->destroy();

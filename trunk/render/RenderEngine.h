@@ -20,6 +20,8 @@ namespace Euclid
 		virtual bool				destroy();
 		virtual IRenderSystem*		getRenderSystem();
 		virtual RenderEngineCreationParameters* getCreationParameters();
+		virtual IMaterialManager* getMaterialManager();
+		virtual BufferManager* getBufferManager();
 	public:
 		RenderEngine();
 		~RenderEngine();

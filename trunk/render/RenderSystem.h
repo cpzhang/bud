@@ -10,6 +10,7 @@
 #include "IRenderSystem.h"
 #include "base/Buddha.h"
 #include "external/directx/Include/d3d9.h"
+#include "RenderEngineCreationParameters.h"
 namespace Euclid
 {
 	class RenderSystem: public IRenderSystem, public Buddha::SingletonEx<RenderSystem>
@@ -36,13 +37,35 @@ namespace Euclid
 			const Rect *pDestRect,
 			HWND hDestWindowOverride
 			);
+
+		virtual bool setVertexDeclaration(eVertexDeclarationType e);
+
+		virtual bool setStreamSource(
+			u32 StreamNumber,
+			IBuffer *pStreamData,
+			u32 OffsetInBytes,
+			u32 Stride
+			);
+
+		//
+		virtual bool drawPrimitive(
+			ePrimitive PrimitiveType,
+			u32 StartVertex,
+			u32 PrimitiveCount
+			);
 		//
 	public:
 		RenderSystem();
 		~RenderSystem();
+
+		IDirect3DDevice9* getDevice();
+	private:
+		void initVertexDeclarations();
 	private:
 		IDirect3D9*	_d3d9;
 		IDirect3DDevice9* _device;
+		//
+		IDirect3DVertexDeclaration9*	_vertexDeclarations[eVertexDeclarationType_Size];
 	};
 }
 

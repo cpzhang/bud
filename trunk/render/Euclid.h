@@ -10,5 +10,8 @@
 //
 #include "IRenderSystem.h"
 #include "IRenderEngine.h"
-
+#include "IMaterial.h"
+#include "Material.h"
+#include "BufferManager.h"
+#include "Buffer.h"
 #endif // __Euclid_h__
