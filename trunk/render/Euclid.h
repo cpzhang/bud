@@ -14,4 +14,6 @@
 #include "Material.h"
 #include "BufferManager.h"
 #include "Buffer.h"
+#include "EffectManager.h"
+#include "Effect.h"
 #endif // __Euclid_h__

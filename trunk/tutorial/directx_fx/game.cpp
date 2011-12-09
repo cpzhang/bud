@@ -7,7 +7,7 @@
 
 //
 WaitingForYou::WaitingForYou()
-:	_modules(NULL)
+:	_modules(NULL), _material(NULL), _vb(NULL), _fx(NULL)
 {
 	_windowTitle = "tutorial_shader_introduction";
 }
@@ -42,7 +42,7 @@ bool WaitingForYou::foreRender()
 bool WaitingForYou::rendering()
 {
 	//
-	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Green, 1.0f, 0L);
+	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);
 	
 	_modules->getRenderEngine()->getRenderSystem()->beginScene();
 
@@ -149,6 +149,14 @@ bool WaitingForYou::initGeometry()
 	void* data = _vb->lock(0, 0, Euclid::eLock_Null);
 	memcpy(data, vertices, 3 * sizeof(Euclid::sPosition));
 	_vb->unLock();
+
+	//
+	_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader/Position.fx");
+	if (NULL == _fx)
+	{
+		return false;
+	}
+
 	//
 	return _initAxis();
 
@@ -160,7 +168,17 @@ void WaitingForYou::renderGeometry()
 {
 	_modules->getRenderEngine()->getRenderSystem()->setStreamSource(0, _vb, 0, sizeof(Euclid::sPosition));
 	_material->apply();
-	_modules->getRenderEngine()->getRenderSystem()->drawPrimitive(Euclid::ePrimitive_TriangleList, 0, 1);
+	{
+		u32 passes = 0;
+		_fx->begin(&passes);
+		for (u32 i = 0; i != passes; ++i)
+		{
+			_fx->beginPass(i);
+			_modules->getRenderEngine()->getRenderSystem()->drawPrimitive(Euclid::ePrimitive_TriangleList, 0, 1);
+			_fx->endPass();
+		}
+		_fx->end();
+	}
 }
 
 bool WaitingForYou::createFonts()
@@ -189,6 +207,12 @@ bool WaitingForYou::destroy()
 		_inputMessageHandler = NULL;
 	}
 
+	//
+	if (_fx)
+	{
+		_fx->destroy();
+		_fx = 0;
+	}
 	//
 	if (_material)
 	{

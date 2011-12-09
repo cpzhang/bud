@@ -2,6 +2,7 @@
 #include "RenderSystem.h"
 #include "Material.h"
 #include "BufferManager.h"
+#include "EffectManager.h"
 namespace Euclid
 {
 	bool RenderEngine::create()
@@ -19,12 +20,18 @@ namespace Euclid
 		//
 		new BufferManager;
 
+		//
+		new EffectManager;
+
 		return true;
 	}
 
 
 	bool RenderEngine::destroy()
 	{
+		//
+		delete EffectManager::getInstancePtr();
+
 		//
 		delete BufferManager::getInstancePtr();
 
@@ -72,6 +79,11 @@ namespace Euclid
 	BufferManager* RenderEngine::getBufferManager()
 	{
 		return BufferManager::getInstancePtr();
+	}
+
+	EffectManager* RenderEngine::getEffectManager()
+	{
+		return EffectManager::getInstancePtr();
 	}
 
 	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine()

@@ -65,6 +65,7 @@ private:
 	IModules*				_modules;
 	Euclid::IMaterial*		_material;
 	Euclid::IBuffer*		_vb;
+	Euclid::Effect*			_fx;
 };
 
 #endif // __WaitingForYou_h__

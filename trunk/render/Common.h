@@ -13,7 +13,8 @@
 //
 #include "base/Buddha.h"
 #include "math/Euler.h"
-
+#include "external/directx/Include/d3d9.h"
+#include "external/directx/Include/d3dx9.h"
 //
 namespace Euclid
 {
@@ -33,6 +34,8 @@ namespace Euclid
 	class VertexBuffer;
 	class IndexBuffer;
 	class BufferManager;
+	class Effect;
+	class EffectManager;
 }
 
 //

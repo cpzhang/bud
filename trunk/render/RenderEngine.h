@@ -22,6 +22,7 @@ namespace Euclid
 		virtual RenderEngineCreationParameters* getCreationParameters();
 		virtual IMaterialManager* getMaterialManager();
 		virtual BufferManager* getBufferManager();
+		virtual EffectManager* getEffectManager();
 	public:
 		RenderEngine();
 		~RenderEngine();
