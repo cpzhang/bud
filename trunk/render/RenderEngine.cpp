@@ -3,6 +3,8 @@
 #include "Material.h"
 #include "BufferManager.h"
 #include "EffectManager.h"
+#include "TextureManager.h"
+
 namespace Euclid
 {
 	bool RenderEngine::create()
@@ -23,12 +25,18 @@ namespace Euclid
 		//
 		new EffectManager;
 
+		//
+		new TextureManager;
+
 		return true;
 	}
 
 
 	bool RenderEngine::destroy()
 	{
+		//
+		delete TextureManager::getInstancePtr();
+
 		//
 		delete EffectManager::getInstancePtr();
 
@@ -84,6 +92,11 @@ namespace Euclid
 	EffectManager* RenderEngine::getEffectManager()
 	{
 		return EffectManager::getInstancePtr();
+	}
+
+	ITextureManager* RenderEngine::getTextureManager()
+	{
+		return TextureManager::getInstancePtr();
 	}
 
 	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine()

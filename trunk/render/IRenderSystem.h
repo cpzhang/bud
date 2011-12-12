@@ -49,6 +49,12 @@ namespace Euclid
 			u32 StartVertex,
 			u32 PrimitiveCount
 			) = 0;
+		//
+		virtual bool setTexture(
+			u32 Sampler,
+			ITexture* pTexture
+			) = 0;
+
 	};
 }
 

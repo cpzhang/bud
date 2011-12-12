@@ -15,6 +15,8 @@
 #include "math/Euler.h"
 #include "external/directx/Include/d3d9.h"
 #include "external/directx/Include/d3dx9.h"
+#include "external/directx/Include/DxErr.h"
+
 //
 namespace Euclid
 {
@@ -38,6 +40,10 @@ namespace Euclid
 	class EffectManager;
 	class Camera;
 	class CameraControllerThirdPerson;
+	class ITexture;
+	class Texture;
+	class ITextureManager;
+	class TextureManager;
 }
 
 //

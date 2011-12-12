@@ -27,7 +27,7 @@ namespace Euclid
 		virtual void			endPass();
 		virtual void			onLostDevice();
 		virtual void			onResetDevice();
-//		virtual void			setTexture(const std::string& name, ITexture *pTexture);
+		virtual void			setTexture(const std::string& name, ITexture *pTexture);
 		virtual void			setMatrix(const std::string& name, const Mat4 *pMatrix);
 		virtual void			setMatrix(const std::string& name, const Mat4& pMatrix);
 		virtual void			setInt(const std::string& name, int value);
@@ -43,8 +43,11 @@ namespace Euclid
 		bool loadFromFile(const std::string& filename);
 		bool loadFromMemory(const u8* data, u32 len);
 
+		typedef std::map<std::string, ITexture*> NameTextureMap;
 	private:
 		ID3DXEffect*	_effect;
+
+		NameTextureMap  _nameTextures;
 	};
 }
 

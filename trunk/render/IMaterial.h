@@ -13,6 +13,8 @@ namespace Euclid
 	enum eMaterialType
 	{
 		eMaterialType_Vertex,
+		eMaterialType_VertexTexture,
+
 		eMaterialType_Size,
 	};
 	class _EuclidExport_ IMaterial
@@ -21,7 +23,10 @@ namespace Euclid
 		//
 		void setVertexDeclaration(eVertexDeclarationType e);
 		//
-		void apply();
+		virtual void apply();
+		//
+		virtual void destroy();
+
 	private:
 		eVertexDeclarationType	_vertexDeclaration;
 	};

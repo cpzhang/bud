@@ -125,7 +125,7 @@ bool WaitingForYou::update(u32 current, u32 delta)
 	// rotate
 	static Quaternion sQ;
 	static float sT;
-	sT = current * 0.001f;
+	//sT = current * 0.001f;
 	sQ.FromAngleAxis(sT, Vec3::UNIT_Y);
 	
 	//
@@ -151,39 +151,45 @@ bool WaitingForYou::initGeometry()
 	_material = _modules->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_VertexTexture);
 	if (_material)
 	{
-		_material->setVertexDeclaration(Euclid::eVertexDeclarationType_PositionTexture);
+		_material->setVertexDeclaration(Euclid::eVertexDeclarationType_PositionTextureNormal);
 		Euclid::MaterialVertexTexture* mvt = static_cast<Euclid::MaterialVertexTexture*>(_material);
-		mvt->setTexture("image/wing.dds");
+		mvt->setTexture("image/rock.jpg");
 	}
 	//
-	Euclid::sPositionTexture vertices[6];
+	Euclid::sPositionTextureNormal vertices[6];
 	//A
 	vertices[0].position = Vec3(-10.0f,  10.0f, 0.0f);
 	vertices[0].texcoord = Vec2(0.0f, 0.0f);
+	vertices[0].normal = Vec3(0.0f,  0.0f, 1.0f);
 	//B
 	vertices[1].position = Vec3(-10.0f, -10.0f, 0.0f);
 	vertices[1].texcoord= Vec2(0.0f, 1.0f);
+	vertices[1].normal = Vec3(0.0f,  0.0f, 1.0f);
 	//C
 	vertices[2].position = Vec3(10.0f, 10.0f, 0.0f);
 	vertices[2].texcoord = Vec2(1.0f, 0.0f);
+	vertices[2].normal = Vec3(0.0f,  0.0f, 1.0f);
 
 	//B
 	vertices[3].position = Vec3(-10.0f, -10.0f, 0.0f);
 	vertices[3].texcoord = Vec2(0.0f, 1.0f);
+	vertices[3].normal = Vec3(0.0f,  0.0f, 1.0f);
 	//D
 	vertices[4].position = Vec3(10.0f, -10.0f, 0.0f);
 	vertices[4].texcoord= Vec2(1.0f, 1.0f);
+	vertices[4].normal = Vec3(0.0f,  0.0f, 1.0f);
 	//C
 	vertices[5].position = Vec3(10.0f, 10.0f, 0.0f);
 	vertices[5].texcoord = Vec2(1.0f, 0.0f);
+	vertices[5].normal = Vec3(0.0f,  0.0f, 1.0f);
 
-	_vb = _modules->getRenderEngine()->getBufferManager()->createVertexBuffer(6 * sizeof(Euclid::sPositionTexture), Euclid::eUsage_WriteOnly, Euclid::ePool_Default);
+	_vb = _modules->getRenderEngine()->getBufferManager()->createVertexBuffer(6 * sizeof(Euclid::sPositionTextureNormal), Euclid::eUsage_WriteOnly, Euclid::ePool_Default);
 	void* data = _vb->lock(0, 0, Euclid::eLock_Null);
-	memcpy(data, vertices, 6 * sizeof(Euclid::sPositionTexture));
+	memcpy(data, vertices, 6 * sizeof(Euclid::sPositionTextureNormal));
 	_vb->unLock();
 
 	//
-	_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader/PositionTexture.fx");
+	_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader/PositionTextureLight.fx");
 	if (NULL == _fx)
 	{
 		return false;
@@ -205,11 +211,14 @@ bool WaitingForYou::initGeometry()
 
 void WaitingForYou::renderGeometry()
 {
-	_modules->getRenderEngine()->getRenderSystem()->setStreamSource(0, _vb, 0, sizeof(Euclid::sPositionTexture));
+	_modules->getRenderEngine()->getRenderSystem()->setStreamSource(0, _vb, 0, sizeof(Euclid::sPositionTextureNormal));
 	_material->apply();
 	{
 		u32 passes = 0;
 		_fx->setMatrix("g_mWorldViewProjection", _camera->getProjectionMatrix() * _camera->getViewMatrix() * _cameraController->getMatrix() * _modelMatrix);
+		_fx->setMatrix("g_mWorld", Mat4::IDENTITY);
+		static Vec3 sLightPos(0, 10, 10);
+		_fx->setFloatArray("g_vLightPosition", &sLightPos[0], 3);
 		_fx->setTexture("g_MeshTexture", static_cast<Euclid::MaterialVertexTexture*>(_material)->_texture);
 
 		_fx->begin(&passes);

@@ -13,4 +13,10 @@ namespace Euclid
 	{
 		RenderSystem::getInstancePtr()->setVertexDeclaration(_vertexDeclaration);
 	}
+
+	void IMaterial::destroy()
+	{
+		
+	}
+
 }

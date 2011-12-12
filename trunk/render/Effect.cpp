@@ -1,6 +1,7 @@
 #include "Effect.h"
 #include "DXMapping.h"
 #include "RenderSystem.h"
+#include "ITexture.h"
 //
 namespace Euclid
 {
@@ -54,17 +55,33 @@ namespace Euclid
 		}
 	}
 
-// 	void Effect::setTexture( const std::string& name, ITexture *pTexture )
-// 	{
-// 		if (pTexture)
-// 		{
-// 			_effect->SetTexture(name.c_str(), pTexture->getTexture());
-// 		}
-// 		else
-// 		{
-// 			_effect->SetTexture(name.c_str(), NULL);
-// 		}
-// 	}
+	void Effect::setTexture( const std::string& name, ITexture *pTexture )
+	{
+		NameTextureMap::iterator it = _nameTextures.find(name);
+		if (it == _nameTextures.end())
+		{
+			_nameTextures[name] = pTexture;
+		}
+		else
+		{
+			if (it->second == pTexture)
+			{
+				return;
+			}
+		}
+
+		_nameTextures[name] = pTexture;
+
+		if (pTexture)
+		{
+			
+			_effect->SetTexture(name.c_str(), pTexture->getTexture());
+		}
+		else
+		{
+			_effect->SetTexture(name.c_str(), NULL);
+		}
+	}
 
 	void Effect::setMatrix( const std::string& name, const Mat4 *pMatrix )
 	{
@@ -111,31 +128,19 @@ namespace Euclid
 		// Create an effect from an ASCII or binary effect description
 		//
 		std::string data = filename;
-		HRESULT hr;
-		if (FAILED(hr = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, NULL)))
+		HRESULT r;
+		LPD3DXBUFFER error;
+		if (FAILED(r = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, &error)))
 		{
 			data.clear();
 			Buddha::FileSystem::getInstancePtr()->getDataDirectory(data);
 			data += filename;
-			if (FAILED(hr = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, NULL)))
+			if (FAILED(r = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, &error)))
 			{
-				data.clear();
-				//
-				char path[257];
-				static const std::string tMaxProgramName("MaxPreview.exe");
-				GetModuleFileName(GetModuleHandle(tMaxProgramName.c_str()), path, 256);
-				std::string parentPath(path);
-				parentPath.erase(parentPath.size() - tMaxProgramName.size(), tMaxProgramName.size());
-				std::string previewProgramPath(parentPath);
-				//
-				data = previewProgramPath + filename;
-				if (FAILED(hr = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, NULL)))
-				{
-					std::ostringstream buf;
-					buf<<"D3DXCreateTextureFromFile "<<filename<<" Error Code : "<<(hr);
-						Error(buf.str());
-					return false;
-				}
+				std::ostringstream buf;
+				buf<<"D3DXCreateTextureFromFile "<<filename<<" Error Code : "<<r<<" Error: "<<DXGetErrorString(r)<<" error description: "<<DXGetErrorDescription(r);
+				Error(buf.str());
+				return false;
 			}
 		}
 

@@ -23,6 +23,7 @@ namespace Euclid
 		virtual IMaterialManager* getMaterialManager();
 		virtual BufferManager* getBufferManager();
 		virtual EffectManager* getEffectManager();
+		virtual ITextureManager* getTextureManager();
 	public:
 		RenderEngine();
 		~RenderEngine();

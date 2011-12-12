@@ -18,4 +18,6 @@
 #include "Effect.h"
 #include "Camera.h"
 #include "CameraControllerThirdPerson.h"
+#include "ITextureManager.h"
+#include "ITexture.h"
 #endif // __Euclid_h__

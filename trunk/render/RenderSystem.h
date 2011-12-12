@@ -54,6 +54,12 @@ namespace Euclid
 			u32 PrimitiveCount
 			);
 		//
+		//
+		virtual bool setTexture(
+			u32 Sampler,
+			ITexture* pTexture
+			);
+
 	public:
 		RenderSystem();
 		~RenderSystem();

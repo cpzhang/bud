@@ -31,6 +31,7 @@ namespace Euclid
 		virtual IMaterialManager* getMaterialManager() = 0;
 		virtual BufferManager* getBufferManager() = 0;
 		virtual EffectManager* getEffectManager() = 0;
+		virtual ITextureManager* getTextureManager() = 0;
 	};
 
 	// Factory function that creates instances of the IRenderEngine object.
