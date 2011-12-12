@@ -32,6 +32,8 @@ namespace Euclid
 		eVertexDeclarationType_Null,
 		eVertexDeclarationType_Position,
 		eVertexDeclarationType_PositionColor,
+		eVertexDeclarationType_PositionTexture,
+		eVertexDeclarationType_PositionColorTexture,
 		eVertexDeclarationType_Size,
 	};
 
@@ -40,6 +42,33 @@ namespace Euclid
 	{
 		//
 		Vec3	position;
+	};
+
+	//
+	struct sPositionColor
+	{
+		//
+		Vec3	position;
+		//
+		u32		color_ARGB;
+	};
+	//
+	struct sPositionTexture
+	{
+		//
+		Vec3	position;
+		//
+		Vec2	texcoord;
+	};
+	//
+	struct sPositionColorTexture
+	{
+		//
+		Vec3	position;
+		//
+		u32		color_ARGB;
+		//
+		Vec2	texcoord;
 	};
 
 	/* Pool types */

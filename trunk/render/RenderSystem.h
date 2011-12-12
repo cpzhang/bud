@@ -59,6 +59,7 @@ namespace Euclid
 		~RenderSystem();
 
 		IDirect3DDevice9* getDevice();
+		void getViewPort(D3DVIEWPORT9* vp);
 	private:
 		void initVertexDeclarations();
 	private:

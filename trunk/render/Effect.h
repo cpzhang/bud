@@ -28,7 +28,8 @@ namespace Euclid
 		virtual void			onLostDevice();
 		virtual void			onResetDevice();
 //		virtual void			setTexture(const std::string& name, ITexture *pTexture);
-		virtual void			setMatrix(const std::string& name, Mat4 *pMatrix);
+		virtual void			setMatrix(const std::string& name, const Mat4 *pMatrix);
+		virtual void			setMatrix(const std::string& name, const Mat4& pMatrix);
 		virtual void			setInt(const std::string& name, int value);
 		virtual void			setBool(const std::string& name, bool value);
 		virtual bool			getBool(const std::string& name);

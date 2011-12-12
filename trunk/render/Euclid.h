@@ -16,4 +16,6 @@
 #include "Buffer.h"
 #include "EffectManager.h"
 #include "Effect.h"
+#include "Camera.h"
+#include "CameraControllerThirdPerson.h"
 #endif // __Euclid_h__

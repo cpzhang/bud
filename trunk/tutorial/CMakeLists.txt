@@ -4,4 +4,7 @@
 # add_subdirectory(directx_empty)
 # add_subdirectory(CFont)
 # add_subdirectory(directx_triangle)
-add_subdirectory(directx_fx)
+# add_subdirectory(directx_fx)
+# add_subdirectory(directx_04_transformation)
+# add_subdirectory(directx_05_color)
+add_subdirectory(directx_06_texture)

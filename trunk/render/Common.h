@@ -36,6 +36,8 @@ namespace Euclid
 	class BufferManager;
 	class Effect;
 	class EffectManager;
+	class Camera;
+	class CameraControllerThirdPerson;
 }
 
 //

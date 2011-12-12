@@ -27,6 +27,7 @@ namespace Buddha
 	{
 	public:
 		IInputMessageHandler()
+			:_game(NULL)
 		{
 		}
 

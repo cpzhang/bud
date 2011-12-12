@@ -9,7 +9,7 @@
 #include "IndexBuffer.h"
 #include "D3D9Mapping.h"
 #include "IShader.h"
-#include "CameraEx.h"
+#include "Camera.h"
 #include "CameraControllerThirdPerson.h"
 //
 namespace Euclid
@@ -627,14 +627,14 @@ namespace Euclid
 
 	bool RenderSystem::update(u32 current, u32 delta)
 	{
-// 		Mat4 viewMat = Paras::getInstancePtr()->_cameraEx->getViewMatrix();
+// 		Mat4 viewMat = Paras::getInstancePtr()->_Camera->getViewMatrix();
 // 		Mat4 controllerMat = Mat4::IDENTITY;
-// 		if (Paras::getInstancePtr()->_cameraEx->getControllerThirdPerson())
+// 		if (Paras::getInstancePtr()->_Camera->getControllerThirdPerson())
 // 		{
-// 			controllerMat = Paras::getInstancePtr()->_cameraEx->getControllerThirdPerson()->getMatrix();
+// 			controllerMat = Paras::getInstancePtr()->_Camera->getControllerThirdPerson()->getMatrix();
 // 		}
 // 
-// 		Mat4 projectMat = Paras::getInstancePtr()->_cameraEx->getProjectionMatrix();
+// 		Mat4 projectMat = Paras::getInstancePtr()->_Camera->getProjectionMatrix();
 // 
 // 		Paras::getInstancePtr()->_renderSystem->setViewMatrix(viewMat * controllerMat);
 // 		Paras::getInstancePtr()->_renderSystem->setProjectionMatrix(projectMat);
@@ -1031,7 +1031,7 @@ namespace Euclid
 
 		D3DXMATRIX proj;
 		//_device->GetTransform(D3DTS_PROJECTION, &proj);
-		//Mat4 mProj = Paras::getInstance()._cameraEx->getProjectionMatrix();
+		//Mat4 mProj = Paras::getInstance()._Camera->getProjectionMatrix();
 		proj = D3D9Mapping::makeD3DXMatrix(mProj);
 
 		D3DXVECTOR3 origin;
@@ -1047,7 +1047,7 @@ namespace Euclid
 		// next, we need to transform it into the world space
 		D3DXMATRIX view;
 		//_device->GetTransform(D3DTS_VIEW, &view);
-		Mat4 mView = Paras::getInstance()._cameraEx->getViewMatrix();
+		Mat4 mView = Paras::getInstance()._Camera->getViewMatrix();
 		view = D3D9Mapping::makeD3DXMatrix(mView);
 
 		D3DXMATRIX viewInverse;

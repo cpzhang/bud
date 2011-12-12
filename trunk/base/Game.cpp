@@ -318,6 +318,7 @@ namespace Buddha
 	void Game::setInputMessageHandler( IInputMessageHandler* handler )
 	{
 		_inputMessageHandler = handler;
+		_inputMessageHandler->_game = this;
 	}
 
 	Buddha::eProcess Game::getProcess()
