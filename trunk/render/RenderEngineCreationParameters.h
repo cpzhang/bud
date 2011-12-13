@@ -35,6 +35,8 @@ namespace Euclid
 		eVertexDeclarationType_PositionTexture,
 		eVertexDeclarationType_PositionTextureNormal,
 		eVertexDeclarationType_PositionColorTexture,
+		eVertexDeclarationType_Matrix,
+		eVertexDeclarationType_PositionTextureNormalMatrix,
 		eVertexDeclarationType_Size,
 	};
 
@@ -131,6 +133,16 @@ namespace Euclid
 		ePrimitive_TriangleList = D3DPT_TRIANGLELIST,
 		ePrimitive_TriangleStrip = D3DPT_TRIANGLESTRIP,
 		ePrimitive_TriangleFan = D3DPT_TRIANGLEFAN,
+	};
+
+	//
+#define StreamSource_IndexedData D3DSTREAMSOURCE_INDEXEDDATA
+#define StreamSource_InstanceData D3DSTREAMSOURCE_INSTANCEDATA
+
+	//
+	enum eFormat
+	{
+		eFormat_Index16 = D3DFMT_INDEX16,
 	};
 }
 

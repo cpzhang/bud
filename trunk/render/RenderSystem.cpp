@@ -216,34 +216,35 @@ namespace Euclid
 	void RenderSystem::initVertexDeclarations()
 	{
 		//
-		D3DVERTEXELEMENT9 ve[eVertexDeclarationType_Size][4] = 
+		static const u32 scMaxElementsNumber = 8;
+		D3DVERTEXELEMENT9 ve[eVertexDeclarationType_Size][scMaxElementsNumber] = 
 		{
-			//	VD_NULL
+			//	eVertexDeclarationType_Null
 			{
 				D3DDECL_END()
 			},
 
-			//	VD_POSITION
+			//	eVertexDeclarationType_Position
 			{
 				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
 				D3DDECL_END()
 			},
 
-			//	VD_POSITION_COLOR
+			//	eVertexDeclarationType_PositionColor
 			{
 				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
 				{0,		12,	D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
 				D3DDECL_END()
 			},
 
-			//	VD_POSITION_TEXTURE
+			//	eVertexDeclarationType_PositionTexture
 			{
 				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
 				{0,		12,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
 				D3DDECL_END()
 			},
 
-			//	VD_POSITION_TEXTURE_NORMAL
+			//	eVertexDeclarationType_PositionTextureNormal
 			{
 				{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
 				{ 0,	12, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
@@ -251,13 +252,33 @@ namespace Euclid
 				D3DDECL_END()
 			},
 
-			//	VD_POSITION_COLOR_TEXTURE
+			//	eVertexDeclarationType_PositionColorTexture
 			{
 				{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
 				{ 0,	12, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
 				{ 0,	16, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
 				D3DDECL_END()
 			},
+			// eVertexDeclarationType_Matrix
+			{
+				{ 1,	0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	1},
+				{ 1,	16,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	2},
+				{ 1,	32,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	3},
+				{ 1,	48,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	4},
+				D3DDECL_END()
+			},
+			//	eVertexDeclarationType_PositionTextureNormalMatrix
+			{
+				{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{ 0,	12, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				{ 0,	20, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,		0},
+				{ 1,	0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	1},
+				{ 1,	16,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	2},
+				{ 1,	32,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	3},
+				{ 1,	48,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	4},
+				D3DDECL_END()
+			},
+
 /*
 			//	VD_TPOSITION_COLOR
 			{
@@ -334,6 +355,19 @@ namespace Euclid
 		return true;
 	}
 
+	bool RenderSystem::drawIndexedPrimitive( ePrimitive Type, s32 BaseVertexIndex, u32 MinIndex, u32 NumVertices, u32 StartIndex, u32 PrimitiveCount )
+	{
+
+		HRESULT r = _device->DrawIndexedPrimitive((D3DPRIMITIVETYPE)Type, BaseVertexIndex, MinIndex, NumVertices, StartIndex, PrimitiveCount);
+		if (D3D_OK != r)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+
 	void RenderSystem::getViewPort( D3DVIEWPORT9* vp )
 	{
 		if (_device)
@@ -356,4 +390,28 @@ namespace Euclid
 		return false;
 	}
 
+	bool RenderSystem::setStreamSourceFreq( u32 StreamNumber, u32 FrequencyParameter )
+	{
+		HRESULT r = _device->SetStreamSourceFreq(StreamNumber, FrequencyParameter);
+		if (D3D_OK == r)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool RenderSystem::setIndices( IBuffer *pIndexData )
+	{
+		if (NULL != pIndexData)
+		{
+			HRESULT r = _device->SetIndices(pIndexData->getIndexBuffer());
+			if (D3D_OK == r)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

@@ -22,7 +22,7 @@ namespace Euclid
 	public:
 	public:
 		virtual IBuffer*	createVertexBuffer(unsigned int Length,	unsigned long Usage, ePool Pool);
-		virtual IBuffer*	createIndexBuffer(unsigned int Length,	unsigned long Usage, D3DFORMAT Format,	ePool Pool);
+		virtual IBuffer*	createIndexBuffer(unsigned int Length,	unsigned long Usage, eFormat Format,	ePool Pool);
 	};
 }
 

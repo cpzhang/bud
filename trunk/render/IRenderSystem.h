@@ -50,11 +50,27 @@ namespace Euclid
 			u32 PrimitiveCount
 			) = 0;
 		//
+		virtual bool drawIndexedPrimitive(
+			ePrimitive Type,
+			s32 BaseVertexIndex,
+			u32 MinIndex,
+			u32 NumVertices,
+			u32 StartIndex,
+			u32 PrimitiveCount
+			) = 0;
+
+		//
 		virtual bool setTexture(
 			u32 Sampler,
 			ITexture* pTexture
 			) = 0;
-
+		virtual bool setStreamSourceFreq(
+			u32 StreamNumber,
+			u32 FrequencyParameter
+			) = 0;
+		virtual bool setIndices(
+			IBuffer *pIndexData
+			) = 0;
 	};
 }
 

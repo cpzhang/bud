@@ -8,4 +8,5 @@
 # add_subdirectory(directx_04_transformation)
 # add_subdirectory(directx_05_color)
 # add_subdirectory(directx_06_texture)
-add_subdirectory(directx_07_light)
+# add_subdirectory(directx_07_light)
+add_subdirectory(directx_08_instancingHardware)

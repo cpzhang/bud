@@ -29,12 +29,12 @@ namespace Euclid
 		return vb;
 	}
 
-	IBuffer* BufferManager::createIndexBuffer( unsigned int Length, unsigned long Usage, D3DFORMAT Format, ePool Pool )
+	IBuffer* BufferManager::createIndexBuffer( unsigned int Length, unsigned long Usage, eFormat Format, ePool Pool )
 	{
 		IndexBuffer* ib = new IndexBuffer;
 		if (ib)
 		{
-			if (!ib->create(Length, Usage, Format, Pool))
+			if (!ib->create(Length, Usage, (D3DFORMAT)Format, Pool))
 			{
 				delete ib;
 				ib = NULL;

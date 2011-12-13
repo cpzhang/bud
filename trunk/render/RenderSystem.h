@@ -54,12 +54,29 @@ namespace Euclid
 			u32 PrimitiveCount
 			);
 		//
+		virtual bool drawIndexedPrimitive(
+			ePrimitive Type,
+			s32 BaseVertexIndex,
+			u32 MinIndex,
+			u32 NumVertices,
+			u32 StartIndex,
+			u32 PrimitiveCount
+			);
+		//
 		//
 		virtual bool setTexture(
 			u32 Sampler,
 			ITexture* pTexture
 			);
+		//
+		virtual bool setStreamSourceFreq(
+			u32 StreamNumber,
+			u32 FrequencyParameter
+			);
 
+		virtual bool setIndices(
+			IBuffer *pIndexData
+			);
 	public:
 		RenderSystem();
 		~RenderSystem();

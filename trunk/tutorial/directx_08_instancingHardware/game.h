@@ -67,6 +67,8 @@ private:
 	IModules*				_modules;
 	Euclid::IMaterial*		_material;
 	Euclid::IBuffer*		_vb;
+	Euclid::IBuffer*		_vbInstances;
+	Euclid::IBuffer*		_ib;
 	Euclid::Effect*			_fx;
 	Euclid::Camera*			_camera;
 	Euclid::CameraControllerThirdPerson*	_cameraController;

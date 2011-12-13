@@ -1,4 +1,4 @@
-set(ItemName "tutorial_directx_07_light")
+set(ItemName "tutorial_directx_08_instancingHardware")
 
 FILE(GLOB SRCS 
   *.cpp 
