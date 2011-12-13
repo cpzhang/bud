@@ -202,4 +202,48 @@ namespace Euclid
 		return value;
 	}
 
+	bool Effect::setVector( const std::string& name, const Vec4* pVector )
+	{
+		HRESULT r = _effect->SetVector(name.c_str(), (D3DXVECTOR4*)pVector);
+		if (D3D_OK == r)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool Effect::setVector( const std::string& name, Vec4* pVector )
+	{
+		HRESULT r = _effect->SetVector(name.c_str(), (D3DXVECTOR4*)pVector);
+		if (D3D_OK == r)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool Effect::setVectorArray( const std::string& name, const Vec4* pVector, u32 Count )
+	{
+		HRESULT r = _effect->SetVectorArray(name.c_str(), (D3DXVECTOR4*)pVector, Count);
+		if (D3D_OK == r)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool Effect::setVectorArray( const std::string& name, Vec4* pVector, u32 Count )
+	{
+		HRESULT r = _effect->SetVectorArray(name.c_str(), (D3DXVECTOR4*)pVector, Count);
+		if (D3D_OK == r)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 }

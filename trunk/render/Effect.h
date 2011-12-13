@@ -38,6 +38,12 @@ namespace Euclid
 		virtual void			setMatrixArray(const std::string& name, Mat4 *pMtxArray, u32 count);
 		virtual void			setTechnique(const std::string&  name);
 		virtual void			setFloatArray(const std::string&  name, float *pFloatArray, u32 count);
+		//
+		virtual bool			setVector(const std::string&  name, const Vec4* pVector);
+		virtual bool			setVector(const std::string&  name, Vec4* pVector);
+		virtual bool			setVectorArray(const std::string&  name, const Vec4* pVector, u32 Count);
+		virtual bool			setVectorArray(const std::string&  name, Vec4* pVector, u32 Count);
+
 		virtual void			commitChanges();
 	public:
 		bool loadFromFile(const std::string& filename);
