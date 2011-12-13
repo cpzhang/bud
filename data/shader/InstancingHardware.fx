@@ -78,10 +78,10 @@ technique RenderScene
 {
     pass P0
     {
-        VertexShader = compile vs_3_0 RenderSceneVS();
+        VertexShader = compile vs_2_0 RenderSceneVS();
 	/* The default value is D3DCULL_CCW. */
 	CullMode = None;
-        PixelShader  = compile ps_3_0 RenderScenePS();
+        PixelShader  = compile ps_2_0 RenderScenePS();
         /* The default value is D3DSHADE_GOURAUD */
 	/* ShadeMode = Flat; */
     }
