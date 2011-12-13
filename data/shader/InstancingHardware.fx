@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // Global variables
 //-----------------------------------------------------------------------------
-float4x4 g_mWorldViewProjection;	// World * View * Projection matrix
+float4x4 g_mViewProjection;	// World * View * Projection matrix
 float4x4 g_mWorld;	// World
 float3   g_vLightPosition;
 //-----------------------------------------------------------------------------
@@ -22,14 +22,20 @@ struct VS_OUTPUT
 //-----------------------------------------------------------------------------
 VS_OUTPUT RenderSceneVS( float4 vPos : POSITION
 			 ,float2 vTexCoord : TEXCOORD0
-			 ,float3 vNormal : NORMAL0
+			 ,float3 vNormal : NORMAL
+			 ,float4 vTexCoord1 : TEXCOORD1
+			 ,float4 vTexCoord2 : TEXCOORD2
+			 ,float4 vTexCoord3 : TEXCOORD3
+			 ,float4 vTexCoord4 : TEXCOORD4
     )
 {
     VS_OUTPUT Output;
     // Transform the position from object space to homogeneous projection space
-    Output.Position = mul(vPos, g_mWorldViewProjection);
+    float4x4 mWorld = {vTexCoord1, vTexCoord2, vTexCoord3, vTexCoord4};
+    float4x4 m = mul(mWorld, g_mViewProjection);
+    Output.Position = mul(vPos, m);
     Output.TexCoord = vTexCoord;
-    float4 worldPosition = mul(vPos, g_mWorld);
+    float4 worldPosition = mul(vPos, mWorld);
     float3 nLight = normalize(g_vLightPosition - worldPosition.xyz);
     float3 nNormal = normalize(vNormal);
     Output.Diffuse = max(0.0, dot(nLight, nNormal));
@@ -58,7 +64,7 @@ PS_OUTPUT RenderScenePS( VS_OUTPUT In )
     PS_OUTPUT Output;
 
     // Lookup mesh texture and modulate it with diffuse
-    Output.RGBColor = tex2D(MeshTextureSampler, In.TexCoord) * In.Diffuse * 2.0;
+    Output.RGBColor = tex2D(MeshTextureSampler, In.TexCoord) * In.Diffuse * 2.0f;
 
     return Output;
 }
@@ -72,15 +78,15 @@ technique RenderScene
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 RenderSceneVS();
+        VertexShader = compile vs_3_0 RenderSceneVS();
 	/* The default value is D3DCULL_CCW. */
 	CullMode = None;
-        PixelShader  = compile ps_2_0 RenderScenePS();
+        PixelShader  = compile ps_3_0 RenderScenePS();
         /* The default value is D3DSHADE_GOURAUD */
 	/* ShadeMode = Flat; */
     }
-    pass PRecover
-    {
+    /* pass PRecover */
+    /* { */
 	/* CullMode = CCW; */
-    }
+    /* } */
 }
