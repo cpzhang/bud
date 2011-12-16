@@ -44,6 +44,8 @@ namespace Euclid
 	class Texture;
 	class ITextureManager;
 	class TextureManager;
+	class FontManager;
+	class FreeType;
 }
 
 //

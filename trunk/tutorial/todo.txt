@@ -1,9 +1,35 @@
-1.normal mapping
-2.bump mapping
-3.parallax mapping
-4.shadow
-5.geometry instancing
-6.skin
-7.phong
-8.light mapping
-9.
+.normal mapping
+.bump mapping
+.parallax mapping
+.shadow
+// .geometry instancing
+.skin
+.phong
+.light mapping
+.displacement mapping
+.terrain
+.lod
+.fog
+.facial
+.enviroment mapping
+.mirror
+.blur
+.freetype
+.x mesh
+.max exporter, material, previvew
+.particle
+.procedural texture
+.water
+.RRT
+.antialiase
+.depth of field
+.hdr
+.pick
+.len flare
+.bloom
+.carton
+.ray tracing
+.billboard
+.skybox
+.tone mapping
+.motion blur

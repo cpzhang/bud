@@ -7,6 +7,7 @@ namespace Euclid
 {
 	bool RenderSystem::create()
 	{
+		//
 		_d3d9 = Direct3DCreate9(D3D_SDK_VERSION);
 		if (NULL  == _d3d9)
 		{
@@ -16,7 +17,25 @@ namespace Euclid
 		UINT adapter = D3DADAPTER_DEFAULT;
 		D3DDEVTYPE deviceType = D3DDEVTYPE_HAL;
 		HWND hFocusWindow = RenderEngineCreationParameters::getInstancePtr()->hFocusWindow;
+
 		
+#define NV_PERF_HUD
+#ifdef NV_PERF_HUD
+		// Look for 'NVIDIA PerfHUD' adapter
+		// If it is present, override default settings
+		for(UINT adpt = 0;adpt < _d3d9->GetAdapterCount();adpt++)
+		{
+			D3DADAPTER_IDENTIFIER9 Identifier;
+			HRESULT Res;
+			Res = _d3d9->GetAdapterIdentifier(adpt, 0, &Identifier);
+			if (strstr(Identifier.Description,"PerfHUD") != 0)
+			{
+				adapter = adpt;
+				deviceType = D3DDEVTYPE_REF;
+				break;
+			}
+		}
+#endif
 		//
 		D3DCAPS9				_caps;
 		_d3d9->GetDeviceCaps(adapter, deviceType, &_caps);
@@ -367,6 +386,17 @@ namespace Euclid
 	{
 
 		HRESULT r = _device->DrawIndexedPrimitive((D3DPRIMITIVETYPE)Type, BaseVertexIndex, MinIndex, NumVertices, StartIndex, PrimitiveCount);
+		if (D3D_OK != r)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool RenderSystem::drawIndexedPrimitiveUP( ePrimitive PrimitiveType, u32 MinVertexIndex, u32 NumVertices, u32 PrimitiveCount, const void *pIndexData, eFormat IndexDataFormat, const void *pVertexStreamZeroData, u32 VertexStreamZeroStride )
+	{
+		HRESULT r = _device->DrawIndexedPrimitiveUP((D3DPRIMITIVETYPE)PrimitiveType, MinVertexIndex, NumVertices, PrimitiveCount, pIndexData, (D3DFORMAT)IndexDataFormat, pVertexStreamZeroData, VertexStreamZeroStride);
 		if (D3D_OK != r)
 		{
 			return false;

@@ -63,6 +63,16 @@ namespace Euclid
 			u32 PrimitiveCount
 			);
 		//
+		virtual bool drawIndexedPrimitiveUP(
+			ePrimitive PrimitiveType,
+			u32 MinVertexIndex,
+			u32 NumVertices,
+			u32 PrimitiveCount,
+			const void *pIndexData,
+			eFormat IndexDataFormat,
+			const void *pVertexStreamZeroData,
+			u32 VertexStreamZeroStride
+			);
 		//
 		virtual bool setTexture(
 			u32 Sampler,

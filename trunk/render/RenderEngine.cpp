@@ -4,6 +4,7 @@
 #include "BufferManager.h"
 #include "EffectManager.h"
 #include "TextureManager.h"
+#include "FontManager.h"
 
 namespace Euclid
 {
@@ -28,12 +29,18 @@ namespace Euclid
 		//
 		new TextureManager;
 
+		//
+		new FontManager;
+
 		return true;
 	}
 
 
 	bool RenderEngine::destroy()
 	{
+		//
+		delete FontManager::getInstancePtr();
+
 		//
 		delete TextureManager::getInstancePtr();
 
@@ -97,6 +104,11 @@ namespace Euclid
 	ITextureManager* RenderEngine::getTextureManager()
 	{
 		return TextureManager::getInstancePtr();
+	}
+
+	FontManager* RenderEngine::getFontManager()
+	{
+		return FontManager::getInstancePtr();
 	}
 
 	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine()

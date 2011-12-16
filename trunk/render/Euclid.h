@@ -20,4 +20,5 @@
 #include "CameraControllerThirdPerson.h"
 #include "ITextureManager.h"
 #include "ITexture.h"
+#include "FontManager.h"
 #endif // __Euclid_h__
