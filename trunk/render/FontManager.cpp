@@ -11,7 +11,7 @@ namespace Euclid
 
 	FontManager::~FontManager()
 	{
-
+		destroy();
 	}
 
 	bool FontManager::createFont(std::string& faceFile, unsigned int fontSize, eFontProperty fp, std::string fontName )
@@ -38,6 +38,21 @@ namespace Euclid
 			return _fonts.begin()->second;
 		}
 		return _fonts[fontName];
+	}
+
+	void FontManager::destroy()
+	{
+		for (NameFreetypeMap::iterator i = _fonts.begin(); i != _fonts.end(); ++i)
+		{
+			FreeType* ft = i->second;
+			if (ft)
+			{
+				ft->destroy();
+				delete ft;
+				ft = 0;
+			}
+		}
+		_fonts.clear();
 	}
 
 }

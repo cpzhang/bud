@@ -23,6 +23,12 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				switch(wParam)
 				{
 					// Destroy the window and Send the WM_DESTROY message
+				case 'l':
+				case 'L':
+					{
+						bool b = wfy->_fx->getBool("g_toggleLight");
+						wfy->_fx->setBool("g_toggleLight", !b);
+					}break;
 				case VK_ESCAPE:
 					{
 						::DestroyWindow((HWND)hWnd);

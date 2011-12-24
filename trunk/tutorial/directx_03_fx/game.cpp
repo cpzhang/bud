@@ -151,7 +151,7 @@ bool WaitingForYou::initGeometry()
 	_vb->unLock();
 
 	//
-	_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader/Position.fx");
+	_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader\\Position.fx");
 	if (NULL == _fx)
 	{
 		return false;

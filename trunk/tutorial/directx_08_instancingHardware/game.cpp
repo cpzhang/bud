@@ -42,7 +42,7 @@ bool WaitingForYou::foreRender()
 bool WaitingForYou::rendering()
 {
 	//
-	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Green, 1.0f, 0L);
+	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);
 	
 	_modules->getRenderEngine()->getRenderSystem()->beginScene();
 
@@ -193,7 +193,7 @@ bool WaitingForYou::initGeometry()
 	// instances vb
 	{
 		Mat4 matrices[2];
-		matrices[1] = Mat4.IDENTITY;
+		matrices[1] = Mat4::IDENTITY;
 		matrices[0].makeTrans(Vec3(25, 0, 0));
 		matrices[0] = matrices[0].transpose();
 		_vbInstances = _modules->getRenderEngine()->getBufferManager()->createVertexBuffer(2 * sizeof(Mat4), Euclid::eUsage_WriteOnly, Euclid::ePool_Default);

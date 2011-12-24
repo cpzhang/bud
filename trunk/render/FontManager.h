@@ -27,13 +27,16 @@ namespace Euclid
 		//
 		FreeType* getFont(std::string& fontName = std::string(""));
 
+		//
+		void destroy();
 	public:
 		FontManager();
 		~FontManager();
 
 	private:
 		//
-		std::map<std::string, FreeType*>		_fonts;
+		typedef std::map<std::string, FreeType*> NameFreetypeMap;
+		NameFreetypeMap				_fonts;
 	};
 }
 

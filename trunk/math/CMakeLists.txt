@@ -7,8 +7,6 @@ FILE(GLOB HDRS
   *.h
   ) 
 
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
-
 # Add include directories to the build.
 include_directories(
   ${CMAKE_SOURCE_DIR}

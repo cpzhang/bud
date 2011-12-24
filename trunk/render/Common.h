@@ -13,6 +13,10 @@
 //
 #include "base/Buddha.h"
 #include "math/Euler.h"
+
+//
+//#define D3D_DEBUG_INFO	
+
 #include "external/directx/Include/d3d9.h"
 #include "external/directx/Include/d3dx9.h"
 #include "external/directx/Include/DxErr.h"

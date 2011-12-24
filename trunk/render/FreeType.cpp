@@ -2,6 +2,8 @@
 #include "RenderSystem.h"
 #include "TextureManager.h"
 #include "ITexture.h"
+#include "EffectManager.h"
+#include "Effect.h"
 //
 namespace Euclid
 {
@@ -18,16 +20,26 @@ namespace Euclid
 
 	bool FreeType::create( std::string& faceFile, unsigned int fontSize, eFontProperty fontProperty )
 	{
+		int err = 0;
 		//
-		if (FT_Init_FreeType(&_library) != 0)
+		err = FT_Init_FreeType(&_library);
+		if (err != 0)
 		{
 			return false;
 		}
 
 		//
-		if (FT_New_Face(_library, faceFile.c_str(), 0, &_face) != 0)
+		err = FT_New_Face(_library, faceFile.c_str(), 0, &_face);
+		if (err != 0)
 		{
-			return false;
+			std::string data;
+			Buddha::FileSystem::getInstancePtr()->getDataDirectory(data);
+			data += faceFile;
+			err = FT_New_Face(_library, data.c_str(), 0, &_face);
+			if (err != 0)
+			{
+				return false;
+			}
 		}
 
 		//
@@ -43,6 +55,9 @@ namespace Euclid
 		_OFFSET_VERTICAL = (unsigned int)(_fontSize * 1.2) + 2;
 		//
 		_renderSystem = RenderSystem::getInstancePtr();
+
+		//
+		_fx = EffectManager::getInstancePtr()->createEffectFromFile("shader\\Freetype.fx");
 		//
 		return true;
 	}
@@ -50,6 +65,21 @@ namespace Euclid
 
 	bool FreeType::destroy()
 	{
+		if (_fx)
+		{
+			_fx->destroy();
+			_fx = 0;
+		}
+		for (CodeTexMap::iterator i = _codeTex.begin(); i != _codeTex.end(); ++i)
+		{
+			ITexture* t = i->second->_tex;
+			if (t)
+			{
+				t->release();
+				t = 0;
+			}
+		}
+		_codeTex.clear();
 		return true;
 	}	
 
@@ -104,51 +134,46 @@ namespace Euclid
 		return true;
 	}
 
-	void FreeType::_renderImpl( FTex* fft, const Color& color, Vec3& direction )
+	void FreeType::_renderImpl( FTex* fft, const Color& color, Vec3& basePoint )
 	{
-		//
-		if (NULL == _renderSystem)
-		{
-			return;
-		}
-
-		//
-		if (!_renderSystem->setTexture(0, fft->_tex))
-		{
-			return;
-		}
-
-		//
-		//static unsigned short i[6] = {0, 1, 3, 1, 2, 3};
-		static unsigned short i[6] = {0, 1, 2, 0, 2, 3};
-
+		static unsigned short sIndices[6] = {0, 1, 2, 0, 2, 3};
 	
 		// 
-		_renderSystem->setVertexDeclaration(eVertexDeclarationType_PositionColorTexture);
+		_renderSystem->setVertexDeclaration(eVertexDeclarationType_PositionTTexture);
 
 		//
-		sPositionColorTexture vertices[4]; 
-		vertices[0].position = Vec3(_baseX + fft->_bearingX, fft->_bearingY, 0.0f);
-		vertices[0].color_ARGB = color.getARGB();
+		sPositionTTexture vertices[4]; 
+		vertices[0].position = Vec4(_baseX + fft->_bearingX, basePoint.y - fft->_bearingY, 0.f, 1.0f);
 		vertices[0].texcoord = fft->_uv0;
 
-		vertices[1].position = Vec3(_baseX + fft->_bearingX + fft->_width, fft->_bearingY,	0);
-		vertices[1].color_ARGB = color.getARGB();
+		vertices[1].position = Vec4(_baseX + fft->_bearingX + fft->_width, basePoint.y - fft->_bearingY,	0.f, 1.0f);
 		vertices[1].texcoord = Vec2(fft->_uv2.x, fft->_uv0.y);
 
-		vertices[2].position = Vec3(_baseX + fft->_bearingX + fft->_width,	-fft->_height + fft->_bearingY, 0);
-		vertices[2].color_ARGB = color.getARGB();
+		vertices[2].position = Vec4(_baseX + fft->_bearingX + fft->_width,	basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
 		vertices[2].texcoord = fft->_uv2;
 
-		vertices[3].position = Vec3(_baseX + fft->_bearingX, -fft->_height + fft->_bearingY, 0);
-		vertices[3].color_ARGB = color.getARGB();
+		vertices[3].position = Vec4(_baseX + fft->_bearingX, basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
 		vertices[3].texcoord = Vec2(fft->_uv0.x, fft->_uv2.y);
+		//
+		// render
+		{
+			//
+			u32 passes = 0;
+			_fx->setTexture("g_MeshTexture", fft->_tex);
+			_fx->setFloatArray("g_diffuse", (float*)&(Color::Red.r), 4);
+			_fx->begin(&passes);
+			for (u32 i = 0; i != passes; ++i)
+			{
+				_fx->beginPass(i);
+				//
+				_renderSystem->drawIndexedPrimitiveUP(ePrimitive_TriangleList, 0, 4, 2, sIndices, eFormat_Index16, vertices, sizeof(sPositionTTexture));
+		
+				_fx->endPass();
+			}
+			_fx->end();
+		}
 		
 		//
-		_renderSystem->drawIndexedPrimitiveUP(ePrimitive_TriangleList, 0, 4, 2, i, eFormat_Index16, vertices, sizeof(sPositionColorTexture));
-
-		//
-		_renderSystem->setTexture(0, NULL);
 		_renderSystem->setVertexDeclaration(eVertexDeclarationType_Null);
 
 		//
@@ -299,6 +324,7 @@ namespace Euclid
 		fft->_uv2 = Vec2((_pen.x + fft->_width)  * _INVERSE_TEXTURE_SIZE, (_pen.y + fft->_height) * _INVERSE_TEXTURE_SIZE);
 		fft->_tex = _activeTex;
 		_codeTex[unicode] = fft;
+		_activeTex->addReference();
 
 		//
 		_pen.x += fft->_width;

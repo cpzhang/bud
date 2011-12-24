@@ -19,8 +19,8 @@ namespace Euclid
 		HWND hFocusWindow = RenderEngineCreationParameters::getInstancePtr()->hFocusWindow;
 
 		
-#define NV_PERF_HUD
-#ifdef NV_PERF_HUD
+//#define NV_PERF_HUD
+#ifdef PerfHUD
 		// Look for 'NVIDIA PerfHUD' adapter
 		// If it is present, override default settings
 		for(UINT adpt = 0;adpt < _d3d9->GetAdapterCount();adpt++)
@@ -278,6 +278,13 @@ namespace Euclid
 				{ 0,	16, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
 				D3DDECL_END()
 			},
+			//	eVertexDeclarationType_PositionTTexture
+			{
+				{ 0,	0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},
+				{ 0,	16, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				D3DDECL_END()
+			},
+
 			// eVertexDeclarationType_Matrix
 			{
 				{ 1,	0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	1},
@@ -305,7 +312,7 @@ namespace Euclid
 				{ 0,	32,	D3DDECLTYPE_FLOAT1,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	1},
 				D3DDECL_END()
 			},
-
+			
 /*
 			//	VD_TPOSITION_COLOR
 			{

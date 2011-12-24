@@ -147,7 +147,10 @@ namespace Euclid
 
 	void Texture::release()
 	{
-		--_references;
+		if (_references > 0)
+		{
+			--_references;
+		}
 		if (_references == 0)
 		{
 			destroy();

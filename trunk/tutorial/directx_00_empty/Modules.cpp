@@ -21,10 +21,14 @@ Euclid::IRenderEngine* Modules::getRenderEngine()
 
 bool Modules::create(HWND hwnd)
 {
-	_renderEngine = Euclid::createRenderEngine(hwnd);
-
+	_renderEngine = Euclid::createRenderEngine();
 	//
 	if (NULL == _renderEngine)
+	{
+		return false;
+	}
+	_renderEngine->getCreationParameters()->hFocusWindow = hwnd;
+	if (!_renderEngine->create())
 	{
 		return false;
 	}

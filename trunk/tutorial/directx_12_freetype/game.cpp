@@ -79,12 +79,6 @@ bool WaitingForYou::forePlay()
 	Record(Buddha::Logger::getInstancePtr()->getPath());
 
 	//
-	if (!createFonts())
-	{
-		return false;
-	}
-
-	//
 	if (!setViewport())
 	{
 		return false;
@@ -95,6 +89,12 @@ bool WaitingForYou::forePlay()
 
 	//
 	if (!initGeometry())
+	{
+		return false;
+	}
+
+	//
+	if (!createFonts())
 	{
 		return false;
 	}
@@ -147,64 +147,23 @@ bool WaitingForYou::_initAxis()
 
 bool WaitingForYou::initGeometry()
 {
-	//
-	_material = _modules->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_VertexTexture);
-	if (_material)
-	{
-		_material->setVertexDeclaration(Euclid::eVertexDeclarationType_PositionTexture);
-		Euclid::MaterialVertexTexture* mvt = static_cast<Euclid::MaterialVertexTexture*>(_material);
-		mvt->setTexture("image/wing.dds");
-	}
-
-	//
-	_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader/Freetype.fx");
-	if (NULL == _fx)
-	{
-		return false;
-	}
-
-	//
-	_camera = new Euclid::Camera;
-	_camera->setPosition(Vec3(0.0f, 0.0f, 100.0f));
-
-	//
-	_cameraController = new Euclid::CameraControllerThirdPerson(_camera);
-
-	//
-	return _initAxis();
-
-	//
 	return true;
 }
 
 void WaitingForYou::renderGeometry()
 {
 	// vertex declaration
-	_material->apply();
-
-	// render
-// 	{
-// 		//
-// 		u32 passes = 0;
-// 		_fx->setMatrix("g_mWorldViewProjection", _camera->getProjectionMatrix() * _camera->getViewMatrix() * _cameraController->getMatrix() * _modelMatrix);
-// 		_fx->setTexture("g_MeshTexture", static_cast<Euclid::MaterialVertexTexture*>(_material)->_texture);
-// 
-// 		_fx->begin(&passes);
-// 		for (u32 i = 0; i != passes; ++i)
-// 		{
-// 			_fx->beginPass(i);
-// 			_modules->getRenderEngine()->getRenderSystem()->drawIndexedPrimitive(Euclid::ePrimitive_TriangleList, 0, 0, 4, 0, 2);
-// 			_fx->endPass();
-// 		}
-// 		_fx->end();
-// 	}
-	//_font->render()
+	if (_font)
+	{
+		_font->render(Vec3(10, 10, 0), Vec3(1, 0, 0), Euclid::Color::Red, std::string("freetypetesting0123456789×ÖÌåäÖÈ¾²âÊÔ"));
+	}
 }
 
 bool WaitingForYou::createFonts()
 {
 	//
-	if(_modules->getRenderEngine()->getFontManager()->createFont(std::string("freetype/default.font"), 16, Euclid::eFontProperty_Normal, "free"))
+	
+	if(_modules->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\simkai.ttf"), 48, Euclid::eFontProperty_Normal, "free"))
 	{
 		_font = _modules->getRenderEngine()->getFontManager()->getFont(std::string("free"));
 	}

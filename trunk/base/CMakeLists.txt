@@ -12,8 +12,6 @@ include_directories(
   ${CMAKE_SOURCE_DIR}
   )
 
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
-
 add_library(${ItemName} SHARED 
   ${SRCS} 
   ${HDRS}

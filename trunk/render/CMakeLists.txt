@@ -8,7 +8,11 @@ FILE(GLOB HDRS
   *.h
 )
 
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
+FILE(GLOB FX
+  ../../../data/shader/*.fx
+) 
+
+SOURCE_GROUP(FX FILES ${FX})
 
 include_directories(
   ${CMAKE_SOURCE_DIR}
@@ -25,11 +29,12 @@ link_directories(
 add_library(${ItemName} SHARED
   ${SRCS} 
   ${HDRS}
+  ${FX}
   ) 
 
 # Add dependent external Libraries
 target_link_libraries(${ItemName}
-  #"dxerr.lib"
+  "dxerr.lib"
   "d3d9.lib"
   "d3dx9.lib"
   "dxerr.lib"
@@ -41,9 +46,8 @@ target_link_libraries(${ItemName}
   )
 
 set_target_properties(${ItemName} PROPERTIES 
-DEFINE_SYMBOL "${ItemName}_EXPORTS"
-COMPILE_DEFINITIONS "_CRT_SECURE_NO_DEPRECATE;D3D_DEBUG_INFO"
-COMPILE_DEFINITIONS "DEBUG"
-# COMPILE_DEFINITIONS "PerfHUD"
+DEFINE_SYMBOL "${ItemName}_EXPORTS;DEBUG"
+COMPILE_DEFINITIONS "_CRT_SECURE_NO_DEPRECATE;"
+COMPILE_DEFINITIONS "PerfHUD"
 #COMPILE_FLAGS "/Zp1"
 )

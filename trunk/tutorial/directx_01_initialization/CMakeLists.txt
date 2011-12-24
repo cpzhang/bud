@@ -1,4 +1,4 @@
-set(ItemName "tutorial_directx_initialization")
+set(ItemName "tutorial_directx_01_initialization")
 
 FILE(GLOB SRCS 
   *.cpp 
@@ -7,8 +7,6 @@ FILE(GLOB SRCS
 FILE(GLOB HDRS 
   *.h
 ) 
-
-SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
 
 link_directories(
   ${EXECUTABLE_OUTPUT_PATH}
@@ -19,6 +17,7 @@ link_directories(
 
 include_directories(
   ${CMAKE_SOURCE_DIR}
+  ${CMAKE_SOURCE_DIR}/external/freetype-2.4.4/Include
 )
 
 add_executable(${ItemName} WIN32

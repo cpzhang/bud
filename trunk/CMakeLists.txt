@@ -21,6 +21,7 @@ set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /machine:x86" )
 # project name
 project(bud)
 
+SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../../bin)
 # subdirectory
 # base
 set(BaseName base)

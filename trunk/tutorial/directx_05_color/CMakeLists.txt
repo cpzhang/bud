@@ -8,15 +8,9 @@ FILE(GLOB HDRS
   *.h
 ) 
 
-SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
-
 link_directories(
   ${EXECUTABLE_OUTPUT_PATH}
   )
-
-include_directories(
-  ${CMAKE_SOURCE_DIR}
-)
 
 add_executable(${ItemName} WIN32
   ${SRCS}

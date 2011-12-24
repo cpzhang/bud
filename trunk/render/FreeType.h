@@ -31,16 +31,16 @@ namespace Euclid
 	struct FTex
 	{
 		ITexture*		_tex;
-		Vec2		_uv0;
-		Vec2		_uv2;
-		Real				_advance;
-		Real				_bearingX;
-		Real				_bearingY;
-		Real				_width;
-		Real				_height;
+		Vec2			_uv0;
+		Vec2			_uv2;
+		Real			_advance;
+		Real			_bearingX;
+		Real			_bearingY;
+		Real			_width;
+		Real			_height;
 	};
 
-	class _EuclidExport_ FreeType
+	class /*_EuclidExport_*/ FreeType
 	{
 	public:
 		FreeType(Vec3);
@@ -77,8 +77,9 @@ namespace Euclid
 		//
 		IRenderSystem*	_renderSystem;
 		ITexture*		_activeTex;
-		Vec2		_pen;
+		Vec2			_pen;
 		Real			_baseX;
+		Effect*			_fx;
 	};
 }
 

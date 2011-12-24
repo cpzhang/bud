@@ -35,6 +35,7 @@ namespace Euclid
 		eVertexDeclarationType_PositionTexture,
 		eVertexDeclarationType_PositionTextureNormal,
 		eVertexDeclarationType_PositionColorTexture,
+		eVertexDeclarationType_PositionTTexture,
 		eVertexDeclarationType_Matrix,
 		eVertexDeclarationType_PositionTextureNormalMatrix,
 		eVertexDeclarationType_PositionTextureNormalIndex,
@@ -61,6 +62,14 @@ namespace Euclid
 	{
 		//
 		Vec3	position;
+		//
+		Vec2	texcoord;
+	};
+	//
+	struct sPositionTTexture
+	{
+		//
+		Vec4	position;
 		//
 		Vec2	texcoord;
 	};

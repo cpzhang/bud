@@ -74,6 +74,7 @@ private:
 	Euclid::CameraControllerThirdPerson*	_cameraController;
 	Mat4					_modelMatrix;
 	Euclid::ITexture*		_texture;
+	friend class InputMessageHandler;
 };
 
 #endif // __WaitingForYou_h__

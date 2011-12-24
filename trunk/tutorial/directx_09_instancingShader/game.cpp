@@ -232,7 +232,7 @@ bool WaitingForYou::initGeometry()
 	// instances vb
 	{
 		Mat4 matrices[2];
-		matrices[1] = Mat4.IDENTITY;
+		matrices[1] = Mat4::IDENTITY;
 		matrices[0].makeTrans(Vec3(25, 0, 0));
 		matrices[0] = matrices[0].transpose();
 		//

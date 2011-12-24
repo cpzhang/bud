@@ -1,4 +1,4 @@
-set(ItemName "tutorial_directx_point")
+set(ItemName "tutorial_directx_02_point")
 
 FILE(GLOB SRCS 
   *.cpp 
@@ -8,14 +8,13 @@ FILE(GLOB HDRS
   *.h
 ) 
 
-SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
-
 link_directories(
   ${EXECUTABLE_OUTPUT_PATH}
   )
 
 include_directories(
   ${CMAKE_SOURCE_DIR}
+  ${CMAKE_SOURCE_DIR}/external/freetype-2.4.4/Include
 )
 
 add_executable(${ItemName} WIN32

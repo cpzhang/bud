@@ -18,7 +18,8 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 		case WM_KEYDOWN:
 			{
 				WaitingForYou* wfy = (WaitingForYou*)_game;
-				wfy->getCameraController()->onKeyDown(wParam);
+				if (wfy->getCameraController())
+					wfy->getCameraController()->onKeyDown(wParam);
 
 				switch(wParam)
 				{
@@ -37,7 +38,8 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				int y = GET_Y_LPARAM(lParam);
 				{
 					WaitingForYou* wfy = (WaitingForYou*)_game;
-					wfy->getCameraController()->onLeftButtonDown(x,y);
+					if (wfy->getCameraController())
+						wfy->getCameraController()->onLeftButtonDown(x,y);
 				}
 			}
 			break;
@@ -48,6 +50,7 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				int y = GET_Y_LPARAM(lParam);
 				{
 					WaitingForYou* wfy = (WaitingForYou*)_game;
+					if (wfy->getCameraController())
 					wfy->getCameraController()->onLeftButtonUp(x,y);
 				}
 			}
@@ -60,6 +63,7 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 
 				{
 					WaitingForYou* wfy = (WaitingForYou*)_game;
+					if (wfy->getCameraController())
 					wfy->getCameraController()->onMouseMove(x,y);
 				}
 			}
@@ -71,6 +75,7 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				int y = GET_Y_LPARAM(lParam);
 				{
 					WaitingForYou* wfy = (WaitingForYou*)_game;
+					if (wfy->getCameraController())
 					wfy->getCameraController()->onRightButtonDown(x,y);
 				}
 			}
@@ -82,6 +87,7 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				int y = GET_Y_LPARAM(lParam);
 				{
 					WaitingForYou* wfy = (WaitingForYou*)_game;
+					if (wfy->getCameraController())
 					wfy->getCameraController()->onRightButtonUp(x,y);
 				}
 			}
@@ -92,6 +98,7 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				int x = GET_X_LPARAM(lParam);
 				int y = GET_Y_LPARAM(lParam);
 				WaitingForYou* wfy = (WaitingForYou*)_game;
+				if (wfy->getCameraController())
 				wfy->getCameraController()->onMButtonDown(x,y);
 			}
 			break;
@@ -101,6 +108,7 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				int x = GET_X_LPARAM(lParam);
 				int y = GET_Y_LPARAM(lParam);
 				WaitingForYou* wfy = (WaitingForYou*)_game;
+				if (wfy->getCameraController())
 				wfy->getCameraController()->onMButtonUp(x,y);
 			}
 			break;
@@ -109,6 +117,7 @@ bool InputMessageHandler::onInputMessage( void* hWnd, unsigned int message, WPAR
 				short delta = HIWORD(wParam);
 				{
 					WaitingForYou* wfy = (WaitingForYou*)_game;
+					if (wfy->getCameraController())
 					wfy->getCameraController()->onMouseWheel(delta);
 				}
 			}
