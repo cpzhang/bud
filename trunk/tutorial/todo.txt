@@ -1,3 +1,4 @@
+Render
 .normal mapping
 .bump mapping
 .parallax mapping
@@ -33,3 +34,10 @@
 .skybox
 .tone mapping
 .motion blur
+.megatexture
+
+Net
+.tcp
+.udp
+.http
+.smpt

@@ -155,7 +155,7 @@ void WaitingForYou::renderGeometry()
 	// vertex declaration
 	if (_font)
 	{
-		_font->render(Vec3(10, 10, 0), Vec3(1, 0, 0), Euclid::Color::Red, std::string("freetypetesting0123456789×ÖÌåäÖÈ¾²âÊÔ"));
+		_font->render(Vec3(10, 10, 0), Vec3(1, 0, 0), Euclid::Color::Red, std::string("freetype0123×ÖÌåäÖÈ¾"));
 	}
 }
 
@@ -163,7 +163,7 @@ bool WaitingForYou::createFonts()
 {
 	//
 	
-	if(_modules->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\simkai.ttf"), 48, Euclid::eFontProperty_Normal, "free"))
+	if(_modules->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\simkai.ttf"), 18, Euclid::eFontProperty_Normal, "free"))
 	{
 		_font = _modules->getRenderEngine()->getFontManager()->getFont(std::string("free"));
 	}

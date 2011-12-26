@@ -140,16 +140,19 @@ namespace Euclid
 	
 		// 
 		_renderSystem->setVertexDeclaration(eVertexDeclarationType_PositionTTexture);
-
+		//
+		D3DVIEWPORT9 vp;
+		RenderSystem::getInstancePtr()->getViewPort(&vp);
+		float ratio = float(vp.Width) / float(vp.Height);
 		//
 		sPositionTTexture vertices[4]; 
 		vertices[0].position = Vec4(_baseX + fft->_bearingX, basePoint.y - fft->_bearingY, 0.f, 1.0f);
 		vertices[0].texcoord = fft->_uv0;
 
-		vertices[1].position = Vec4(_baseX + fft->_bearingX + fft->_width, basePoint.y - fft->_bearingY,	0.f, 1.0f);
+		vertices[1].position = Vec4(_baseX + fft->_bearingX + fft->_width / ratio, basePoint.y - fft->_bearingY,	0.f, 1.0f);
 		vertices[1].texcoord = Vec2(fft->_uv2.x, fft->_uv0.y);
 
-		vertices[2].position = Vec4(_baseX + fft->_bearingX + fft->_width,	basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
+		vertices[2].position = Vec4(_baseX + fft->_bearingX + fft->_width / ratio,	basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
 		vertices[2].texcoord = fft->_uv2;
 
 		vertices[3].position = Vec4(_baseX + fft->_bearingX, basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
@@ -202,8 +205,13 @@ namespace Euclid
 	void FreeType::_addCode( unsigned short unicode )
 	{
 		//
-		if (FT_Load_Char(_face, unicode, FT_LOAD_DEFAULT | FT_LOAD_RENDER 	|
-			FT_LOAD_TARGET_NORMAL | FT_LOAD_FORCE_AUTOHINT))
+		if (FT_Load_Char(_face, unicode,
+			FT_LOAD_DEFAULT |
+			FT_LOAD_MONOCHROME |
+			FT_LOAD_TARGET_LIGHT |
+			FT_LOAD_RENDER |
+			FT_LOAD_TARGET_NORMAL |
+			FT_LOAD_FORCE_AUTOHINT))
 		{
 			return;
 		}
@@ -225,9 +233,13 @@ namespace Euclid
 		fft->_bearingX = slot->metrics.horiBearingX >> 6;
 		fft->_bearingY = slot->metrics.horiBearingY >> 6;
 		fft->_advance = slot->metrics.horiAdvance >> 6;
-
+#define A8
 		//
+#ifdef A8
+		u8* buffer = 0;
+#else
 		unsigned int* buffer = 0;
+#endif
 		unsigned char alphaAddon = 0;
 		switch(_property)
 		{
@@ -235,8 +247,13 @@ namespace Euclid
 		case eFontProperty_Normal:
 		default:
 			{
+#ifdef A8
+				buffer = new u8[bitmap.width * bitmap.rows];
+				memset(buffer, 0, sizeof(u8) * bitmap.width * bitmap.rows);
+#else
 				buffer = new unsigned int[bitmap.width * bitmap.rows];
 				memset(buffer, 0, sizeof(unsigned int) * bitmap.width * bitmap.rows);
+#endif
 				switch (bitmap.pixel_mode)
 				{
 				case FT_PIXEL_MODE_MONO:
@@ -244,10 +261,13 @@ namespace Euclid
 						for (int i = 0; i < bitmap.rows; ++i)
 						{
 							unsigned char *src = bitmap.buffer + (i * bitmap.pitch);
-							unsigned int pitch = i * bitmap.rows;
-							int j;
+#ifdef A8
+							for (int j = 0; j < bitmap.width; ++j)
+								buffer [j + i * bitmap.rows] = (src[j/8] & (0x80 >> (j & 7))) ? 0xFF : 0x00;
+#else
 							for (j = 0; j < bitmap.width; ++j)
 								buffer [j + pitch] = (src[j / 8] & (0x80 >> (j & 7))) ? 0xFFFFFFFF : 0x00000000;
+#endif
 						}
 					}
 					break;
@@ -257,9 +277,12 @@ namespace Euclid
 						for (int i = 0; i < bitmap.rows; ++i)
 							for (int j = 0; j < bitmap.width; ++j)
 							{
-								unsigned char c = bitmap.buffer[i * bitmap.pitch + j];
+#ifdef A8
+									buffer[i * bitmap.width + j] = bitmap.buffer[i * bitmap.pitch + j];
+#else
 								if(c > 0)
 									buffer[i * bitmap.width + j] = (c << 24) | (0xFF<< 16) | (0xFF << 8) | 0xFF;
+#endif
 							}
 					}
 				}
@@ -270,7 +293,11 @@ namespace Euclid
 		//
 		if (NULL == _activeTex)
 		{
+#ifdef A8
+			_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8);
+#else
 			_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8R8G8B8);
+#endif
 			if (NULL == _activeTex)
 			{
 				return;
@@ -288,7 +315,11 @@ namespace Euclid
 			_pen.y += _OFFSET_VERTICAL;
 			if (_pen.y + _OFFSET_VERTICAL > _TEXTURE_SIZE)
 			{
+#ifdef A8
+				_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8);
+#else
 				_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8R8G8B8);
+#endif
 				if (NULL == _activeTex)
 				{
 					return;
@@ -303,10 +334,16 @@ namespace Euclid
 		}
 
 		//
+#ifdef A8
 		_activeTex->setSubData(0, (unsigned int)_pen.x, (unsigned int)_pen.y,
-				fft->_width, fft->_height, 4 * fft->_width,
-				buffer, D3DFMT_A8R8G8B8);
-
+			fft->_width, fft->_height, fft->_width,
+			buffer, D3DFMT_A8);
+#else
+		_activeTex->setSubData(0, (unsigned int)_pen.x, (unsigned int)_pen.y,
+			fft->_width, fft->_height, 4 * fft->_width,
+			buffer, D3DFMT_A8R8G8B8);
+#endif
+		
 		//
 		if (buffer)
 		{
