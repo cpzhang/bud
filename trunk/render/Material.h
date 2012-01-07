@@ -27,9 +27,11 @@ namespace Euclid
 		MaterialVertexTexture();
 
 		bool setTexture(const std::string& fileName);
+		bool setLightmapping(const std::string& fileName);
 	public:
 		std::string _textureFileName;
 		ITexture*    _texture;
+		ITexture*    _lightmapping;
 	};
 
 	class MaterialManager: public IMaterialManager, public Buddha::SingletonEx<MaterialManager>

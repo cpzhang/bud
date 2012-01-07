@@ -7,10 +7,39 @@
 #ifndef __Buffer_h__
 #define __Buffer_h__
 #include "Common.h"
-#include "external/directx/Include/d3d9.h"
 #include "RenderEngineCreationParameters.h"
 namespace Euclid
 {
+	class EBuffer : public Buddha::Exception
+	{
+	public:
+		/** Constructor
+			* You can provide an internet address. If so, reason *must* contain "%s"
+			* where the address should be written. Moreover, the length of reason plus
+			* the length of the address when displayed by asString() should no exceed 256.
+			*/
+		EBuffer( HRESULT r)
+		{
+			std::ostringstream ss;
+			ss<<"Buffer error, string: "<<DXGetErrorString(r)<<";description: "<<DXGetErrorDescription(r);
+			_reason = ss.str();
+		}
+	};
+	class EReleaseLeak : public Buddha::Exception
+	{
+	public:
+		/** Constructor
+			* You can provide an internet address. If so, reason *must* contain "%s"
+			* where the address should be written. Moreover, the length of reason plus
+			* the length of the address when displayed by asString() should no exceed 256.
+			*/
+		EReleaseLeak( int r)
+		{
+			std::ostringstream ss;
+			ss<<"release leak: "<<r;
+			_reason = ss.str();
+		}
+	};
 	class IBuffer
 	{
 	public:
@@ -19,13 +48,16 @@ namespace Euclid
 		virtual IDirect3DVertexBuffer9*		getVertexBuffer() {return NULL;}
 		//
 		virtual bool create( unsigned int Length, unsigned long Usage, ePool Pool ) {return true;}
-		virtual bool create(unsigned int Length, unsigned long Usage, D3DFORMAT Format, ePool Pool ) {return true;}
+		virtual bool create(unsigned int Length, unsigned long Usage, eFormat Format, ePool Pool ) {return true;}
 		//
 		virtual void destroy() = 0;
 		//
 		virtual void* lock(unsigned int OffsetToLock, unsigned int SizeToLock, unsigned long Flags) = 0;
 		//
 		virtual void unLock() = 0;
+
+		virtual void onInvalidateDevice() = 0;
+		virtual void onRestoreDevice() = 0;
 
 	public:
 		IBuffer();
@@ -43,16 +75,23 @@ namespace Euclid
 		virtual IDirect3DIndexBuffer9*		getIndexBuffer(); 
 
 		//
-		virtual bool create(unsigned int Length, unsigned long Usage, D3DFORMAT Format, ePool Pool );
+		virtual bool create(unsigned int Length, unsigned long Usage, eFormat Format, ePool Pool );
 		//
 		virtual void destroy();
 		//
 		virtual void* lock(unsigned int OffsetToLock, unsigned int SizeToLock, unsigned long Flags);
 		//
 		virtual void unLock();
+		virtual void onInvalidateDevice();
+		virtual void onRestoreDevice();
+
 		//
 	private:
 		IDirect3DIndexBuffer9*		_ib; 
+		unsigned int _Length;
+		unsigned long _Usage;
+		eFormat _Format;
+		ePool _Pool;
 	};
 
 	class VertexBuffer : public IBuffer
@@ -74,9 +113,14 @@ namespace Euclid
 		virtual void* lock(unsigned int OffsetToLock, unsigned int SizeToLock, unsigned long Flags);
 		//
 		virtual void unLock();
+		virtual void onInvalidateDevice();
+		virtual void onRestoreDevice();
 		//
 	private:
 		IDirect3DVertexBuffer9*		_vb; 
+		unsigned int _Length;
+		unsigned long _Usage;
+		ePool _Pool;
 	};
 }
 

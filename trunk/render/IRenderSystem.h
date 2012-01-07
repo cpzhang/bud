@@ -50,6 +50,14 @@ namespace Euclid
 			u32 PrimitiveCount
 			) = 0;
 		//
+		virtual bool drawPrimitiveUP(
+			ePrimitive PrimitiveType,
+			u32 PrimitiveCount,
+			const void *pVertexStreamZeroData,
+			u32 VertexStreamZeroStride
+			) = 0;
+
+		//
 		virtual bool drawIndexedPrimitive(
 			ePrimitive Type,
 			s32 BaseVertexIndex,
@@ -81,6 +89,17 @@ namespace Euclid
 			) = 0;
 		virtual bool setIndices(
 			IBuffer *pIndexData
+			) = 0;
+		virtual bool setRenderState(
+			eRenderState State,
+			u32 Value
+			) = 0;
+		virtual bool getRenderState(
+			eRenderState State,
+			u32 *pValue
+			) = 0;
+		virtual bool setViewport(
+			const sViewPort *pViewport
 			) = 0;
 	};
 }

@@ -10,7 +10,7 @@
 #include "Common.h"
 namespace Euclid
 {
-	class Effect
+	class _EuclidExport_ Effect
 	{
 	public:
 		Effect()
@@ -48,12 +48,14 @@ namespace Euclid
 	public:
 		bool loadFromFile(const std::string& filename);
 		bool loadFromMemory(const u8* data, u32 len);
-
+		void onInvalidateDevice();
+		void onRestoreDevice();
 		typedef std::map<std::string, ITexture*> NameTextureMap;
 	private:
 		ID3DXEffect*	_effect;
 
 		NameTextureMap  _nameTextures;
+		std::string		_effectfFile;
 	};
 }
 

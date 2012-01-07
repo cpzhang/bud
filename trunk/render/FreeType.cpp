@@ -8,7 +8,7 @@
 namespace Euclid
 {
 	FreeType::FreeType(Vec3 a)
-		: _activeTex(0), _baseX(0), _renderSystem(0)
+		: _activeTex(0), _baseX(0), _renderSystem(0), _fx(0)
 	{
 		
 	}
@@ -57,7 +57,8 @@ namespace Euclid
 		_renderSystem = RenderSystem::getInstancePtr();
 
 		//
-		_fx = EffectManager::getInstancePtr()->createEffectFromFile("shader\\Freetype.fx");
+		onRestoreDevice();
+		
 		//
 		return true;
 	}
@@ -65,18 +66,26 @@ namespace Euclid
 
 	bool FreeType::destroy()
 	{
+		if (_activeTex)
+		{
+			_activeTex = 0;
+		}
 		if (_fx)
 		{
 			_fx->destroy();
+			delete _fx;
 			_fx = 0;
 		}
 		for (CodeTexMap::iterator i = _codeTex.begin(); i != _codeTex.end(); ++i)
 		{
-			ITexture* t = i->second->_tex;
-			if (t)
+			if (i->second)
 			{
-				t->release();
-				t = 0;
+				ITexture* t = i->second->_tex;
+				if (t)
+				{
+					t->release();
+					t = 0;
+				}
 			}
 		}
 		_codeTex.clear();
@@ -98,7 +107,7 @@ namespace Euclid
 		//
 		unsigned short unicode = 0;
 		FTex* fTex = 0;
-		_baseX = 0;
+		_baseX = basePoint.x;
 		unsigned int spaceOffset = _fontSize * 0.5;
 		basePoint.y += _fontSize;
 		//
@@ -118,7 +127,16 @@ namespace Euclid
 			fTex = _parse(unicode);
 			if (NULL == fTex)
 			{
-				basePoint.x += spaceOffset;
+				// '\n'
+				if (unicode == 10)
+				{
+					basePoint.y += _fontSize;
+					_baseX = basePoint.x;
+				} 
+				else
+				{
+					_baseX += spaceOffset;
+				}
 			}
 			else
 			{
@@ -143,16 +161,15 @@ namespace Euclid
 		//
 		D3DVIEWPORT9 vp;
 		RenderSystem::getInstancePtr()->getViewPort(&vp);
-		float ratio = float(vp.Width) / float(vp.Height);
 		//
-		sPositionTTexture vertices[4]; 
+		sPositionTTexture vertices[4];
 		vertices[0].position = Vec4(_baseX + fft->_bearingX, basePoint.y - fft->_bearingY, 0.f, 1.0f);
 		vertices[0].texcoord = fft->_uv0;
 
-		vertices[1].position = Vec4(_baseX + fft->_bearingX + fft->_width / ratio, basePoint.y - fft->_bearingY,	0.f, 1.0f);
+		vertices[1].position = Vec4(_baseX + fft->_bearingX + fft->_width, basePoint.y - fft->_bearingY,	0.f, 1.0f);
 		vertices[1].texcoord = Vec2(fft->_uv2.x, fft->_uv0.y);
 
-		vertices[2].position = Vec4(_baseX + fft->_bearingX + fft->_width / ratio,	basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
+		vertices[2].position = Vec4(_baseX + fft->_bearingX + fft->_width,	basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
 		vertices[2].texcoord = fft->_uv2;
 
 		vertices[3].position = Vec4(_baseX + fft->_bearingX, basePoint.y + fft->_height - fft->_bearingY, 0.f, 1.0f);
@@ -366,6 +383,41 @@ namespace Euclid
 		//
 		_pen.x += fft->_width;
 		_pen.x += 2;
+	}
+
+	void FreeType::onInvalidateDevice()
+	{
+		if (_activeTex)
+		{
+			_activeTex = 0;
+		}
+		_baseX = 0;
+		_pen.x = 0;
+		_pen.y = 0;
+// 		if (_fx)
+// 		{
+// 			_fx->destroy();
+// 			delete _fx;
+// 			_fx = 0;
+// 		}
+		for (CodeTexMap::iterator i = _codeTex.begin(); i != _codeTex.end(); ++i)
+		{
+			if (i->second)
+			{
+				ITexture* t = i->second->_tex;
+				if (t)
+				{
+					t->release();
+					t = 0;
+				}
+			}
+		}
+		_codeTex.clear();
+	}
+
+	void FreeType::onRestoreDevice()
+	{
+		_fx = EffectManager::getInstancePtr()->createEffectFromFile("shader\\Freetype.fx");
 	}
 
 	const unsigned int FreeType::_TEXTURE_SIZE(256);

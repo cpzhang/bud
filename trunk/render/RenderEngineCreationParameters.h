@@ -109,8 +109,8 @@ namespace Euclid
 	/* Pool types */
 	enum ePool
 	{
-		ePool_Default = D3DPOOL_DEFAULT,
-		ePool_Manager = D3DPOOL_MANAGED,
+		ePool_Default = D3DPOOL_DEFAULT,// reset时，首先release，然后重新load
+		ePool_Manager = D3DPOOL_MANAGED,// reset时，无需处理
 		ePool_SystemMem = D3DPOOL_SYSTEMMEM,
 		ePool_Scratch = D3DPOOL_SCRATCH,
 		ePool_Size ,
@@ -165,6 +165,41 @@ namespace Euclid
 	enum eFormat
 	{
 		eFormat_Index16 = D3DFMT_INDEX16,
+	};
+
+	//
+	enum eRenderState
+	{
+		eRenderState_FillMode = D3DRS_FILLMODE,
+	};
+
+	//
+	enum eFillMode
+	{
+		eFillMode_Point = D3DFILL_POINT,
+		eFillMode_WireFrame = D3DFILL_WIREFRAME,
+		eFillMode_Solid = D3DFILL_SOLID,
+		eFillMode_Size,
+	};
+
+	//
+	typedef D3DVIEWPORT9 sViewPort;
+
+	//
+	class EDX : public Buddha::Exception
+	{
+	public:
+		/** Constructor
+			* You can provide an internet address. If so, reason *must* contain "%s"
+			* where the address should be written. Moreover, the length of reason plus
+			* the length of the address when displayed by asString() should no exceed 256.
+			*/
+		EDX( HRESULT r)
+		{
+			std::ostringstream ss;
+			ss<<"dx error, string: "<<DXGetErrorString(r)<<";description: "<<DXGetErrorDescription(r);
+			_reason = ss.str();
+		}
 	};
 }
 

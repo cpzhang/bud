@@ -30,6 +30,11 @@ namespace Euclid
 	//
 	struct FTex
 	{
+		FTex()
+			:_tex(NULL)
+		{
+
+		}
 		ITexture*		_tex;
 		Vec2			_uv0;
 		Vec2			_uv2;
@@ -40,7 +45,7 @@ namespace Euclid
 		Real			_height;
 	};
 
-	class /*_EuclidExport_*/ FreeType
+	class _EuclidExport_ FreeType
 	{
 	public:
 		FreeType(Vec3);
@@ -50,6 +55,8 @@ namespace Euclid
 		virtual bool create(std::string& faceFile, unsigned int fontSize, eFontProperty fontProperty);
 		virtual bool destroy();
 		virtual bool render(Vec3& basePoint, Vec3& direction, const Color& color, std::string& text);
+		void onInvalidateDevice();
+		void onRestoreDevice();
 	private:
 		//
 		unsigned short _computeUnicode(std::string& character);

@@ -8,7 +8,7 @@ namespace Buddha
 	Game*	gGameClient = NULL;
 
 	Game::Game()
-		: _windowName("Game_Window"), _windowTitle("Game"), _clientHeight(600),
+		: _windowName("Game_Window"), _windowTitle("Game"), _clientHeight(600), _clientWidth(480),
 		_windowX(0), _windowY(0), _hwnd(0), _fps(0.0f), _inputMessageHandler(NULL),
 		_process(eProcess_Begin)
 	{
@@ -94,9 +94,9 @@ namespace Buddha
 		++count_frames;
 		float delta = current_time - last_time;
 		// calculate FPS per Second
-		if(delta >= 1000)
+		if(delta >= 1000.0f)
 		{
-			_fps = (float)count_frames * 1000.0f  / (current_time - last_time);
+			_fps = (float)count_frames * 1000.0f  / delta;
 			last_time = current_time;
 			count_frames = 0;
 		}
@@ -133,12 +133,12 @@ namespace Buddha
 	{
 		// Fill out the WNDCLASS structure
 		WNDCLASS wc;
-		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 		wc.lpfnWndProc = _wndProc;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
 		wc.hInstance = ::GetModuleHandle(NULL);
-		wc.hIcon = NULL;//::LoadIcon(0, IDI_APPLICATION);
+		wc.hIcon = ::LoadIcon(0, IDI_APPLICATION);
 		wc.hCursor = ::LoadCursor(0, IDC_ARROW);
 		wc.hbrBackground = static_cast<HBRUSH>(::GetStockObject(BLACK_BRUSH));
 		wc.lpszMenuName = 0;
@@ -153,7 +153,7 @@ namespace Buddha
 		// Create the window
 		_hwnd = ::CreateWindow(_windowName.c_str(), _windowTitle.c_str(),
 			WS_OVERLAPPEDWINDOW,
-			_windowX, _windowY, 640, 480,
+			_windowX, _windowY, _clientWidth, _clientHeight,
 			GetDesktopWindow(), 0, ::GetModuleHandle(0), 0);
 		if (_hwnd ==0)
 		{
@@ -161,7 +161,7 @@ namespace Buddha
 		}
 
 		// Show the window
-		::ShowWindow(_hwnd, SW_SHOW);
+		::ShowWindow(_hwnd, SW_NORMAL);
 		// Update the window
 		::UpdateWindow(_hwnd);
 
@@ -177,11 +177,6 @@ namespace Buddha
 		case WM_DESTROY:
 			{
 				::PostQuitMessage(0);
-			}
-			break;
-		case WM_SIZE:
-			{
-				//onSize(LOWORD(lParam), HIWORD(lParam),wParam);
 			}
 			break;
 // 

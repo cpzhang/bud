@@ -23,7 +23,7 @@ namespace Euclid
 	}
 
 	MaterialVertexTexture::MaterialVertexTexture()
-		:_texture(NULL)
+		:_texture(NULL), _lightmapping(NULL)
 	{
 
 	}
@@ -53,6 +53,23 @@ namespace Euclid
 			_texture->release();
 			_texture = NULL;
 		}
+		//
+		if (_lightmapping)
+		{
+			_lightmapping->release();
+			_lightmapping = NULL;
+		}
+	}
+
+	bool MaterialVertexTexture::setLightmapping( const std::string& fileName )
+	{
+		_lightmapping = TextureManager::getInstancePtr()->createTextureFromFile(fileName);
+		if (NULL == _lightmapping)
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 }

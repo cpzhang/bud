@@ -9,7 +9,7 @@
 WaitingForYou::WaitingForYou()
 :	_modules(NULL), _material(NULL), _vb(NULL), _fx(NULL)
 {
-	_windowTitle = "tutorial_shader_introduction";
+	_windowTitle = "tutorial";
 }
 
 WaitingForYou::~WaitingForYou()

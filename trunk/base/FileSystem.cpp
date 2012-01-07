@@ -36,6 +36,16 @@ namespace Buddha
 		dir += "\\";
 	}
 
+	std::string FileSystem::getDataDirectory()
+	{
+		static std::string dir;
+		if (dir.empty())
+		{
+			getDataDirectory(dir);
+		}
+		return dir;
+	}
+
 	bool FileSystem::isFileExist( std::string& fileName )
 	{
 		bool exist = false;

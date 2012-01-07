@@ -10,13 +10,19 @@
 //
 namespace Euclid
 {
-	class EffectManager : public Buddha::SingletonEx<EffectManager>
+	class _EuclidExport_ EffectManager : public Buddha::SingletonEx<EffectManager>
 	{
 	public:
 		//
 		virtual Effect*		createEffectFromFile(const std::string& f);
 		//
 		virtual Effect*		createEffectFromMemory(const u8 *pBuffer,u8 len);
+		//
+		void onInvalidateDevice();
+		void onRestoreDevice();
+	private:
+		typedef std::map<std::string, Effect*> NameEffectMap;
+		NameEffectMap _effects;
 	};
 }
 

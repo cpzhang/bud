@@ -54,6 +54,13 @@ namespace Euclid
 			u32 PrimitiveCount
 			);
 		//
+		virtual bool drawPrimitiveUP(
+			ePrimitive PrimitiveType,
+			u32 PrimitiveCount,
+			const void *pVertexStreamZeroData,
+			u32 VertexStreamZeroStride
+			);
+		//
 		virtual bool drawIndexedPrimitive(
 			ePrimitive Type,
 			s32 BaseVertexIndex,
@@ -87,6 +94,19 @@ namespace Euclid
 		virtual bool setIndices(
 			IBuffer *pIndexData
 			);
+
+		virtual bool setRenderState(
+			eRenderState State,
+			u32 Value
+			);
+		virtual bool getRenderState(
+			eRenderState State,
+			u32 *pValue
+			);
+
+		virtual bool setViewport(
+			const sViewPort *pViewport
+			);
 	public:
 		RenderSystem();
 		~RenderSystem();
@@ -100,6 +120,8 @@ namespace Euclid
 		IDirect3DDevice9* _device;
 		//
 		IDirect3DVertexDeclaration9*	_vertexDeclarations[eVertexDeclarationType_Size];
+		//
+		D3DPRESENT_PARAMETERS _presentationParameters;
 	};
 }
 

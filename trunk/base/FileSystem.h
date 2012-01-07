@@ -24,6 +24,7 @@ namespace Buddha
 		void getWindowDirectory(std::string& dir);
 		void getModuleFileName(std::string& file);
 		void getDataDirectory(std::string& dir);
+		std::string getDataDirectory();
 		void getBinDirectory(std::string& dir);
 		void getParent(std::string& dir);
 		//

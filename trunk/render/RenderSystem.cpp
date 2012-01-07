@@ -50,18 +50,19 @@ namespace Euclid
 		}
 
 		//
-		D3DPRESENT_PARAMETERS pPresentationParameters;
-		ZeroMemory(&pPresentationParameters, sizeof(pPresentationParameters));
-		pPresentationParameters.Windowed = true;
-		pPresentationParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-		pPresentationParameters.BackBufferFormat = D3DFMT_UNKNOWN;
-		pPresentationParameters.hDeviceWindow = hFocusWindow;
-		pPresentationParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+		//D3DPRESENT_PARAMETERS pPresentationParameters;
+		ZeroMemory(&_presentationParameters, sizeof(_presentationParameters));
+		_presentationParameters.Windowed = true;
+		_presentationParameters.hDeviceWindow = hFocusWindow;
+		_presentationParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
+		_presentationParameters.BackBufferFormat = D3DFMT_UNKNOWN;
+		_presentationParameters.hDeviceWindow = hFocusWindow;
+		_presentationParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 		// The rate at which the display adapter refreshes the screen. 
-		pPresentationParameters.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
+		_presentationParameters.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 		{
-			pPresentationParameters.BackBufferCount = 1;
+			_presentationParameters.BackBufferCount = 1;
 			// Use the current display mode.
 			D3DDISPLAYMODE mode;
 
@@ -70,34 +71,30 @@ namespace Euclid
 				return false;
 			}
 
-			pPresentationParameters.BackBufferFormat = D3DFMT_A8R8G8B8;//mode.Format;
-			pPresentationParameters.EnableAutoDepthStencil = true;
-			pPresentationParameters.AutoDepthStencilFormat	= D3DFMT_D24S8;
-			//
+			_presentationParameters.BackBufferFormat = mode.Format;
+			_presentationParameters.EnableAutoDepthStencil = true;
+			_presentationParameters.AutoDepthStencilFormat	= D3DFMT_D16;
 			//
 			RECT rect;
 			GetClientRect(hFocusWindow, &rect);
 			// Width of the new swap chain's back buffers, in pixels
-			pPresentationParameters.BackBufferWidth	= rect.right - rect.left;
+			_presentationParameters.BackBufferWidth	= rect.right - rect.left;
 
 			// Height of the new swap chain's back buffers, in pixels. 
-			pPresentationParameters.BackBufferHeight = rect.bottom - rect.top;
+			_presentationParameters.BackBufferHeight = rect.bottom - rect.top;
 
 			// Multisampling is supported only if the swap effect is D3DSWAPEFFECT_DISCARD.
-			pPresentationParameters.MultiSampleType			= D3DMULTISAMPLE_NONE;
+			_presentationParameters.MultiSampleType			= D3DMULTISAMPLE_NONE;
 
-			pPresentationParameters.MultiSampleQuality = 0;
+			_presentationParameters.MultiSampleQuality = 0;
 
-			pPresentationParameters.Flags = D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL;
+			_presentationParameters.Flags = D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL;
 		}
 		{
-			HRESULT r = _d3d9->CreateDevice(adapter, deviceType, hFocusWindow, behaviorFlags, &pPresentationParameters, &_device);
+			HRESULT r = _d3d9->CreateDevice(adapter, deviceType, hFocusWindow, behaviorFlags, &_presentationParameters, &_device);
 			if (D3D_OK != r)
 			{
-				char buf[2048];
-				sprintf(buf, "Error: %s error description: %s\n",DXGetErrorString(r),DXGetErrorDescription(r));
-				OutputDebugString(buf);
-				return false;
+				throw EDX(r);
 			}
 		}
 
@@ -135,7 +132,7 @@ namespace Euclid
 			ULONG reference_count = _device->Release();
 			if (reference_count > 0)
 			{
-				return false;
+				throw EReleaseLeak(reference_count);
 			}
 			_device = 0;
 		}
@@ -145,7 +142,7 @@ namespace Euclid
 			ULONG reference_count = _d3d9->Release();
 			if (reference_count > 0)
 			{
-				return false;
+				throw EReleaseLeak(reference_count);
 			}
 			_d3d9 = 0;
 		}
@@ -312,37 +309,6 @@ namespace Euclid
 				{ 0,	32,	D3DDECLTYPE_FLOAT1,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	1},
 				D3DDECL_END()
 			},
-			
-/*
-			//	VD_TPOSITION_COLOR
-			{
-				{0,		0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},
-				{0,		16,	D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
-				D3DDECL_END()
-			},
-
-			//	VD_POSITION_NORMAL
-			{
-				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
-				{0,		12,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,		0},
-				D3DDECL_END()
-			},
-
-			//	VD_TPOSITION_TEXTURE
-			{
-				{0,		0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},
-				{0,		16,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
-				D3DDECL_END()
-			},
-
-			//	VD_TPOSITION_COLOR_TEXTURE
-			{
-				{ 0,	0,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},
-				{ 0,	16, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
-				{ 0,	20, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
-				D3DDECL_END()
-			},
-*/
 		};
 
 		//
@@ -391,7 +357,6 @@ namespace Euclid
 
 	bool RenderSystem::drawIndexedPrimitive( ePrimitive Type, s32 BaseVertexIndex, u32 MinIndex, u32 NumVertices, u32 StartIndex, u32 PrimitiveCount )
 	{
-
 		HRESULT r = _device->DrawIndexedPrimitive((D3DPRIMITIVETYPE)Type, BaseVertexIndex, MinIndex, NumVertices, StartIndex, PrimitiveCount);
 		if (D3D_OK != r)
 		{
@@ -458,5 +423,56 @@ namespace Euclid
 		}
 
 		return false;
+	}
+
+	bool RenderSystem::setRenderState( eRenderState State, u32 Value )
+	{
+		HRESULT r = _device->SetRenderState((D3DRENDERSTATETYPE)State, Value);
+		if (D3D_OK == r)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool RenderSystem::drawPrimitiveUP( ePrimitive PrimitiveType, u32 PrimitiveCount, const void *pVertexStreamZeroData, u32 VertexStreamZeroStride )
+	{
+		HRESULT r = _device->DrawPrimitiveUP((D3DPRIMITIVETYPE)PrimitiveType, PrimitiveCount, pVertexStreamZeroData, VertexStreamZeroStride);
+		if (D3D_OK != r)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool RenderSystem::getRenderState( eRenderState State, u32 *pValue )
+	{
+		HRESULT r = _device->GetRenderState((D3DRENDERSTATETYPE)State, (DWORD*)pValue);
+		if (D3D_OK != r)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool RenderSystem::setViewport( const sViewPort *pViewport )
+	{
+		HRESULT r = _device->SetViewport(pViewport);
+		if (D3D_OK != r)
+		{
+			return false;
+		}
+		//
+		_presentationParameters.BackBufferWidth = pViewport->Width;
+		_presentationParameters.BackBufferHeight = pViewport->Height;
+ 		HRESULT hr = _device->Reset(&_presentationParameters);
+ 		if (D3D_OK != r)
+ 		{
+ 			throw EDX(hr);
+ 		}
+		return true;
 	}
 }

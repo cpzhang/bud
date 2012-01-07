@@ -9,7 +9,7 @@
 WaitingForYou::WaitingForYou()
 :_modules(NULL), _material(NULL), _vb(NULL), _fx(NULL), _camera(NULL), _cameraController(NULL), _modelMatrix(Mat4::IDENTITY)
 {
-	_windowTitle = "tutorial_shader_introduction";
+	_windowTitle = "tutorial";
 }
 
 WaitingForYou::~WaitingForYou()

@@ -16,7 +16,7 @@ namespace Euclid
 			_effect->Release();
 			_effect = NULL;
 		}
-		delete this;
+		//delete this;
 	}
 
 	bool Effect::begin( u32* count )
@@ -71,15 +71,10 @@ namespace Euclid
 		}
 
 		_nameTextures[name] = pTexture;
-
-		if (pTexture)
+		HRESULT r = _effect->SetTexture(name.c_str(), pTexture->getTexture());
+		if (FAILED(r))
 		{
-			
-			_effect->SetTexture(name.c_str(), pTexture->getTexture());
-		}
-		else
-		{
-			_effect->SetTexture(name.c_str(), NULL);
+			throw EDX(r);
 		}
 	}
 
@@ -137,12 +132,10 @@ namespace Euclid
 			data += filename;
 			if (FAILED(r = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, &error)))
 			{
-				std::ostringstream buf;
-				buf<<"D3DXCreateTextureFromFile "<<filename<<" Error Code : "<<r<<" Error: "<<DXGetErrorString(r)<<" error description: "<<DXGetErrorDescription(r);
-				Error(buf.str());
-				return false;
+				throw EDX(r);
 			}
 		}
+		_effectfFile = filename;
 
 		return true;
 	}
@@ -246,4 +239,18 @@ namespace Euclid
 		return false;
 	}
 
+	void Effect::onInvalidateDevice()
+	{
+		if (_effect)
+		{
+			_effect->Release();
+			_effect = NULL;
+		}
+		_nameTextures.clear();
+	}
+
+	void Effect::onRestoreDevice()
+	{
+		loadFromFile(_effectfFile);
+	}
 }

@@ -55,4 +55,28 @@ namespace Euclid
 		_fonts.clear();
 	}
 
+	void FontManager::onInvalidateDevice()
+	{
+		for (NameFreetypeMap::iterator i = _fonts.begin(); i != _fonts.end(); ++i)
+		{
+			FreeType* ft = i->second;
+			if (ft)
+			{
+				ft->onInvalidateDevice();
+			}
+		}
+	}
+
+	void FontManager::onRestoreDevice()
+	{
+		for (NameFreetypeMap::iterator i = _fonts.begin(); i != _fonts.end(); ++i)
+		{
+			FreeType* ft = i->second;
+			if (ft)
+			{
+				//ft->onRestoreDevice();
+			}
+		}
+	}
+
 }

@@ -221,4 +221,9 @@ namespace Euclid
 		return m_mtxOrthoProjection;
 	}
 
+	void Camera::setDirty()
+	{
+		m_dirty = true;
+	}
+
 }

@@ -29,6 +29,8 @@ namespace Euclid
 
 		//
 		void destroy();
+		void onInvalidateDevice();
+		void onRestoreDevice();
 	public:
 		FontManager();
 		~FontManager();

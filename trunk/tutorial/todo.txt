@@ -6,21 +6,27 @@ Render
 // .geometry instancing
 .skin
 .phong
-.light mapping
+// .light mapping
 .displacement mapping
-.terrain
+// .terrain,height map
+// .terrain,geomipmapping
+.terrain,roam
+.bsp 
+.quadtree
+.octree 
+.portal 
 .lod
 .fog
 .facial
 .enviroment mapping
 .mirror
 .blur
-.freetype
+// .freetype
 .x mesh
 .max exporter, material, previvew
 .particle
 .procedural texture
-.water
+// .water
 .RRT
 .antialiase
 .depth of field
@@ -40,4 +46,11 @@ Net
 .tcp
 .udp
 .http
-.smpt
+.smtp
+
+AI
+.A*
+
+Math
+
+Misc

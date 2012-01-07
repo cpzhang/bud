@@ -22,6 +22,7 @@
 #include "StlHelper.h"
 #include "CRL.h"
 #include "DataChunk.h"
+#include "Exception.h"
 //#define ALIGN(size, boundary)  (((size) + ((boundary) - 1)) & ~((boundary) - 1))
 
 #endif // __Buddha_h__

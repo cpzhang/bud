@@ -17,16 +17,20 @@ namespace Euclid
 		return _ib;
 	}
 
-	bool IndexBuffer::create( unsigned int Length, unsigned long Usage, D3DFORMAT Format, ePool Pool )
+	bool IndexBuffer::create( unsigned int Length, unsigned long Usage, eFormat Format, ePool Pool )
 	{
 		//
 		HRESULT hr;
-		hr = RenderSystem::getInstancePtr()->getDevice()->CreateIndexBuffer(Length, Usage, Format, (D3DPOOL)Pool, &_ib, NULL);
+		hr = RenderSystem::getInstancePtr()->getDevice()->CreateIndexBuffer(Length, Usage, (D3DFORMAT)Format, (D3DPOOL)Pool, &_ib, NULL);
 		if (FAILED(hr))
 		{
-			return false;
+			throw EBuffer(hr);
 		}
 
+		_Length = Length;
+		_Usage = Usage;
+		_Pool = Pool;
+		_Format = Format;
 		//
 		return true;
 	}
@@ -67,8 +71,37 @@ namespace Euclid
 	{
 		if (_ib)
 		{
-			_ib->Release();
+			int r =_ib->Release();
+			if (r > 0)
+			{
+				throw EReleaseLeak(r);
+			}
+
 			_ib = 0;
+		}
+	}
+
+	void IndexBuffer::onInvalidateDevice()
+	{
+		if (_Pool == ePool_Default)
+		{
+			if (_ib)
+			{
+				int r = _ib->Release();
+				if (r > 0 )
+				{
+					throw EReleaseLeak(r);
+				}
+			}
+			_ib = NULL;
+		}
+	}
+
+	void IndexBuffer::onRestoreDevice()
+	{
+		if (_Pool == ePool_Default)
+		{
+			create(_Length, _Usage, _Format, _Pool);
 		}
 	}
 
@@ -98,12 +131,15 @@ namespace Euclid
 		//
 		HRESULT hr;
 		// D3DPOOL_DEFAULT flag tells Direct3D to create the vertex buffer in the memory allocation that is most appropriate for this buffer
-		hr = RenderSystem::getInstancePtr()->getDevice()->CreateVertexBuffer(Length, Usage, 0, (D3DPOOL)Pool, &_vb, NULL);
+		IDirect3DDevice9* device = RenderSystem::getInstancePtr()->getDevice();
+		hr = device->CreateVertexBuffer(Length, Usage, 0, (D3DPOOL)Pool, &_vb, NULL);
 		if (FAILED(hr))
 		{
-			return false;
+			throw EBuffer(hr);
 		}
-
+		_Length = Length;
+		_Usage = Usage;
+		_Pool = Pool;
 		//
 		return true;
 	}
@@ -150,8 +186,36 @@ namespace Euclid
 	{
 		if (_vb)
 		{
-			_vb->Release();
+			int r =_vb->Release();
+			if (r > 0)
+			{
+				throw EReleaseLeak(r);
+			}
 			_vb = 0;
+		}
+	}
+
+	void VertexBuffer::onInvalidateDevice()
+	{
+		if (_Pool == ePool_Default)
+		{
+			if (_vb)
+			{
+				int r = _vb->Release();
+				if (r > 0 )
+				{
+					throw EReleaseLeak(r);
+				}
+			}
+			_vb = NULL;
+		}
+	}
+
+	void VertexBuffer::onRestoreDevice()
+	{
+		if (_Pool == ePool_Default)
+		{
+			create(_Length, _Usage, _Pool);
 		}
 	}
 }

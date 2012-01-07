@@ -30,6 +30,7 @@
 
 #include "Common.h"
 #include "Vector3.h"
+#include "Vector2.h"
 
 //
 namespace Euler
@@ -86,6 +87,15 @@ namespace Euler
 			}
 			return kProd;
 		}
+		/** Builds a translation matrix
+        */
+        inline void makeTrans( const Vector2& v )
+        {
+            m[0][0] = 1.0; m[0][1] = 0.0; m[0][2] = v.x;
+            m[1][0] = 0.0; m[1][1] = 1.0; m[1][2] = v.y;
+            m[2][0] = 0.0; m[2][1] = 0.0; m[2][2] = 1.0;
+        }
+
 		Matrix3 Transpose () const;
 		Matrix3 operator- () const;
 	};

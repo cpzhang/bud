@@ -9,7 +9,7 @@
 WaitingForYou::WaitingForYou()
 :_modules(NULL), _material(NULL), _vb(NULL), _fx(NULL), _camera(NULL), _cameraController(NULL), _modelMatrix(Mat4::IDENTITY), _texture(NULL)
 {
-	_windowTitle = "tutorial_shader_introduction";
+	_windowTitle = "tutorial";
 }
 
 WaitingForYou::~WaitingForYou()
@@ -91,7 +91,7 @@ bool WaitingForYou::forePlay()
 	}
 
 	//
-	DragAcceptFiles(_hwnd, true);
+//	DragAcceptFiles(_hwnd, true);
 
 	//
 	if (!initGeometry())
@@ -129,7 +129,7 @@ bool WaitingForYou::update(u32 current, u32 delta)
 	sQ.FromAngleAxis(sT, Vec3::UNIT_Y);
 	
 	//
-	_modelMatrix.makeTransform(Vec3::ZERO, Vec3::UNIT_SCALE, sQ);
+	//_modelMatrix.makeTransform(Vec3::ZERO, Vec3::UNIT_SCALE, sQ);
 	//
 	return true;
 }
@@ -153,7 +153,8 @@ bool WaitingForYou::initGeometry()
 	{
 		_material->setVertexDeclaration(Euclid::eVertexDeclarationType_PositionTexture);
 		Euclid::MaterialVertexTexture* mvt = static_cast<Euclid::MaterialVertexTexture*>(_material);
-		mvt->setTexture("image/wing.dds");
+		//mvt->setTexture("image/wing.dds");
+		mvt->setTexture("image/setting.png");
 	}
 	//
 	Euclid::sPositionTexture vertices[6];

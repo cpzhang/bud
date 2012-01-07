@@ -105,6 +105,7 @@ namespace Euclid
 		void update();
 		void setControllerThirdPerson(CameraControllerThirdPerson* ctp);
 		CameraControllerThirdPerson* getControllerThirdPerson();
+		void setDirty();
 	private:
 		bool			m_dirty;
 		Vec3			m_vPosition;

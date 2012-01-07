@@ -35,5 +35,12 @@ add_subdirectory(math)
 set(RenderName render)
 add_subdirectory(render)
 
+# net
+set(NetName net)
+add_subdirectory(net)
+
 # tutorial
 add_subdirectory(tutorial)
+
+# tool
+add_subdirectory(tool)
