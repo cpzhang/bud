@@ -16,7 +16,7 @@ Render
 .octree 
 .portal 
 .lod
-.fog
+// .fog
 .facial
 .enviroment mapping
 .mirror
@@ -27,7 +27,7 @@ Render
 .particle
 .procedural texture
 // .water
-.RRT
+// .RRT
 .antialiase
 .depth of field
 .hdr
@@ -37,10 +37,16 @@ Render
 .carton
 .ray tracing
 .billboard
-.skybox
+// .skybox
+// .skydome
 .tone mapping
 .motion blur
 .megatexture
+.deferred shading
+.depth peeling
+.camera terrain detection
+.Fractal Brownian Motion
+// .pitch yaw camera
 
 Net
 .tcp

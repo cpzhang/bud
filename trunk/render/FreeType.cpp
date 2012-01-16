@@ -311,7 +311,7 @@ namespace Euclid
 		if (NULL == _activeTex)
 		{
 #ifdef A8
-			_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8);
+			_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, 1, eUsage_Null, eFormat_A8, ePool_Manager);
 #else
 			_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8R8G8B8);
 #endif
@@ -333,7 +333,7 @@ namespace Euclid
 			if (_pen.y + _OFFSET_VERTICAL > _TEXTURE_SIZE)
 			{
 #ifdef A8
-				_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8);
+				_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, 1, eUsage_Null, eFormat_A8, ePool_Manager);
 #else
 				_activeTex = TextureManager::getInstancePtr()->createEmptyTexture(_TEXTURE_SIZE, _TEXTURE_SIZE, D3DFMT_A8R8G8B8);
 #endif

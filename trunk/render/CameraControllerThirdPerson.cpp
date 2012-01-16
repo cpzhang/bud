@@ -75,6 +75,9 @@ namespace Euclid
 			Vec3 v = m_pCamera->getRight();
 			v = mi * v;
 			Quaternion q;
+// 			std::ostringstream os;
+// 			os<<angleY;
+// 			Record(os.str());
 			q.FromAngleAxis(angleY, v);
 			m_mtxWorld = m_mtxWorld * q;
 		}

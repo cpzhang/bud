@@ -107,12 +107,17 @@ namespace Euclid
 		virtual bool setViewport(
 			const sViewPort *pViewport
 			);
+		virtual void getViewPort(sViewPort* vp);
+		virtual bool setRenderTarget(
+			u32 RenderTargetIndex,
+			ITexture* tex
+			//IDirect3DSurface9 *pRenderTarget
+			);
 	public:
 		RenderSystem();
 		~RenderSystem();
 
 		IDirect3DDevice9* getDevice();
-		void getViewPort(D3DVIEWPORT9* vp);
 	private:
 		void initVertexDeclarations();
 	private:
@@ -122,6 +127,7 @@ namespace Euclid
 		IDirect3DVertexDeclaration9*	_vertexDeclarations[eVertexDeclarationType_Size];
 		//
 		D3DPRESENT_PARAMETERS _presentationParameters;
+		static 	LPDIRECT3DSURFACE9 s_pRenderSurface;
 	};
 }
 

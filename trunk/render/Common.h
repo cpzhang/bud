@@ -20,7 +20,7 @@
 #include "external/directx/Include/d3d9.h"
 #include "external/directx/Include/d3dx9.h"
 #include "external/directx/Include/DxErr.h"
-
+#include "RenderEngineCreationParameters.h"
 //
 namespace Euclid
 {

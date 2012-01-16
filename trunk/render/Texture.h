@@ -23,7 +23,7 @@ namespace Euclid
 		//
 	public:
 		virtual IDirect3DTexture9*		getTexture();
-		virtual bool					createEmpty(unsigned int width, unsigned int height, D3DFORMAT pf);
+		virtual bool					createEmpty(u32 Width, u32 Height, u32 Levels, eUsage Usage, eFormat Format, ePool Pool);
 		virtual bool					loadFromFile(const std::string& fileName);
 		virtual bool					loadFromMemory(unsigned char* buffer, unsigned int length);
 		virtual bool					loadFromRawData(unsigned char* buffer, unsigned int width, unsigned int height, unsigned int pitch, D3DFORMAT format);
@@ -31,6 +31,8 @@ namespace Euclid
 		virtual void					destroy();
 		virtual void					release();
 		virtual void					addReference();
+		virtual void onInvalidateDevice();
+		virtual void onRestoreDevice();
 		//
 	private:
 		IDirect3DTexture9*		_texture;

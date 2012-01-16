@@ -81,7 +81,7 @@ namespace Euclid
 		return true;
 	}
 
-	bool Texture::createEmpty( unsigned int width, unsigned int height, D3DFORMAT pf )
+	bool Texture::createEmpty(u32 Width, u32 Height, u32 Levels, eUsage Usage, eFormat Format, ePool Pool)
 	{
 		// The first two parameters that are accepted by IDirect3DDevice9::CreateTexture are the size and width of the top-level texture. 
 		// The third parameter specifies the number of levels in the texture. If you set this to zero, Direct3D creates a chain of surfaces,
@@ -91,12 +91,12 @@ namespace Euclid
 		// The sixth parameter specifies a member of the D3DPOOL enumerated type indicating the memory class into which to place the created resource.
 		// Unless you are using dynamic textures, D3DPOOL_MANAGED is recommended.
 		// The final parameter takes the address of a pointer to an IDirect3DTexture9 interface.
-		HRESULT hr = D3DXCreateTexture(RenderSystem::getInstancePtr()->getDevice(), width, height, 1, 0,
-			pf, D3DPOOL_MANAGED, &_texture);
+		HRESULT hr = D3DXCreateTexture(RenderSystem::getInstancePtr()->getDevice(), Width, Height, Levels, Usage,
+			(D3DFORMAT)Format, (D3DPOOL)Pool, &_texture);
 
 		if(FAILED(hr))
 		{
-			return false;
+			throw EDX(hr);
 		}
 
 		//
@@ -161,6 +161,16 @@ namespace Euclid
 	void Texture::addReference()
 	{
 		++_references;
+	}
+
+	void Texture::onInvalidateDevice()
+	{
+
+	}
+
+	void Texture::onRestoreDevice()
+	{
+
 	}
 
 }

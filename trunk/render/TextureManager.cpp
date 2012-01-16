@@ -13,7 +13,7 @@ namespace Euclid
 
 	}
 
-	ITexture* TextureManager::createEmptyTexture( unsigned int width, unsigned int height, D3DFORMAT pf )
+	ITexture* TextureManager::createEmptyTexture(u32 Width, u32 Height, u32 Levels, eUsage Usage, eFormat Format, ePool Pool)
 	{
 		Texture* tex = new Texture;
 		if (NULL == tex)
@@ -22,7 +22,7 @@ namespace Euclid
 		}
 
 		//
-		tex->createEmpty(width, height, pf);
+		tex->createEmpty(Width, Height, Levels, Usage, Format, Pool);
 
 		//
 		return tex;
@@ -93,5 +93,4 @@ namespace Euclid
 			}
 		}
 	}
-
 }

@@ -8,7 +8,7 @@
 //
 WaitingForYou::WaitingForYou()
 	:_modules(NULL), _material(NULL), _vb(NULL), _fx(NULL), _camera(NULL), _cameraController(NULL), _modelMatrix(Mat4::IDENTITY), _texture(NULL), _vbInstances(NULL), _ib(NULL), _font(NULL)
-	,_vertexNumber(0), _mapWidth(0), _fx_axis(NULL), _vertexNumber2GPU(0), _triangleNumber2GPU(0), _lod(0), _water_material(NULL)
+	,_vertexNumber(0), _mapWidth(0), _fx_axis(NULL), _vertexNumber2GPU(0), _triangleNumber2GPU(0), _lod(0), _water_material(NULL), _rtt(NULL)
 {
 	_windowTitle = "tutorial";
 	_heightMapFileName = "terrain\\height128.raw";
@@ -43,16 +43,8 @@ bool WaitingForYou::foreRender()
 
 bool WaitingForYou::rendering()
 {
-	//
-	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);
-
-	_modules->getRenderEngine()->getRenderSystem()->beginScene();
-
-	//
-	renderGeometry();
-
-	//
-	_modules->getRenderEngine()->getRenderSystem()->endScene();
+	render2Texture();
+	render2Backbuffer();
 	_modules->getRenderEngine()->getRenderSystem()->present(NULL, NULL, NULL);
 	//
 	return true;
@@ -147,6 +139,7 @@ bool WaitingForYou::update(u32 current, u32 delta)
 
 bool WaitingForYou::setViewport()
 {
+	_modules->getRenderEngine()->getRenderSystem()->getViewPort(&_vp);
 	//
 	return true;
 }
@@ -242,7 +235,8 @@ bool WaitingForYou::initGeometry()
 		_modules->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\simkai.ttf"), 18, Euclid::eFontProperty_Normal, "free");
 		_font = _modules->getRenderEngine()->getFontManager()->getFont(std::string("free"));
 	}
-
+	//
+	createRTT();
 
 	return true;
 }
@@ -299,7 +293,14 @@ void WaitingForYou::renderGeometry()
 			u32 passes = 0;
 			_fx->setMatrix("g_mWorldViewProjection", _camera->getProjectionMatrix() * _camera->getViewMatrix() * _cameraController->getMatrix() * _modelMatrix);
 			_fx->setMatrix("g_mTextureMatrix", _water_matrix); 
-			_fx->setTexture("g_MeshTexture", static_cast<Euclid::MaterialVertexTexture*>(_material)->_texture);
+			if (_isRTTOK)
+			{
+				_fx->setTexture("g_MeshTexture", _rtt);
+			}
+			else
+			{
+				_fx->setTexture("g_MeshTexture", static_cast<Euclid::MaterialVertexTexture*>(_material)->_texture);
+			}
 			_fx->setTexture("g_LightmappingTexture", static_cast<Euclid::MaterialVertexTexture*>(_material)->_lightmapping);
 			_fx->begin(&passes);
 			for (u32 i = 0; i != passes; ++i)
@@ -399,6 +400,12 @@ bool WaitingForYou::destroy()
 	{
 		_texture->release();
 		_texture = NULL;
+	}
+	//
+	if (_rtt)
+	{
+		_rtt->release();
+		_rtt = NULL;
 	}
 
 	//
@@ -554,6 +561,12 @@ void WaitingForYou::invalidateDevice()
 	_modules->getRenderEngine()->getBufferManager()->onInvalidateDevice();
 	_modules->getRenderEngine()->getEffectManager()->onInvalidateDevice();
 	_modules->getRenderEngine()->getFontManager()->onInvalidateDevice();
+	//
+	if (_rtt)
+	{
+		_rtt->release();
+		_rtt = NULL;
+	}
 }
 
 void WaitingForYou::restoreDevice()
@@ -561,6 +574,7 @@ void WaitingForYou::restoreDevice()
 	_modules->getRenderEngine()->getBufferManager()->onRestoreDevice();
 	_modules->getRenderEngine()->getEffectManager()->onRestoreDevice();
 	_modules->getRenderEngine()->getFontManager()->onRestoreDevice();
+	createRTT();
 }
 
 void WaitingForYou::createVB()
@@ -610,17 +624,21 @@ void WaitingForYou::fillVB()
 			_mapWidth = width;
 			int half_width = width / 2;
 			for (int i = 0; i != width; ++i)
+			{
+				float c = Euler::Basic::Sin(i * 0.1f) * 100;
 				for (int j = 0; j != width; ++j)
 				{
 					Euclid::sPositionTexture p;
 					p.position.x = (i - half_width) * 20;
 					p.position.z = (j - half_width) * 20;
-					p.position.y = (buffer[j + i * width]) - 208;
+					//p.position.y = (buffer[j + i * width]) - 208;
+					p.position.y = c;
 					p.texcoord.x = (float)j / (float)(width - 1);
 					p.texcoord.y = (float)i / (float)(width - 1);
 					memcpy(dataPos, &p, sizeof(Euclid::sPositionTexture));
 					++dataPos;
 				}
+			}
 				_vb->unLock();
 		}
 		delete buffer;
@@ -668,6 +686,41 @@ void WaitingForYou::fillIB()
 		}
 	}
 	_ib->unLock();
+}
+
+void WaitingForYou::render2Backbuffer()
+{
+	_isRTTOK = true;
+	//
+	_modules->getRenderEngine()->getRenderSystem()->setRenderTarget(0, 0);
+	renderImp();
+}
+
+void WaitingForYou::render2Texture()
+{
+	_isRTTOK = false;
+	//
+	_modules->getRenderEngine()->getRenderSystem()->setRenderTarget(0, _rtt);
+	renderImp();
+}
+
+void WaitingForYou::renderImp()
+{
+	//
+	_modules->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);
+
+	_modules->getRenderEngine()->getRenderSystem()->beginScene();
+
+	//
+	renderGeometry();
+
+	//
+	_modules->getRenderEngine()->getRenderSystem()->endScene();
+}
+
+void WaitingForYou::createRTT()
+{
+	_rtt = _modules->getRenderEngine()->getTextureManager()->createEmptyTexture(/*_vp.Width*/256, /*_vp.Height*/256, 1, Euclid::eUsage_RenderTarget, Euclid::eFormat_X8R8G8B8, Euclid::ePool_Default);
 }
 
 const u32 WaitingForYou::sc_PatchSize(17);

@@ -33,6 +33,12 @@ include_directories(
 # add_subdirectory(directx_18_terrainGeomipmapping_reset)
 # add_subdirectory(directx_19_water)
 # add_subdirectory(directx_19_water_flow)
-add_subdirectory(directx_20_rtt)
+# add_subdirectory(directx_20_rtt)
+# add_subdirectory(directx_21_skybox)
+# add_subdirectory(directx_22_skydome)
+# add_subdirectory(directx_22_skydome_trip)
+# add_subdirectory(directx_23_fog)
+# add_subdirectory(directx_24_terrain_camera_collide)
+add_subdirectory(directx_25_particle)
 # net tutorial
 # add_subdirectory(net_00_empty) 

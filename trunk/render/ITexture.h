@@ -31,6 +31,8 @@ namespace Euclid
 		virtual void					destroy() = 0;
 		virtual void					addReference() = 0;
 		virtual void					release() = 0;
+		virtual void onInvalidateDevice() = 0;
+		virtual void onRestoreDevice() = 0;
 	};
 }
 

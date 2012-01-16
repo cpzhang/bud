@@ -150,6 +150,31 @@ namespace Euler
 		zaxis.z = kRot[2][2];
 	}
 
+	Radian Quaternion::getRoll( bool reprojectAxis /*= true*/ ) const
+	{
+		if (reprojectAxis)
+		{
+			// roll = atan2(localx.y, localx.x)
+			// pick parts of xAxis() implementation that we need
+			//			Real fTx  = 2.0*x;
+			Real fTy  = 2.0f*_y;
+			Real fTz  = 2.0f*_z;
+			Real fTwz = fTz*_w;
+			Real fTxy = fTy*_x;
+			Real fTyy = fTy*_y;
+			Real fTzz = fTz*_z;
+
+			// Vector3(1.0-(fTyy+fTzz), fTxy+fTwz, fTxz-fTwy);
+
+			return Radian(Euler::Basic::ATan2(fTxy+fTwz, 1.0f-(fTyy+fTzz)));
+
+		}
+		else
+		{
+			return Radian(Euler::Basic::ATan2(2*(_x*_y + _w*_z), _w*_w + _x*_x - _y*_y - _z*_z));
+		}
+	}
+
 	const Real Quaternion::ms_fEpsilon = 1e-03;;
 
 }

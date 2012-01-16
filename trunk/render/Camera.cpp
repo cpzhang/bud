@@ -14,6 +14,7 @@ namespace Euclid
 		m_mtxView = Mat4::IDENTITY;
 		m_mtxProjection = Mat4::IDENTITY;
 		m_mtxOrthoProjection = Mat4::IDENTITY;
+		Radian r = m_qtnOrientation.getRoll();
 		_ctp = NULL;
 	}
 
@@ -89,32 +90,51 @@ namespace Euclid
 
 	void Camera::yaw( const Radian& angle )
 	{
+#ifdef New_PitchYaw
+		m_yawAngle += angle;
+		makeQuaternion();
+#else
 		// Rotate around local Y axis
 		Vec3 yAxis = m_qtnOrientation * Vec3::UNIT_Y;
 		rotate(yAxis, angle);
+#endif
 	}
 
 	void Camera::pitch( const Radian& angle )
 	{
+#ifdef New_PitchYaw
+		m_pitchAngle += angle;
+		makeQuaternion();
+#else
+
 		// Rotate around local X axis
 		Vec3 xAxis = m_qtnOrientation * Vec3::UNIT_X;
 		rotate(xAxis,angle);
+#endif
 	}
 
 	void Camera::rotate( const Vec3& axis, const Radian& angle )
 	{
+
+#ifdef New_PitchYaw
+#else
 		Quaternion q;
 		q.FromAngleAxis(angle,axis);
 		rotate(q);
+#endif
 	}
 
 	void Camera::rotate( const Quaternion& q )
 	{
+#ifdef New_PitchYaw
+#else
 		// Note the order of the mult, i.e. q comes after
 		// Normalise the quat to avoid cumulative problems with precision
 		Quaternion qnorm = q;
 		qnorm.normalize();
 		m_qtnOrientation = qnorm * m_qtnOrientation;
+#endif
+		
 		m_dirty = true;
 	}
 
@@ -223,6 +243,21 @@ namespace Euclid
 
 	void Camera::setDirty()
 	{
+		m_dirty = true;
+	}
+
+	Vec3 Camera::getPosition()
+	{
+		return m_vPosition;
+	}
+
+	void Camera::makeQuaternion()
+	{
+		Quaternion p;
+		p.FromAngleAxis(m_pitchAngle, Vec3::UNIT_X);
+		Quaternion y;
+		y.FromAngleAxis(m_yawAngle, Vec3::UNIT_Y);
+		m_qtnOrientation = y * p;
 		m_dirty = true;
 	}
 

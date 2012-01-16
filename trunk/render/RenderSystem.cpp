@@ -97,7 +97,12 @@ namespace Euclid
 				throw EDX(r);
 			}
 		}
-
+		//
+		HRESULT r = _device->GetRenderTarget(0, &s_pRenderSurface);
+		if (D3D_OK != r)
+		{
+			throw EDX(r);
+		}
 		// 这里可以清除IDirect3D9，此时PIX无法使用
 /*
 		if (_d3d9)
@@ -126,7 +131,16 @@ namespace Euclid
 				_vertexDeclarations[i] = 0;
 			}
 		}
-
+		//
+		if (s_pRenderSurface)
+		{
+			ULONG reference_count = s_pRenderSurface->Release();
+			if (reference_count > 0)
+			{
+				throw EReleaseLeak(reference_count);
+			}
+			s_pRenderSurface = NULL;
+		}
 		if (_device)
 		{
 			ULONG reference_count = _device->Release();
@@ -223,7 +237,24 @@ namespace Euclid
 		HRESULT r = _device->Present(pSource, pDest, NULL, NULL);
 		if (D3D_OK != r)
 		{
-			return false;
+			r = _device->TestCooperativeLevel();
+			switch(r)
+			{
+				// Device lost -> Fullscreen window has lost focus (alt + tab, ctrl + alt + del, ...). Lets wait until we regain focus
+			case D3DERR_DEVICELOST:
+				{
+
+				}break;
+				// Device not reset -> We have regained focus and the device needs to be recreated
+			case D3DERR_DEVICENOTRESET:
+				{
+
+				}break;
+			default:
+				{
+					throw EDX(r);
+				}break;
+			}
 		}
 
 		return true;
@@ -378,7 +409,7 @@ namespace Euclid
 	}
 
 
-	void RenderSystem::getViewPort( D3DVIEWPORT9* vp )
+	void RenderSystem::getViewPort( sViewPort* vp )
 	{
 		if (_device)
 		{
@@ -465,6 +496,9 @@ namespace Euclid
 		{
 			return false;
 		}
+		s_pRenderSurface->Release();
+		s_pRenderSurface = NULL;
+
 		//
 		_presentationParameters.BackBufferWidth = pViewport->Width;
 		_presentationParameters.BackBufferHeight = pViewport->Height;
@@ -473,6 +507,41 @@ namespace Euclid
  		{
  			throw EDX(hr);
  		}
+		//
+		r = _device->GetRenderTarget(0, &s_pRenderSurface);
+		if (D3D_OK != r)
+		{
+			throw EDX(r);
+		}
 		return true;
 	}
+
+	bool RenderSystem::setRenderTarget( u32 RenderTargetIndex, ITexture* tex)
+	{
+		LPDIRECT3DSURFACE9 pRenderSurface = NULL;
+		if (NULL == tex	)
+		{
+			pRenderSurface = s_pRenderSurface;
+		}
+		else
+		{
+
+			IDirect3DTexture9* t = tex->getTexture();
+			t->GetSurfaceLevel(0, &pRenderSurface);
+			//
+			if (pRenderSurface)
+			{
+				pRenderSurface->Release();
+			}
+		}
+	
+		//
+		HRESULT r = _device->SetRenderTarget(RenderTargetIndex, pRenderSurface);
+		if (D3D_OK != r)
+		{
+			throw EDX(r);
+		}
+	}
+
+	LPDIRECT3DSURFACE9 RenderSystem::s_pRenderSurface(NULL);
 }

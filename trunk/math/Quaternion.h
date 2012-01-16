@@ -290,7 +290,7 @@ namespace Euler
 		/** Gets the 3 orthonormal axes defining the quaternion. @See FromAxes */
         void ToAxes (Vector3* akAxis) const;
         void ToAxes (Vector3& xAxis, Vector3& yAxis, Vector3& zAxis) const;
-
+		Radian getRoll(bool reprojectAxis = true) const;
 	public:
 		 // spherical linear interpolation
 		 static Quaternion Slerp (Real fT, const Quaternion& rkP, const Quaternion& rkQ, bool shortestPath = false);

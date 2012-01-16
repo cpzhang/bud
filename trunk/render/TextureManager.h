@@ -20,10 +20,11 @@ namespace Euclid
 
 		//
 	public:
-		virtual ITexture*	createEmptyTexture(unsigned int width, unsigned int height, D3DFORMAT pf);
+		virtual ITexture*	createEmptyTexture(u32 Width, u32 Height, u32 Levels, eUsage Usage, eFormat Format, ePool Pool);
 		virtual ITexture*	createTextureFromFile(const std::string& fileName);
 		virtual ITexture*	createTexFromMemory(unsigned char* buffer, unsigned int length);
 		virtual ITexture*	createTextureFromRawData(unsigned char* pBuffer, unsigned int width, unsigned int height, unsigned int pitch, D3DFORMAT pf);
+		//virtual ITexture*	createTexture(u32 Width, u32 Height, u32 Levels, u32 Usage, eFormat Format, ePool Pool);
 	public:
 		//
 		void onReleaseTexture(ITexture* tex);

@@ -119,6 +119,7 @@ namespace Euclid
 	// Usage
 	enum eUsage
 	{
+		eUsage_Null = 0,
 		eUsage_RenderTarget = D3DUSAGE_RENDERTARGET,
 		eUsage_DepthStencil = D3DUSAGE_DEPTHSTENCIL,
 		eUsage_Dynamic = D3DUSAGE_DYNAMIC,
@@ -164,7 +165,13 @@ namespace Euclid
 	//
 	enum eFormat
 	{
+		//
 		eFormat_Index16 = D3DFMT_INDEX16,
+
+		//
+		eFormat_A8 = D3DFMT_A8,
+		eFormat_A8R8G8B8 = D3DFMT_A8R8G8B8,
+		eFormat_X8R8G8B8 = D3DFMT_X8R8G8B8,
 	};
 
 	//
@@ -185,6 +192,14 @@ namespace Euclid
 	//
 	typedef D3DVIEWPORT9 sViewPort;
 
+	//
+	class Surface
+	{
+	public:
+		IDirect3DSurface9* getSurface();
+	private:
+		
+	};
 	//
 	class EDX : public Buddha::Exception
 	{

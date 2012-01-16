@@ -50,6 +50,9 @@ public:
 	void toggleLOD();
 	void invalidateDevice();
 	void restoreDevice();
+	void render2Backbuffer();
+	void render2Texture();
+	void renderImp();
 private:
 	//
 	bool createModules();
@@ -69,6 +72,7 @@ private:
 	void fillVB();
 	void createIB();
 	void fillIB();
+	void createRTT();
 	//
 	struct Patch
 	{
@@ -104,6 +108,9 @@ private:
 	Euclid::IMaterial*		_water_material;
 	Euclid::Effect*			_water_fx;
 	Mat3					_water_matrix;
+	Euclid::ITexture*		_rtt;
+	bool					_isRTTOK;
+	Euclid::sViewPort		_vp;
 };
 
 #endif // __WaitingForYou_h__

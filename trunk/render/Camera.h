@@ -10,6 +10,7 @@
 
 namespace Euclid
 {
+#define New_PitchYaw
 	class _EuclidExport_ Camera
 	{
 	public:
@@ -42,6 +43,7 @@ namespace Euclid
         /** Sets the camera's position.
         */
         void setPosition(const Vec3& vec);
+		Vec3 getPosition();
 		/** Moves the camera's position by the vector offset provided along world axes.
         */
         void move(const Vec3& vec);
@@ -106,6 +108,7 @@ namespace Euclid
 		void setControllerThirdPerson(CameraControllerThirdPerson* ctp);
 		CameraControllerThirdPerson* getControllerThirdPerson();
 		void setDirty();
+		void makeQuaternion();
 	private:
 		bool			m_dirty;
 		Vec3			m_vPosition;
@@ -117,6 +120,8 @@ namespace Euclid
 		Mat4 m_mtxOrthoProjection;
 		Mat4 m_mtxView;
 		CameraControllerThirdPerson*	_ctp;
+		Radian m_pitchAngle;
+		Radian m_yawAngle;
 	};
 }
 

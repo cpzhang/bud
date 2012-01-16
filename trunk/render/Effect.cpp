@@ -71,10 +71,13 @@ namespace Euclid
 		}
 
 		_nameTextures[name] = pTexture;
-		HRESULT r = _effect->SetTexture(name.c_str(), pTexture->getTexture());
-		if (FAILED(r))
+		if (pTexture)
 		{
-			throw EDX(r);
+			HRESULT r = _effect->SetTexture(name.c_str(), pTexture->getTexture());
+			if (FAILED(r))
+			{
+				throw EDX(r);
+			}
 		}
 	}
 

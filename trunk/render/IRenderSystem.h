@@ -101,6 +101,18 @@ namespace Euclid
 		virtual bool setViewport(
 			const sViewPort *pViewport
 			) = 0;
+		virtual void getViewPort(sViewPort* vp) = 0;
+		// The default render target is called the back buffer
+		// A render target has a width and height. The width and height of the back buffer are the final resolution of your game.
+		// An offscreen render target does not need to have the same width and height as the back buffer. 
+		// Small parts of the final image can be rendered in small render targets, then copied to another render target later.
+		// A render target also has a surface format, which describes how many bits are allocated to each pixel and how they are divided between red, green, blue, and alpha.
+		//
+		virtual bool setRenderTarget(
+			u32 RenderTargetIndex,
+			ITexture* tex
+			//IDirect3DSurface9 *pRenderTarget
+			) = 0;
 	};
 }
 
