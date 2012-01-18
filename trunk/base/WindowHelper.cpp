@@ -3,16 +3,6 @@
 //
 namespace Buddha
 {
-	WindowHelper::WindowHelper()
-	{
-
-	}
-
-	WindowHelper::~WindowHelper()
-	{
-
-	}
-
 	int WindowHelper::getWindowHeight( HWND hwnd )
 	{
 		//
@@ -69,6 +59,73 @@ namespace Buddha
 		float h = static_cast<float>(getScreenHeight());
 
 		return w / h;
+	}
+
+	void WindowHelper::setAccelerationLevel(int level)
+	{
+		char originalLevel[10]={0};
+
+		char regDevicePath[1024]={0};
+		char regDeviceKeyName[]="Acceleration.Level";
+		DISPLAY_DEVICE  dv;
+		HKEY hKey;
+		char *p;
+		int i;
+
+		ZeroMemory(&dv,sizeof(DISPLAY_DEVICE));
+		dv.cb=sizeof(DISPLAY_DEVICE);
+		EnumDisplayDevices(0,0,&dv,0);
+
+		i=0;
+		while(dv.DeviceKey[i])
+		{
+			dv.DeviceKey[i++]=toupper(dv.DeviceKey[i]);
+		}
+
+		p=(char *)strstr(dv.DeviceKey,"\\SYSTEM");
+		lstrcpy(regDevicePath,p + 1);
+
+		if(ERROR_SUCCESS== RegOpenKeyEx(HKEY_LOCAL_MACHINE,regDevicePath,0,KEY_ALL_ACCESS,&hKey))
+		{
+			i=9;
+			RegQueryValueEx(hKey,regDeviceKeyName,0,0,(LPBYTE)originalLevel,(LPDWORD)&i);
+			RegSetValueEx(hKey,regDeviceKeyName,0,REG_DWORD,(BYTE*)&level,sizeof(level));
+			ChangeDisplaySettings(0,0x40);  //0x40 查MSDN没有找到什么意思，这里直接在OD中照搬。
+			RegCloseKey(hKey);
+		}
+	}
+
+	int WindowHelper::getAccelerationLevel()
+	{
+		char originalLevel[10]={0};
+
+		char regDevicePath[1024]={0};
+		char regDeviceKeyName[]="Acceleration.Level";
+		DISPLAY_DEVICE  dv;
+		HKEY hKey;
+		char *p;
+		int i;
+
+		ZeroMemory(&dv,sizeof(DISPLAY_DEVICE));
+		dv.cb=sizeof(DISPLAY_DEVICE);
+		EnumDisplayDevices(0,0,&dv,0);
+
+		i=0;
+		while(dv.DeviceKey[i])
+		{
+			dv.DeviceKey[i++]=toupper(dv.DeviceKey[i]);
+		}
+
+		p=(char *)strstr(dv.DeviceKey,"\\SYSTEM");
+		lstrcpy(regDevicePath,p + 1);
+
+		if(ERROR_SUCCESS== RegOpenKeyEx(HKEY_LOCAL_MACHINE,regDevicePath,0,KEY_ALL_ACCESS,&hKey))
+		{
+			i=9;
+			RegQueryValueEx(hKey,regDeviceKeyName,0,0,(LPBYTE)originalLevel,(LPDWORD)&i);
+			RegCloseKey(hKey);
+		}
+		return  (int)originalLevel[0];
 	}
 
 }

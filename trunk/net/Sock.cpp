@@ -6,7 +6,7 @@ namespace Shannon
 	{
 		if (!Sock::_Initialized)
 		{
-			WORD winsock_version = MAKEWORD( 2, 0 );
+			WORD winsock_version = MAKEWORD( 2, 2 );
 			WSADATA wsaData;
 			if ( WSAStartup( winsock_version, &wsaData ) != 0 )
 			{

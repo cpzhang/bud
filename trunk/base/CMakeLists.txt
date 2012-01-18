@@ -20,6 +20,7 @@ add_library(${ItemName} SHARED
 # Add dependent external Libraries
 target_link_libraries(${ItemName}
   winmm.lib
+  Dbghelp.lib
   )
 
 set_target_properties(${ItemName} PROPERTIES 

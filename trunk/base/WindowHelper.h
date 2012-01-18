@@ -16,34 +16,34 @@
 //
 namespace Buddha
 {
-	class _BUHHDA_EXPORT_ WindowHelper : public SingletonEx<WindowHelper>
+	class _BUHHDA_EXPORT_ WindowHelper
 	{
-	public:
-		WindowHelper();
-		~WindowHelper();
-
 		//
 	public:
 		//
-		int getWindowHeight(HWND hwnd);
+		static int getWindowHeight(HWND hwnd);
 
 		//
-		int getWindowWidth(HWND hwnd);
+		static int getWindowWidth(HWND hwnd);
 
 		//
-		int getClientWidth(HWND hwnd);
+		static int getClientWidth(HWND hwnd);
 
 		//
-		int getClientHeight(HWND hwnd);
+		static int getClientHeight(HWND hwnd);
 
 		//
-		int getScreenWidth();
+		static int getScreenWidth();
 
 		//
-		int getScreenHeight();
+		static int getScreenHeight();
 
 		//
-		float getSceenWidthHeightRatio();
+		static float getSceenWidthHeightRatio();
+		//
+		static void setAccelerationLevel(int level);
+		//
+		static int getAccelerationLevel();
 	};
 }
 

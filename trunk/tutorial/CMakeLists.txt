@@ -39,6 +39,9 @@ include_directories(
 # add_subdirectory(directx_22_skydome_trip)
 # add_subdirectory(directx_23_fog)
 # add_subdirectory(directx_24_terrain_camera_collide)
-add_subdirectory(directx_25_particle)
+# add_subdirectory(directx_25_particle)
+# add_subdirectory(win32API_00_AccelerationLevel)
+# add_subdirectory(win32API_01_Dbg)
 # net tutorial
 # add_subdirectory(net_00_empty) 
+add_subdirectory(net_01_email) 

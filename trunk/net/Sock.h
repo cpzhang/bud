@@ -61,7 +61,7 @@ namespace Shannon
 		 */
 		virtual void		connect( const Address& addr );
 
-		
+		bool				connected() { return _connected; }
 		/** Closes the socket (without shutdown)
 			* In general you don't need to call this method. But you can call it to:
 			* - close a listening socket (i.e. stop accepting connections), or

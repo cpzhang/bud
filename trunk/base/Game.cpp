@@ -13,7 +13,7 @@ namespace Buddha
 		_process(eProcess_Begin)
 	{
 		gGameClient = this;
-		_clientWidth = _clientHeight * static_cast<unsigned int>(WindowHelper::getInstancePtr()->getSceenWidthHeightRatio());
+		_clientWidth = _clientHeight * static_cast<unsigned int>(WindowHelper::getSceenWidthHeightRatio());
 	}
 
 	Game::~Game()

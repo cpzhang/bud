@@ -22,6 +22,7 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <MMSystem.h>
+#include <DbgHelp.h>
 //
 #include <cassert>
 #include <cstdio>

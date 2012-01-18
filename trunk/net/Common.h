@@ -15,7 +15,8 @@
 #include "base/Buddha.h"
 
 //
-#include <winsock2.h>
+#include<winsock2.h>
+#include<ws2tcpip.h>
 
 namespace Shannon
 {

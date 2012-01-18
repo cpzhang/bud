@@ -11,6 +11,7 @@ namespace Shannon
 	{
 	public:
 		Address();
+		Address( const std::string& hostName, u16 port );
 		~Address();
 
 		/// Returns if object (address and port) is valid
@@ -19,8 +20,13 @@ namespace Shannon
 		/// Returns internal socket address (read only)
 		const sockaddr_in	 *sockAddr() const;
 	private:
+		void				init();
+		void				setPort( u16 port );
+		Address&			setByName( const std::string& hostname );
+	private:
 		bool				_valid;
 		sockaddr_in			*_socketAddress;
+		std::string			_hostName;
 	};
 }
 

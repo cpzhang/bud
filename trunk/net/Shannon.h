@@ -7,5 +7,5 @@
 
 #include "Address.h"
 #include "Sock.h"
-
+#include "Email.h"
 #endif //__Shannon_h__
