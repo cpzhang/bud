@@ -7,7 +7,7 @@
 #           这个应用程序是基于 NSIS v2.11 by Nullsoft
 # ===================================================================
 
-
+!include "FileFunc.nsh"
 # -------------------------------------------------------------------
 # 设置工作目录
 # -------------------------------------------------------------------
@@ -17,7 +17,7 @@
 # -------------------------------------------------------------------
 # 定义变量
 # -------------------------------------------------------------------
-var STARTMENU_FOLDER
+!define STARTMENU_FOLDER "冰川网络";
 var EnterDescription
 var Version_Alias
 
@@ -29,7 +29,6 @@ SetCompressor LZMA
 SetCompressorDictSize 32
 SetCompress Auto
 SetDatablockOptimize On
-
 
 # -------------------------------------------------------------------
 # SFX 定义
@@ -73,7 +72,7 @@ ShowUninstDetails Show
 BrandingText "Copyright(C) 2009，冰川网络"
 Name "${SFX_Title}"
 OutFile "${SFX_OutFile}"
-InstallDir "${SFX_InstallDir}"
+# InstallDir "${SFX_InstallDir}"
 InstallDirRegKey HKCU "Software\冰川网络\${SFX_Name}" "Path"
 
 # -------------------------------------------------------------------
@@ -121,7 +120,38 @@ InstallDirRegKey HKCU "Software\冰川网络\${SFX_Name}" "Path"
 # 多语言支持
 # -------------------------------------------------------------------
 !insertmacro MUI_LANGUAGE "SimpChinese"
+var largestDisk
+var largestSize
+Function Example2
+	# MessageBox MB_OK "$9  ($8 Drive)"
+${DriveSpace} $9 "/D=F /S=M" $R0
+	# MessageBox MB_OK $R0
+IntCmp $R0 $largestSize is5 lessthan5 morethan5
+is5:
+# MessageBox MB_OK "$R0 == $largestSize"
+  Goto done
+lessthan5:
+# MessageBox MB_OK "$R0 < $largestSize"
+  Goto done
+morethan5:
+# MessageBox MB_OK "$R0 > $largestSize $largestDisk"
+StrCpy $largestSize $R0
+  StrCpy $largestDisk $9
+  Goto done
+done:
+	Push $0
+FunctionEnd
+Function IterateDisks
+StrCpy $largestSize 0
+  StrCpy $largestDisk $PROGRAMFILES
+${GetDrives} "HDD" "Example2"
+# MessageBox MB_OK "$largestSize $largestDisk"
+StrCpy $INSTDIR "$largestDisk冰川网络\远征Online[极速]"
+FunctionEnd
 
+# Section
+# Call IterateDisks
+# SectionEnd
 # -------------------------------------------------------------------
 # 安装文件区段
 # -------------------------------------------------------------------
@@ -137,9 +167,6 @@ Section
     File /r "I:\setup_wei\Skin"
     # File /r "I:\setup_wei\Bin"
     # File /r "I:\setup_wei\data"
-
-
-
 SectionEnd
 
 
@@ -165,9 +192,9 @@ Section
   # !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 
   SetShellVarContext all
-  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\远征Online [极速].lnk" "$INSTDIR\远征Online.exe"
-  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$(^UninstallCaption).lnk" "$INSTDIR\Uninstall.exe"
+  CreateDirectory "$SMPROGRAMS\${STARTMENU_FOLDER}"
+  CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\远征Online [极速].lnk" "$INSTDIR\远征Online.exe"
+  CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\$(^UninstallCaption).lnk" "$INSTDIR\Uninstall.exe"
   SetShellVarContext current
 
   # !insertmacro MUI_STARTMENU_WRITE_END
@@ -197,6 +224,7 @@ SectionEnd
 # 初始化函数
 # -------------------------------------------------------------------
 Function .onInit
+Call IterateDisks
 StrCpy $0 "Game.exe"
   DetailPrint "Searching for processes called '$0'"
   KillProc::FindProcesses
@@ -265,9 +293,10 @@ FunctionEnd
 Section "Uninstall"
   RMDir /r "$INSTDIR"
 
-  !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
+  # !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
   SetShellVarContext all
-  RMDir /r "$SMPROGRAMS\$R0"
+  # RMDir /r "$SMPROGRAMS\$R0"
+  RMDir /r "$SMPROGRAMS\${STARTMENU_FOLDER}"
   SetShellVarContext current
 
   SetShellVarContext all
@@ -446,7 +475,6 @@ Function .onInstSuccess
   ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=XXX&Remark=wei"
   Exec '"$INSTDIR\远征Online.exe"'
 FunctionEnd
-
 # ===================================================================
 # 文件末尾
 # ===================================================================
