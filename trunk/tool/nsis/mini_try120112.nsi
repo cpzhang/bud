@@ -1,13 +1,6 @@
-# ===================================================================
-# 这个 NSIS 脚本 由 SFX Tool 生成
-# 版本   
-# 作者：     MuldeR (MuldeR2@GMX.de)
-# 访问：http://mulder.at.gg 获取更多信息！
-#
-#           这个应用程序是基于 NSIS v2.11 by Nullsoft
-# ===================================================================
-
 !include "FileFunc.nsh"
+!include "WordFunc.nsh"
+
 # -------------------------------------------------------------------
 # 设置工作目录
 # -------------------------------------------------------------------
@@ -109,7 +102,12 @@ InstallDirRegKey HKCU "Software\冰川网络\${SFX_Name}" "Path"
 !insertmacro MUI_PAGE_DIRECTORY
 # !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 !insertmacro MUI_PAGE_INSTFILES
+!define MUI_FINISHPAGE_RUN
+    !define MUI_FINISHPAGE_RUN_CHECKED
+ # !define MUI_FINISHPAGE_RUN_TEXT "Start a shortcut"
+    !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 !insertmacro MUI_PAGE_FINISH
+# !define MUI_FINISHPAGE_NOAUTOCLOSE
 # !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
@@ -120,12 +118,24 @@ InstallDirRegKey HKCU "Software\冰川网络\${SFX_Name}" "Path"
 # 多语言支持
 # -------------------------------------------------------------------
 !insertmacro MUI_LANGUAGE "SimpChinese"
+# 最大盘
 var largestDisk
+# 最大盘空间（M）
 var largestSize
+# 只考虑这几个盘
+var disksFilter
 Function Example2
 	# MessageBox MB_OK "$9  ($8 Drive)"
 ${DriveSpace} $9 "/D=F /S=M" $R0
 	# MessageBox MB_OK $R0
+${WordFind} $disksFilter $9 "+1{" $R1
+StrCmp $R1 $disksFilter notfound found
+	notfound:
+	# MessageBox MB_OK 'Not found'
+  Goto done
+	found:
+	# MessageBox MB_OK 'Found'
+
 IntCmp $R0 $largestSize is5 lessthan5 morethan5
 is5:
 # MessageBox MB_OK "$R0 == $largestSize"
@@ -144,6 +154,7 @@ FunctionEnd
 Function IterateDisks
 StrCpy $largestSize 0
   StrCpy $largestDisk $PROGRAMFILES
+  StrCpy $disksFilter "C:\D:\E:\F:\"
 ${GetDrives} "HDD" "Example2"
 # MessageBox MB_OK "$largestSize $largestDisk"
 StrCpy $INSTDIR "$largestDisk冰川网络\远征Online[极速]"
@@ -390,7 +401,7 @@ Function un.InitializeGUI
   BGImage::Redraw /NOUNLOAD
 FunctionEnd
 
-Function un.onGUIEnd
+Function un.onUninstSuccess
   BGImage::Destroy
   # ExecShell "open" "http://api.yz.szgla.com/GameInstall/UnInstall.aspx$EnterDescription"
   # StrCmp $EnterDescription "" 0 +2
@@ -473,7 +484,11 @@ Function .onInstSuccess
   # Call FileCorrupt2
   # Call FileCorrupt3
   ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=XXX&Remark=wei"
-  Exec '"$INSTDIR\远征Online.exe"'
+  # ExecShell "" "$INSTDIR\远征Online.exe"
+FunctionEnd
+Function LaunchLink
+	# MessageBox MB_OK "LaunchLink"
+  ExecShell "open" "$INSTDIR\远征Online.exe"
 FunctionEnd
 # ===================================================================
 # 文件末尾
