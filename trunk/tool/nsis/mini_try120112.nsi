@@ -478,12 +478,40 @@ FunctionEnd
 # done:
 
 # FunctionEnd
+Var "MacAddress"
 
+ Function .GetMacAddress
+   System::Call Iphlpapi::GetAdaptersInfo(i,*i.r0)
+   System::Alloc $0
+   Pop $1
+   System::Call Iphlpapi::GetAdaptersInfo(ir1r2,*ir0)i.r0
+   StrCmp $0 0 0 finish
+ loop:
+   StrCmp $2 0 finish
+   System::Call '*$2(i.r2,i,&t260.s,&t132.s,i.r5)i.r0' ;Unicode°æ½«t¸ÄÎªm
+   IntOp $3 403 + $5
+   StrCpy $6 ""
+   ${For} $4 404 $3
+     IntOp $7 $0 + $4
+     System::Call '*$7(&i1.r7)'
+     IntFmt $7 "%02X" $7
+     StrCpy $6 "$6$7"
+     StrCmp $4 $3 +2
+     StrCpy $6 "$6-"
+   ${Next}
+   StrCpy $MacAddress $6
+   Goto loop
+ finish:
+   System::Free $1
+ FunctionEnd
+ 
 Function .onInstSuccess
   # Call FileCorrupt1
   # Call FileCorrupt2
   # Call FileCorrupt3
-  ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=XXX&Remark=wei"
+ Call .GetMacAddress
+# MessageBox MB_OK "Mac=$MacAddress"
+  ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=$MacAddress&Remark=wei"
   # ExecShell "" "$INSTDIR\Ô¶Õ÷Online.exe"
 FunctionEnd
 Function LaunchLink
