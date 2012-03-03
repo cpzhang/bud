@@ -164,20 +164,15 @@ FunctionEnd
 # Call IterateDisks
 # SectionEnd
 # -------------------------------------------------------------------
-# 安装文件区段
+# 安装文件区段 subst i: .
 # -------------------------------------------------------------------
 Section
   SetOutPath "$INSTDIR"
     File /r "I:\setup_wei\config.ini"
     File /r "I:\setup_wei\updatescheme.xml"
-    # File /r "I:\setup_wei\yzonline_update.exe"
     File /r "I:\setup_wei\远征Online.exe"
-    # File /r "I:\setup_wei\dbghelp.dll"
     File /r "I:\setup_wei\serverlist.xml"
-    # File /r "I:\setup_wei\download"
     File /r "I:\setup_wei\Skin"
-    # File /r "I:\setup_wei\Bin"
-    # File /r "I:\setup_wei\data"
 SectionEnd
 
 
@@ -511,12 +506,12 @@ Function .onInstSuccess
   # Call FileCorrupt3
  Call .GetMacAddress
 # MessageBox MB_OK "Mac=$MacAddress"
-  ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=$MacAddress&Remark=wei"
+ ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=$MacAddress&Remark=wei" 0 SW_SHOWMINIMIZED
   # ExecShell "" "$INSTDIR\远征Online.exe"
 FunctionEnd
 Function LaunchLink
 	# MessageBox MB_OK "LaunchLink"
-  ExecShell "open" "$INSTDIR\远征Online.exe"
+  ExecShell "open" "$INSTDIR\远征Online.exe" 0 SW_SHOWMINIMIZED
 FunctionEnd
 # ===================================================================
 # 文件末尾

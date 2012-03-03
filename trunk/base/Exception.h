@@ -18,6 +18,14 @@ namespace Buddha
 		virtual ~Exception() throw() {}
 		virtual const char	*what() const throw();
 	};
+	/*
+	 * Thread exception
+	 */
+	class EThread : public Exception
+	{
+	public:
+		EThread (const char* message) : Exception (message) {}
+	};
 }
 
 #endif //__Exception_h__

@@ -7,7 +7,9 @@ namespace Shannon
 	Address::Address()
 		:_valid(false), _socketAddress(NULL)
 	{
-
+		init();
+		_socketAddress->sin_port = 0; // same as htons(0)
+		memset( &_socketAddress->sin_addr, 0, sizeof(in_addr) ); // same as htonl(INADDR_ANY)
 	}
 
 	Address::Address( const std::string& hostName, u16 port )
@@ -53,6 +55,7 @@ namespace Shannon
 		// Try to convert directly for addresses such as a.b.c.d
 		in_addr iaddr;
 		iaddr.s_addr = inet_addr( hostname.c_str() );
+		// isn't a dotted IP, so resolve it through DNS
 		if ( iaddr.s_addr == INADDR_NONE )
 		{
 			// Otherwise use the traditional DNS look-up
@@ -110,5 +113,11 @@ namespace Shannon
 		}
 		_valid = true;
 		return *this;
+	}
+
+	void Address::setSockAddr( const sockaddr_in* saddr )
+	{
+		memcpy( _socketAddress, saddr, sizeof(*saddr) );
+		_valid = true;
 	}
 }

@@ -7,7 +7,7 @@
 #include "Common.h"
 namespace Shannon
 {
-	class Address
+	class _NET_EXPORT_ Address
 	{
 	public:
 		Address();
@@ -19,10 +19,15 @@ namespace Shannon
 
 		/// Returns internal socket address (read only)
 		const sockaddr_in	 *sockAddr() const;
-	private:
-		void				init();
 		void				setPort( u16 port );
 		Address&			setByName( const std::string& hostname );
+		/** Sets internal socket address directly (contents is copied).
+		* It also retrieves the host name if CInetAddress::RetrieveNames is true.
+		*/
+		void				setSockAddr( const sockaddr_in* saddr );
+	private:
+		void				init();
+		
 	private:
 		bool				_valid;
 		sockaddr_in			*_socketAddress;

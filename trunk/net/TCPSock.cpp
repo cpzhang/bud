@@ -8,6 +8,12 @@ namespace Shannon
 
 	}
 
+	TCPSocket::TCPSocket( SOCKET sock, const Address& remoteaddr )
+		:Sock( sock, remoteaddr )
+	{
+
+	}
+
 
 	TCPSocket::~TCPSocket()
 	{

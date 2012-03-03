@@ -75,6 +75,11 @@ function main()
 				wf.close();
 			    }
 			}
+			else
+			{
+			    alert("打开文件错误, " + tgaFilePath);
+			    return;
+			}
 			app.open(wf);
 			// insert tga file name into the config file
 			fc.writeln(wf.fsName);

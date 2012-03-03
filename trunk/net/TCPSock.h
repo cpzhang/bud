@@ -12,6 +12,9 @@ namespace Shannon
 	{
 	public:
 		TCPSocket();
+		/// Construct a CTcpSock object using an already connected socket descriptor and its associated remote address
+		TCPSocket( SOCKET sock, const Address& remoteaddr );
+
 		~TCPSocket();
 		/** Sets/unsets SO_KEEPALIVE (true by default).
 		 */

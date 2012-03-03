@@ -23,7 +23,8 @@ public:
 	virtual void onDump()
 	{
 		//
-		Shannon::Email::sendEmail("www.baidu.com", "chengpengzhang@gmail.com", "297191409@qq.com", "hello", "test", "crash.dmp", false);
+		//Shannon::Email::sendEmail("smtp.gmail.com", 587, "chengpengzhang@gmail.com", "297191409@qq.com", "hello", "test", "crash.dmp", false);
+		Shannon::Email::sendEmail("smtp.21cn.com", 25, "bccr001@21cn.com", "297191409@qq.com", "hello", "test", "crash.dmp", false);
 	}
 };
 

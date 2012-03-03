@@ -8,4 +8,6 @@
 #include "Address.h"
 #include "Sock.h"
 #include "Email.h"
+#include "ListenSock.h"
+#include "ListenTask.h"
 #endif //__Shannon_h__

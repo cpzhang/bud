@@ -24,7 +24,7 @@ add_library(${ItemName} SHARED
 # Add dependent external Libraries
 target_link_libraries(${ItemName}
   ws2_32.lib
-  # "winmm"
+  winmm
   math.lib
   base.lib
   )

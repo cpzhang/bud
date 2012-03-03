@@ -8,6 +8,7 @@ namespace Shannon
 		{
 			WORD winsock_version = MAKEWORD( 2, 2 );
 			WSADATA wsaData;
+			// The WSAStartup function initiates use of the Winsock DLL by a process.
 			if ( WSAStartup( winsock_version, &wsaData ) != 0 )
 			{
 				throw ESocket( "Winsock initialization failed" );
@@ -65,6 +66,8 @@ namespace Shannon
 		}
 		setLocalAddress();
 		_connected = true;
+		_BytesReceived = 0;
+		_BytesSent = 0;
 	}
 
 	void Sock::createSocket( int type, int protocol )
@@ -77,9 +80,26 @@ namespace Shannon
 	}
 
 	Sock::Sock()
-		:_socket(INVALID_SOCKET), _connected(false)
+		:_socket(INVALID_SOCKET), _connected(false), _NonBlocking(false), _BytesReceived(0), _BytesSent(0)
 	{
 
+	}
+
+	Sock::Sock( SOCKET sock, const Address& remoteaddr ):
+		_socket( sock ),
+		_RemoteAddr( remoteaddr ),
+		_NonBlocking( false ),
+		_BytesReceived( 0 ),
+		_BytesSent( 0 )
+	{
+		_connected = true;
+		// Check remote address
+		if ( ! _RemoteAddr.isValid() )
+		{
+			throw ESocket( "Could not init a socket object with an invalid address", false );
+		}
+		// Get local socket name
+		setLocalAddress();
 	}
 
 	Sock::~Sock()
@@ -99,6 +119,122 @@ namespace Shannon
 	void Sock::setLocalAddress()
 	{
 
+	}
+
+	Sock::eSockResult Sock::send( const u8 *buffer, u32& len, bool throw_exception/*=true */ )
+	{
+		/*
+		If no error occurs, send returns the total number of bytes sent, 
+		which can be less than the number requested to be sent in the len parameter.
+		Otherwise, a value of SOCKET_ERROR is returned,
+		and a specific error code can be retrieved by calling WSAGetLastError.
+		*/
+		len = ::send(_socket, (const char*)buffer, len, 0);
+		if ((int)len == SOCKET_ERROR)
+		{
+			return eSockResult_Error;
+		}
+		return eSockResult_Ok;
+	}
+
+	Sock::eSockResult Sock::receive( u8 *buffer, u32& len, bool throw_exception/*=true */ )
+	{
+		if (_NonBlocking)
+		{
+			len = ::recv( _socket, (char*)buffer, len, 0);
+			switch(len)
+			{
+				// Graceful disconnection
+			case 0:
+				{
+					_connected = false;
+					if ( throw_exception )
+					{
+						throw ESocketConnectionClosed();
+					}
+					return Sock::eSockResult_ConnectionClosed;
+				}break;
+				// Socket error or call would block
+			case SOCKET_ERROR:
+				{
+					len = 0;
+					if ( GetLastError() == WSAEWOULDBLOCK)
+					{
+						// Call would block
+						return Sock::eSockResult_WouldBlock;
+					}
+					else
+					{
+						// Socket error
+						if ( throw_exception )
+						{
+							throw ESocket( "Unable to receive data" );
+						}
+						return Sock::eSockResult_Error;
+					}
+				}
+			}
+		} 
+		else // Blocking Mode
+		{
+			// Receive incoming message, waiting until a complete message has arrived
+			u32 total = 0;
+			u32 brecvd;
+			while ( total < len )
+			{
+				brecvd = ::recv( _socket, (char*)(buffer+total), len-total, 0 );
+				switch ( brecvd )
+				{
+					// Graceful disconnection
+					case 0:
+					{
+						_connected = false;
+						len = total;
+						_BytesReceived += len;
+
+						if ( throw_exception )
+						{
+							throw ESocketConnectionClosed();
+						}
+						return eSockResult_ConnectionClosed;
+					}
+
+					// Socket error
+					case SOCKET_ERROR:
+					{
+						len = total;
+						_BytesReceived += len;
+
+						if ( throw_exception )
+						{
+							throw ESocket( "Unable to receive data" );
+						}
+						return eSockResult_Error;
+					}
+				}
+				if (brecvd < len - total)
+				{
+					break;
+				}
+				total += brecvd;
+			}
+		}
+
+		_BytesReceived += len;
+		return eSockResult_Ok;
+	}
+
+	void Sock::setNonBlockingMode( bool bm )
+	{
+		if ( _NonBlocking != bm )
+		{
+			u_long b = bm;
+			if ( ioctlsocket( _socket, FIONBIO, &b ) != 0 )
+			{
+				throw ESocket( "Cannot set nonblocking mode" );
+			}
+			_NonBlocking = bm;
+		}
 	}
 
 	ESocket::ESocket(const char *reason/*=""*/, bool systemerror/*=true*/, Address *addr/*=NULL */ )

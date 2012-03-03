@@ -44,4 +44,12 @@ include_directories(
 # add_subdirectory(win32API_01_Dbg)
 # net tutorial
 # add_subdirectory(net_00_empty) 
-add_subdirectory(net_01_email) 
+# add_subdirectory(net_01_email) 
+# add_subdirectory(net_02_chat_server) 
+# add_subdirectory(net_02_chat_client)
+# add_subdirectory(winsock_00_empty)
+# add_subdirectory(winsock_01_address)
+# add_subdirectory(winsock_02_connection_oriented_server)
+# add_subdirectory(winsock_02_connection_oriented_client)
+add_subdirectory(winsock_03_connectionless_server)
+add_subdirectory(winsock_03_connectionless_client)

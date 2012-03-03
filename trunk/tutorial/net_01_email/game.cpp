@@ -208,7 +208,7 @@ bool WaitingForYou::initGeometry()
 	}
 	//
 	{
-		//_water_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader\\PositionTextureColor.fx");
+		_water_fx = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader\\PositionTextureColor.fx");
 	}
 	{
 		_fx_skybox = _modules->getRenderEngine()->getEffectManager()->createEffectFromFile("shader\\PositionTextureFogLinear.fx");
