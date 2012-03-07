@@ -1,21 +1,22 @@
+# 头文件
 !include "FileFunc.nsh"
 !include "WordFunc.nsh"
+!include "MUI.nsh"
 
 # -------------------------------------------------------------------
-# 设置工作目录
+# 设置工作目录，可能用到里面的资源，例如图片，配置信息
 # -------------------------------------------------------------------
 !cd "C:\Program Files\NSIS\Resources"
 
 
 # -------------------------------------------------------------------
-# 定义变量
+# 全局变量
 # -------------------------------------------------------------------
-!define STARTMENU_FOLDER "冰川网络";
 var EnterDescription
 var Version_Alias
 
 # -------------------------------------------------------------------
-# 选择压缩器
+# 压缩
 # -------------------------------------------------------------------
 # SetCompressor /SOLID LZMA
 SetCompressor LZMA
@@ -24,20 +25,26 @@ SetCompress Auto
 SetDatablockOptimize On
 
 # -------------------------------------------------------------------
-# SFX 定义
+# 常量
 # -------------------------------------------------------------------
-!define SFX_AppID "{5DE6C873-C7B7-4332-8262-2B45ABAD9CD2}"; 您的 SFX 唯一的 ID (它是实的 GUID)
-#!define SFX_BaseDir "E:\Rocket-Material\安装包制作绿色版"; SFX Tool 安装文件夹 - 请勿编辑!
-!define SFX_Title "远征Online[极速]"; 安装程序的标题
-!define SFX_InstallDir "$PROGRAMFILES\冰川网络\远征Online[极速]"; *默认* 的目标安装目录
-!define SFX_OutFile "I:\setup\miniyz_setup.exe"; 生成的安装程序文件
-# !define SFX_IconFile "Modern-Default"; 安装程序的图标
-!define SFX_IconFile "y"; 安装程序的图标
-!define SFX_HeaderImage "yz12"; 标题的图像
-# !define SFX_HeaderImage "logo"; 标题的图像
-# !define SFX_WizardImage "Llama"; 向导的图像
-!define SFX_WizardImage "mm"; 向导的图像
-!define SFX_Name "远征Online[极速]"
+# 公司名称
+!define Game_CompanyName "冰川网络"
+# 开始菜单文件夹目录
+!define STARTMENU_FOLDER "冰川网络"
+# 安装程序的标题
+!define Game_Title "远征Online"
+# 默认安装目录
+!define Game_InstallDir "$PROGRAMFILES\冰川网络\远征Online"
+# 生成的安装程序文件
+!define Game_OutFile "f:\setup\game_patch.exe"
+# 安装程序的图标
+!define Game_IconFile "y"
+# 标题的图像
+!define Game_HeaderImage "yz12"
+# 向导的图像 
+!define Game_WizardImage "mm"
+# 游戏名称
+!define Game_Name "远征Online"
 # -------------------------------------------------------------------
 # 预定文件
 # -------------------------------------------------------------------
@@ -46,14 +53,10 @@ ReserveFile "Plugins\LangDLL.dll"
 ReserveFile "Plugins\StartMenu.dll"
 ReserveFile "Plugins\UserInfo.dll"
 ReserveFile "Plugins\BGImage.dll"
-ReserveFile "Contrib\Graphics\Wizard\${SFX_WizardImage}.bmp"
-ReserveFile "Contrib\Graphics\Header\${SFX_HeaderImage}.bmp"
-# ReserveFile "Contrib\Graphics\Header\logo.bmp"
-ReserveFile "Contrib\Graphics\Header\${SFX_HeaderImage}-R.bmp"
+ReserveFile "Contrib\Graphics\Wizard\${Game_WizardImage}.bmp"
+ReserveFile "Contrib\Graphics\Header\${Game_HeaderImage}.bmp"
+ReserveFile "Contrib\Graphics\Header\${Game_HeaderImage}-R.bmp"
 ReserveFile "Contrib\Modern UI\ioSpecial.ini"
-# ReserveFile "C:\Documents and Settings\Administrator\桌面\{BA257683-364A-4EB7-8F37-20328F4D4268}.bmp"
-# ReserveFile "C:\Documents and Settings\Administrator\桌面\{EC761AE8-84D1-4B7C-9826-FC254F320008}.bmp"
-
 
 # -------------------------------------------------------------------
 # 常规设置
@@ -62,36 +65,31 @@ XPStyle On
 CRCCheck off
 ShowInstDetails Show
 ShowUninstDetails Show
-BrandingText "Copyright(C) 2009，冰川网络"
-Name "${SFX_Title}"
-OutFile "${SFX_OutFile}"
-# InstallDir "${SFX_InstallDir}"
-InstallDirRegKey HKCU "Software\冰川网络\${SFX_Name}" "Path"
+BrandingText "Copyright(C) 2009，${Game_CompanyName}"
+Name "${Game_Title}"
+OutFile "${Game_OutFile}"
+InstallDirRegKey HKCU "Software\冰川网络\${Game_Name}" "Path"
 
 # -------------------------------------------------------------------
-# 现代界面设置
+# 界面设置
 # -------------------------------------------------------------------
-!include "MUI.nsh"
-
-!define MUI_ICON "Contrib\Graphics\Icons\${SFX_IconFile}-Install.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "Contrib\Graphics\Wizard\${SFX_WizardImage}.bmp"
+!define MUI_ICON "Contrib\Graphics\Icons\${Game_IconFile}-Install.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "Contrib\Graphics\Wizard\${Game_WizardImage}.bmp"
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "Contrib\Graphics\Header\${SFX_HeaderImage}.bmp"
-!define MUI_HEADERIMAGE_BITMAP_RTL "Contrib\Graphics\Header\${SFX_HeaderImage}-R.bmp"
+!define MUI_HEADERIMAGE_BITMAP "Contrib\Graphics\Header\${Game_HeaderImage}.bmp"
+!define MUI_HEADERIMAGE_BITMAP_RTL "Contrib\Graphics\Header\${Game_HeaderImage}-R.bmp"
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE_3LINES
 !define MUI_FINISHPAGE_TITLE_3LINES
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_LANGDLL_REGISTRY_ROOT "HKCU"
-!define MUI_LANGDLL_REGISTRY_KEY "Software\冰川网络\${SFX_Name}"
-# !define MUI_LANGDLL_REGISTRY_VALUENAME "InstallLanguage"
+!define MUI_LANGDLL_REGISTRY_KEY "Software\${Game_CompanyName}\${Game_Name}"
 !define MUI_LANGDLL_ALWAYSSHOW
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU"
-!define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\冰川网络\${SFX_Name}"
+!define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${Game_CompanyName}\${Game_Name}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "StartmenuFolder"
-# !define MUI_LICENSEPAGE_RADIOBUTTONS
-!define MUI_UNICON "Contrib\Graphics\Icons\yzun.ico" #"Contrib\Graphics\Icons\${SFX_IconFile}-Uninstall.ico"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "Contrib\Graphics\Wizard\${SFX_WizardImage}.bmp"
+!define MUI_UNICON "Contrib\Graphics\Icons\yzun.ico"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "Contrib\Graphics\Wizard\${Game_WizardImage}.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 !define MUI_UNABORTWARNING
 !define MUI_CUSTOMFUNCTION_UNGUIINIT un.InitializeGUI
@@ -103,9 +101,9 @@ InstallDirRegKey HKCU "Software\冰川网络\${SFX_Name}" "Path"
 # !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 !insertmacro MUI_PAGE_INSTFILES
 !define MUI_FINISHPAGE_RUN
-    !define MUI_FINISHPAGE_RUN_CHECKED
- # !define MUI_FINISHPAGE_RUN_TEXT "Start a shortcut"
-    !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
+!define MUI_FINISHPAGE_RUN_CHECKED
+# !define MUI_FINISHPAGE_RUN_TEXT "Start a shortcut"
+!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 !insertmacro MUI_PAGE_FINISH
 # !define MUI_FINISHPAGE_NOAUTOCLOSE
 # !insertmacro MUI_UNPAGE_WELCOME
@@ -115,7 +113,7 @@ InstallDirRegKey HKCU "Software\冰川网络\${SFX_Name}" "Path"
 
 
 # -------------------------------------------------------------------
-# 多语言支持
+# 语言设置
 # -------------------------------------------------------------------
 !insertmacro MUI_LANGUAGE "SimpChinese"
 # 最大盘
@@ -152,12 +150,12 @@ done:
 	Push $0
 FunctionEnd
 Function IterateDisks
-StrCpy $largestSize 0
+  StrCpy $largestSize 0
   StrCpy $largestDisk $PROGRAMFILES
   StrCpy $disksFilter "C:\D:\E:\F:\"
 ${GetDrives} "HDD" "Example2"
 # MessageBox MB_OK "$largestSize $largestDisk"
-StrCpy $INSTDIR "$largestDisk冰川网络\远征Online[极速]"
+StrCpy $INSTDIR "$largestDisk冰川网络\远征Online"
 FunctionEnd
 
 # Section
@@ -168,11 +166,11 @@ FunctionEnd
 # -------------------------------------------------------------------
 Section
   SetOutPath "$INSTDIR"
-    File /r "I:\setup_wei\config.ini"
-    File /r "I:\setup_wei\updatescheme.xml"
-    File /r "I:\setup_wei\远征Online.exe"
-    File /r "I:\setup_wei\serverlist.xml"
-    File /r "I:\setup_wei\Skin"
+    File /r "f:\plato\bud\trunk\tool\nsis\data"
+    # File /r "I:\setup_wei\updatescheme.xml"
+    # File /r "I:\setup_wei\远征Online.exe"
+    # File /r "I:\setup_wei\serverlist.xml"
+    # File /r "I:\setup_wei\Skin"
 SectionEnd
 
 
@@ -183,11 +181,11 @@ Section
   SetOutPath "$INSTDIR"
 
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-  # WriteRegStr HKCU "Software\冰川网络\${SFX_Name}"  "DisplayName" "${SFX_Title}"
-  # WriteRegStr HKCU "Software\冰川网络\${SFX_Name}" "DisplayIcon" "$\"$INSTDIR\Uninstall.exe$\""
-  # WriteRegStr HKCU "Software\冰川网络\${SFX_Name}" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
-  # WriteRegDWORD HKCU "Software\冰川网络\${SFX_Name}" "NoModify" 1
-  # WriteRegDWORD HKCU "Software\冰川网络\${SFX_Name}" "NoRepair" 1
+  # WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}"  "DisplayName" "${Game_Title}"
+  # WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}" "DisplayIcon" "$\"$INSTDIR\Uninstall.exe$\""
+  # WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
+  # WriteRegDWORD HKCU "Software\${Game_CompanyName}\${Game_Name}" "NoModify" 1
+  # WriteRegDWORD HKCU "Software\${Game_CompanyName}\${Game_Name}" "NoRepair" 1
 SectionEnd
 
 
@@ -199,7 +197,7 @@ Section
 
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\${STARTMENU_FOLDER}"
-  CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\远征Online [极速].lnk" "$INSTDIR\远征Online.exe"
+  CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\${Game_Title}.lnk" "$INSTDIR\${Game_Title}.exe"
   CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\$(^UninstallCaption).lnk" "$INSTDIR\Uninstall.exe"
   SetShellVarContext current
 
@@ -212,7 +210,7 @@ SectionEnd
 # -------------------------------------------------------------------
 Section
   SetShellVarContext all
-  CreateShortCut "$DESKTOP\远征Online [极速].lnk" "$INSTDIR\远征Online.exe"
+  CreateShortCut "$DESKTOP\${Game_Name}.lnk" "$INSTDIR\${Game_Name}.exe"
   SetShellVarContext current
 SectionEnd
 
@@ -221,8 +219,8 @@ SectionEnd
 # 注册区段
 # -------------------------------------------------------------------
 Section
-  # WriteRegStr HKCU "Software\冰川网络\${SFX_Name}" "" "${SFX_Title}"
-  WriteRegStr HKCU "Software\冰川网络\${SFX_Name}" "Path" "$INSTDIR"
+  # WriteRegStr HKCU "Software\冰川网络\${Game_Name}" "" "${Game_Title}"
+  WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}" "Path" "$INSTDIR"
 SectionEnd
 
 
@@ -271,17 +269,12 @@ StrCpy $0 "Game.exe"
   Quit
   RunTheInstaller:
   !insertmacro MUI_LANGDLL_DISPLAY
+  ReadRegStr $INSTDIR HKCU "Software\${Game_CompanyName}\${Game_Name}" "Path"
+# MessageBox MB_OK "$INSTDIR"
 FunctionEnd
 
 Function InitializeGUI
   SetOutPath "$PLUGINSDIR"
-  # File /oname=BGImage.bmp "C:\Documents and Settings\Administrator\桌面\{BA257683-364A-4EB7-8F37-20328F4D4268}.bmp"
-  # BGImage::SetBG /NOUNLOAD /FILLSCREEN "$PLUGINSDIR\BGImage.bmp"
-  # Delete "$PLUGINSDIR\BGImage.bmp"
-  # SetOutPath "$PLUGINSDIR"
-  # File /oname=BGBrandingImage.bmp "C:\Documents and Settings\Administrator\桌面\{EC761AE8-84D1-4B7C-9826-FC254F320008}.bmp"
-  # BGImage::AddImage /NOUNLOAD "$PLUGINSDIR\BGBrandingImage.bmp" 4294967022 10
-  # Delete "$PLUGINSDIR\BGBrandingImage.bmp"
   CreateFont $R0 "Verdana" 22 700
   BGImage::AddText /NOUNLOAD "$(^SetupCaption)" $R0 0xFF 0xFB 0xF0 10 10 -10 -10
   BGImage::Redraw /NOUNLOAD
@@ -306,10 +299,10 @@ Section "Uninstall"
   SetShellVarContext current
 
   SetShellVarContext all
-  Delete "$DESKTOP\远征Online [极速].lnk"
+  Delete "$DESKTOP\${Game_Name}.lnk"
   SetShellVarContext current
 
-  DeleteRegKey HKCU "Software\冰川网络\${SFX_Name}"
+  DeleteRegKey HKCU "Software\${Game_CompanyName}\${Game_Name}"
 
 SectionEnd
 
@@ -384,13 +377,6 @@ FunctionEnd
 
 Function un.InitializeGUI
   SetOutPath "$PLUGINSDIR"
-  # File /oname=BGImage.bmp "C:\Documents and Settings\Administrator\桌面\{BA257683-364A-4EB7-8F37-20328F4D4268}.bmp"
-  # BGImage::SetBG /NOUNLOAD /FILLSCREEN "$PLUGINSDIR\BGImage.bmp"
-  # Delete "$PLUGINSDIR\BGImage.bmp"
-  # SetOutPath "$PLUGINSDIR"
-  # File /oname=BGBrandingImage.bmp "C:\Documents and Settings\Administrator\桌面\{EC761AE8-84D1-4B7C-9826-FC254F320008}.bmp"
-  # BGImage::AddImage /NOUNLOAD "$PLUGINSDIR\BGBrandingImage.bmp" 4294967022 10
-  # Delete "$PLUGINSDIR\BGBrandingImage.bmp"
   CreateFont $R0 "Verdana" 22 700
   BGImage::AddText /NOUNLOAD "$(^SetupCaption)" $R0 0xFF 0xFB 0xF0 10 10 -10 -10
   BGImage::Redraw /NOUNLOAD
@@ -398,11 +384,7 @@ FunctionEnd
 
 Function un.onUninstSuccess
   BGImage::Destroy
-  # ExecShell "open" "http://api.yz.szgla.com/GameInstall/UnInstall.aspx$EnterDescription"
-  # StrCmp $EnterDescription "" 0 +2
-  # StrCpy $EnterDescription "?enter=-1&q="
   ExecShell "open" "http://api.yz.szgla.com/GameInstall/GameUnInstall.aspx$EnterDescription"
-  # MessageBox MB_OK|MB_ICONSTOP|MB_TOPMOST "http://api.yz.szgla.com/GameInstall/GameUnInstall.aspx$EnterDescription"
 FunctionEnd
 
 # Var size
@@ -506,7 +488,7 @@ Function .onInstSuccess
   # Call FileCorrupt3
  Call .GetMacAddress
 # MessageBox MB_OK "Mac=$MacAddress"
- ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=$MacAddress&Remark=wei" 0 SW_SHOWMINIMIZED
+ # ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=$MacAddress&Remark=wei" 0 SW_SHOWMINIMIZED
   # ExecShell "" "$INSTDIR\远征Online.exe"
 FunctionEnd
 Function LaunchLink
