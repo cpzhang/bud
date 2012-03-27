@@ -4,14 +4,16 @@
 #include "IMaxMaterial.h"
 #include "IMaxParticle.h"
 #include "XRefFunctions.h"
-
+//版本1，导出地形网格，顶点，纹理坐标
+const char gVersion = 1;
+const float gRealNumberTolerance = 0.0001f;
 bool IsRealEqual(const float& a, const float& b)
 {
 	if (a > b)
 	{
-		return (a - b) <= 0.0001f;
+		return (a - b) <= gRealNumberTolerance;
 	}
-	return (b - a) <= 0.0001f;
+	return (b - a) <= gRealNumberTolerance;
 }
 std::ostream& operator<< (std::ostream& out, const sKeyframeTranslation& k )
 {
@@ -2322,6 +2324,200 @@ bool PlatoTreeEnumProc::_isBoneSelected()
 	}
 
 	return false;
+}
+
+
+void PlatoTreeEnumProc::_extractTerrain( INode* node )
+{
+	ObjectState os = node->EvalWorldState(0);
+	if (os.obj == NULL)
+	{
+		return;
+	}
+
+	GeomObject* g = (GeomObject*)os.obj;
+
+	if (g->CanConvertToType(Class_ID(TRIOBJ_CLASS_ID, 0)))
+	{
+		TriObject* t = (TriObject*)g->ConvertToType(_time, Class_ID(TRIOBJ_CLASS_ID, 0));
+
+		//
+		Mesh* s = &t->GetMesh();
+		s->buildNormals();
+
+		int numVertices = s->getNumVerts();
+		int numUVs = s->getNumTVerts();
+		int numFaces = s->getNumFaces();
+		
+		// 
+		int numVerticesLast = _vertices.size();
+		for (int i = 0; i != numFaces; ++i)
+		{
+			TVFace tf = s->tvFace[i];
+			MODELFACE f;
+			for(int k = 0; k != 3; ++k)
+			{
+				DWORD index = s->faces[i].v[k];
+				MODELVERTEX_19 v;
+				Point3 p = s->getVert(index);
+				Matrix3 mt = node->GetObjectTM(_time);
+				p = p * mt;
+				v.pos[0] = p.x;
+				v.pos[1] = p.z;
+				v.pos[2] = -p.y;
+
+				if (s->faces)
+				{
+					Point3 nom = s->getFaceNormal(i);
+					v.normal[0] = nom.x;
+					v.normal[1] = nom.y;
+					v.normal[2] = nom.z;
+				}
+
+				if (s->vertCol)
+				{
+					VertColor c = s->vertCol[index];
+					v.color[0] = c.x;
+					v.color[1] = c.y;
+					v.color[2] = c.z;
+					v.color[3] = s->mapVerts(MAP_ALPHA)[index].x;
+				}
+
+				if (s->tVerts)
+				{
+					DWORD uvIndex = tf.getTVert(k);
+					UVVert uv = s->tVerts[uvIndex];
+					v.texcoords[0] = uv.x;
+					v.texcoords[1] = 1 - uv.y;
+				}
+				
+				bool isAlreadyExtracted = false;
+				for (size_t i = numVerticesLast; i != _vertices.size(); ++i)
+				{
+					if (
+						IsRealEqual(_vertices[i].pos[0], v.pos[0] ) &&
+						IsRealEqual(_vertices[i].pos[1], v.pos[1] ) &&
+						IsRealEqual(_vertices[i].pos[2], v.pos[2] ) &&
+						IsRealEqual(_vertices[i].texcoords[0], v.texcoords[0]) &&
+						IsRealEqual(_vertices[i].texcoords[1], v.texcoords[1])
+					)
+					{
+						isAlreadyExtracted = true;
+						f.index[k] = i;
+						break;
+					}
+				}
+				if (!isAlreadyExtracted)
+				{
+					f.index[k] = _vertices.size();
+					_vertices.push_back(v);
+				}
+			}
+
+			_faces.push_back(f);
+		}
+		SUBMESH sm;
+		sm.icount = numFaces * 3;
+		sm.istart = tIStart;
+		tIStart += sm.icount;
+		sm.matId = 0;
+		std::string nodeName = node->GetName();
+		strcpy(sm.name, nodeName.c_str());
+		sm.vcount = _vertices.size() - numVerticesLast;
+		sm.vstart = tVStart;
+		tVStart += sm.vcount;
+
+		_subMeshes.push_back(sm);
+	}
+}
+bool PlatoTreeEnumProc::readTerrain()
+{
+	for(size_t i = 0; i != _nodeSet.size(); ++i)
+	{
+		INode* node = _nodeSet[i];
+		ObjectState o = node->EvalWorldState(_time);
+
+		eType t = _extractType(node);
+		switch(t)
+		{
+		case eType_Mesh:
+			{
+				//
+				if (!GetExportOptions()->exportAll && !node->Selected())
+				{
+					continue;
+				}
+
+				if (node->IsHidden())
+				{
+					continue;
+				}
+				_extractTerrain(node);
+			}break;
+		default:
+			break;
+		}
+	}
+
+	return true;
+}
+
+void PlatoTreeEnumProc::writeTerrain()
+{
+	//============================================================================
+	// 开始写入数据
+	ChunkSet cs;
+
+	//============================================================================
+	// 版本号
+	cs.beginChunk("MVER");	
+	cs.write(&gVersion, sizeof(gVersion));
+	cs.endChunk();
+
+	//============================================================================
+	// 模型部件
+	cs.beginChunk("MSUB");
+	for(size_t i = 0;i < _subMeshes.size();i++)
+	{
+		SUBMESH* sm = &_subMeshes[i];
+		sSubMesh sb;
+		sb.icount = sm->icount;
+		sb.istart = sm->istart;
+		sb.vcount = sm->vcount;
+		sb.vstart = sm->vstart;
+		strcpy(sb.name, sm->name);
+		cs.write(&sb,sizeof(sb));
+	}
+	cs.endChunk();
+
+	//============================================================================
+	// 顶点
+	cs.beginChunk("MVTX");
+	{
+		for(size_t i = 0;i < _vertices.size();i++)
+		{
+			MODELVERTEX_19& mv = _vertices[i];
+			sVertex v;
+			memcpy(v.pos, mv.pos, 3 * sizeof(float));
+			memcpy(v.texcoords, mv.texcoords, 2 * sizeof(float));
+			cs.write(&v,sizeof(sVertex));
+		}
+	}
+	cs.endChunk();
+
+	//============================================================================
+	// 索引
+	cs.beginChunk("MFAC");
+	writeSequence(cs.getCurrentMemoryFileWriter(), _faces);
+	cs.endChunk();
+
+	//============================================================================
+	// 保存文件，结束
+	std::string fileName = GetExportOptions()->m_outFilePath;
+	cs.save(fileName);
+
+	//
+	_clear();
 }
 
 std::vector<sBone> PlatoTreeEnumProc::_boneSet;

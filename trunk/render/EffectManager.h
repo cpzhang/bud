@@ -20,6 +20,7 @@ namespace Euclid
 		//
 		void onInvalidateDevice();
 		void onRestoreDevice();
+		void OnResetDevice();
 	private:
 		typedef std::map<std::string, Effect*> NameEffectMap;
 		NameEffectMap _effects;

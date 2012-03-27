@@ -23,6 +23,8 @@ namespace Euclid
 		//
 		void setVertexDeclaration(eVertexDeclarationType e);
 		//
+		virtual u32 getStride() = 0;
+		//
 		virtual void apply();
 		//
 		virtual void destroy();

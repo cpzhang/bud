@@ -2,7 +2,7 @@ SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../../bin)
 include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/external/freetype-2.4.4/Include
-)
+  )
 
 # directx tutorial
 # add_subdirectory(directx_00_empty)
@@ -22,13 +22,13 @@ include_directories(
 # add_subdirectory(directx_11_pick)
 # add_subdirectory(directx_12_freetype) 
 # add_subdirectory(directx_12_freetype_reset) 
- # add_subdirectory(directx_13_terrainHeightMap)
- # add_subdirectory(directx_13_terrainHeightMap_reset)
- # add_subdirectory(directx_14_terrainTexture)
+# add_subdirectory(directx_13_terrainHeightMap)
+# add_subdirectory(directx_13_terrainHeightMap_reset)
+# add_subdirectory(directx_14_terrainTexture)
 # add_subdirectory(directx_14_terrainTexture_reset)
- # add_subdirectory(directx_15_terrainTextureLightingHeightBased)
- # add_subdirectory(directx_16_terrainTextureLightingHardware)
- # add_subdirectory(directx_17_terrainTextureLightingLightMapping)
+# add_subdirectory(directx_15_terrainTextureLightingHeightBased)
+# add_subdirectory(directx_16_terrainTextureLightingHardware)
+# add_subdirectory(directx_17_terrainTextureLightingLightMapping)
 # add_subdirectory(directx_18_terrainGeomipmapping)
 # add_subdirectory(directx_18_terrainGeomipmapping_reset)
 # add_subdirectory(directx_19_water)
@@ -40,8 +40,11 @@ include_directories(
 # add_subdirectory(directx_23_fog)
 # add_subdirectory(directx_24_terrain_camera_collide)
 # add_subdirectory(directx_25_particle)
+
+# win32 api tutorial
 # add_subdirectory(win32API_00_AccelerationLevel)
 # add_subdirectory(win32API_01_Dbg)
+
 # net tutorial
 # add_subdirectory(net_00_empty) 
 # add_subdirectory(net_01_email) 
@@ -51,5 +54,44 @@ include_directories(
 # add_subdirectory(winsock_01_address)
 # add_subdirectory(winsock_02_connection_oriented_server)
 # add_subdirectory(winsock_02_connection_oriented_client)
-add_subdirectory(winsock_03_connectionless_server)
-add_subdirectory(winsock_03_connectionless_client)
+# add_subdirectory(winsock_03_connectionless_server)
+# add_subdirectory(winsock_03_connectionless_client)
+
+# c programming language
+# add_subdirectory(c_00_hello)
+# add_subdirectory(c_01_memoryLayout)
+# add_subdirectory(c_02_stdcall)
+# add_subdirectory(c_03_size)
+# add_subdirectory(c_04_char)
+# add_subdirectory(c_05_union)
+# add_subdirectory(c_06_pointer_function)
+# add_subdirectory(c_07_add)
+# add_subdirectory(c_08_sign)
+
+# c++ programming language
+# add_subdirectory(cplusplus_00_hello)
+# add_subdirectory(cplusplus_01_class)
+# add_subdirectory(cplusplus_02_reference)
+# add_subdirectory(cplusplus_03_inherit)
+# add_subdirectory(cplusplus_04_virtual)
+# add_subdirectory(cplusplus_05_class_size)
+# add_subdirectory(cplusplus_06_static_member)
+# add_subdirectory(cplusplus_07_copy_constructor)
+# add_subdirectory(cplusplus_08_new_delete)
+# add_subdirectory(cplusplus_09_const)
+# add_subdirectory(cplusplus_10_template)
+# add_subdirectory(cplusplus_11_default_parameter)
+
+# wtl tutorial
+# add_subdirectory(wtl_00_hello)
+# add_subdirectory(wtl_01_clear)
+# add_subdirectory(wtl_02_triangle)
+# add_subdirectory(wtl_03_fx)
+# add_subdirectory(wtl_04_freetype)
+# add_subdirectory(wtl_00_hello_visible)
+add_subdirectory(wtl_05_mz)
+add_subdirectory(wtl_06_treeview)
+add_subdirectory(wtl_07_Terrain_Mesh)
+
+# assembly language
+# add_subdirectory(assembly_00_MMX)

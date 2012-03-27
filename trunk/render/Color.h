@@ -28,6 +28,7 @@ namespace Euclid
 		RGBA getRGBA() const;
 		RGBA getARGB() const;
 
+		void setABGR(u32 i);
 		void random();
 
 	public:

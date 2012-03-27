@@ -25,7 +25,7 @@ namespace Euclid
 	MaterialVertexTexture::MaterialVertexTexture()
 		:_texture(NULL), _lightmapping(NULL)
 	{
-
+		setVertexDeclaration(eVertexDeclarationType_PositionTexture);
 	}
 
 	void MaterialVertexTexture::apply()
@@ -70,6 +70,22 @@ namespace Euclid
 		}
 
 		return true;
+	}
+
+	u32 MaterialVertexTexture::getStride()
+	{
+		return sizeof(Euclid::sPositionTexture);
+	}
+
+
+	MaterialVertex::MaterialVertex()
+	{
+		setVertexDeclaration(eVertexDeclarationType_Position);
+	}
+
+	u32 MaterialVertex::getStride()
+	{
+		return sizeof(Euclid::sPosition);
 	}
 
 }

@@ -23,8 +23,8 @@ namespace Euclid
 		void onInvalidateDevice();
 		void onRestoreDevice();
 	public:
-		virtual IBuffer*	createVertexBuffer(unsigned int Length,	unsigned long Usage, ePool Pool);
-		virtual IBuffer*	createIndexBuffer(unsigned int Length,	unsigned long Usage, eFormat Format,	ePool Pool);
+		virtual IBuffer*	createVertexBuffer(unsigned int Length,	eUsage Usage, ePool Pool);
+		virtual IBuffer*	createIndexBuffer(unsigned int Length,	eUsage Usage, eFormat Format,	ePool Pool);
 	private:
 		std::vector<IBuffer*>	_buffers;
 	};

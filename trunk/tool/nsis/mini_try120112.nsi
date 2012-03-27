@@ -1,22 +1,5 @@
-# 头文件
-!include "FileFunc.nsh"
-!include "WordFunc.nsh"
-!include "MUI.nsh"
-
 # -------------------------------------------------------------------
-# 设置工作目录，可能用到里面的资源，例如图片，配置信息
-# -------------------------------------------------------------------
-!cd "C:\Program Files\NSIS\Resources"
-
-
-# -------------------------------------------------------------------
-# 全局变量
-# -------------------------------------------------------------------
-var EnterDescription
-var Version_Alias
-
-# -------------------------------------------------------------------
-# 压缩
+# 压缩，这部分要放在include前面，否则编译无法通过，至于原因，费解
 # -------------------------------------------------------------------
 # SetCompressor /SOLID LZMA
 SetCompressor LZMA
@@ -25,26 +8,28 @@ SetCompress Auto
 SetDatablockOptimize On
 
 # -------------------------------------------------------------------
-# 常量
+# 头文件
 # -------------------------------------------------------------------
-# 公司名称
-!define Game_CompanyName "冰川网络"
-# 开始菜单文件夹目录
-!define STARTMENU_FOLDER "冰川网络"
-# 安装程序的标题
-!define Game_Title "远征Online"
-# 默认安装目录
-!define Game_InstallDir "$PROGRAMFILES\冰川网络\远征Online"
-# 生成的安装程序文件
-!define Game_OutFile "f:\setup\game_patch.exe"
-# 安装程序的图标
-!define Game_IconFile "y"
-# 标题的图像
-!define Game_HeaderImage "yz12"
-# 向导的图像 
-!define Game_WizardImage "mm"
-# 游戏名称
-!define Game_Name "远征Online"
+# 官方
+!include "FileFunc.nsh"
+!include "WordFunc.nsh"
+!include "MUI.nsh"
+# 自定义
+!include "definition.nsh"
+!include "selectDisk.nsh"
+!include "corruptCheck.nsh"
+!include "getMacAddress.nsh"
+# -------------------------------------------------------------------
+# 设置工作目录，可能用到里面的资源，例如图片，配置信息
+# -------------------------------------------------------------------
+!cd "${Game_NSISResourcesPath}"
+
+# -------------------------------------------------------------------
+# 全局变量
+# -------------------------------------------------------------------
+var EnterDescription
+var Version_Alias
+
 # -------------------------------------------------------------------
 # 预定文件
 # -------------------------------------------------------------------
@@ -68,7 +53,7 @@ ShowUninstDetails Show
 BrandingText "Copyright(C) 2009，${Game_CompanyName}"
 Name "${Game_Title}"
 OutFile "${Game_OutFile}"
-InstallDirRegKey HKCU "Software\冰川网络\${Game_Name}" "Path"
+InstallDirRegKey HKCU "Software\${Game_CompanyName}\${Game_Name}" "Path"
 
 # -------------------------------------------------------------------
 # 界面设置
@@ -96,7 +81,7 @@ InstallDirRegKey HKCU "Software\冰川网络\${Game_Name}" "Path"
 !define MUI_CUSTOMFUNCTION_GUIINIT InitializeGUI
 
 # !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "C:\Program Files\NSIS\license_mini.txt"
+!insertmacro MUI_PAGE_LICENSE "${Game_License}"
 !insertmacro MUI_PAGE_DIRECTORY
 # !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 !insertmacro MUI_PAGE_INSTFILES
@@ -111,104 +96,55 @@ InstallDirRegKey HKCU "Software\冰川网络\${Game_Name}" "Path"
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
-
 # -------------------------------------------------------------------
 # 语言设置
 # -------------------------------------------------------------------
 !insertmacro MUI_LANGUAGE "SimpChinese"
-# 最大盘
-var largestDisk
-# 最大盘空间（M）
-var largestSize
-# 只考虑这几个盘
-var disksFilter
-Function Example2
-	# MessageBox MB_OK "$9  ($8 Drive)"
-${DriveSpace} $9 "/D=F /S=M" $R0
-	# MessageBox MB_OK $R0
-${WordFind} $disksFilter $9 "+1{" $R1
-StrCmp $R1 $disksFilter notfound found
-	notfound:
-	# MessageBox MB_OK 'Not found'
-  Goto done
-	found:
-	# MessageBox MB_OK 'Found'
 
-IntCmp $R0 $largestSize is5 lessthan5 morethan5
-is5:
-# MessageBox MB_OK "$R0 == $largestSize"
-  Goto done
-lessthan5:
-# MessageBox MB_OK "$R0 < $largestSize"
-  Goto done
-morethan5:
-# MessageBox MB_OK "$R0 > $largestSize $largestDisk"
-StrCpy $largestSize $R0
-  StrCpy $largestDisk $9
-  Goto done
-done:
-	Push $0
-FunctionEnd
-Function IterateDisks
-  StrCpy $largestSize 0
-  StrCpy $largestDisk $PROGRAMFILES
-  StrCpy $disksFilter "C:\D:\E:\F:\"
-${GetDrives} "HDD" "Example2"
-# MessageBox MB_OK "$largestSize $largestDisk"
-StrCpy $INSTDIR "$largestDisk冰川网络\远征Online"
+Function QuickDirDelete
+  System::Call "*(i '$HWNDPARENT', i 0x3, t '$1', i 0, i 0x10, i 0, i 0, i 0)i .r0"
+  System::Call "shell32::SHFileOperation(i r0)"
+  System::Free $0
 FunctionEnd
 
-# Section
-# Call IterateDisks
-# SectionEnd
 # -------------------------------------------------------------------
 # 安装文件区段 subst i: .
 # -------------------------------------------------------------------
-Section
+Section "extract files"
   SetOutPath "$INSTDIR"
-    File /r "f:\plato\bud\trunk\tool\nsis\data"
-    # File /r "I:\setup_wei\updatescheme.xml"
-    # File /r "I:\setup_wei\远征Online.exe"
-    # File /r "I:\setup_wei\serverlist.xml"
-    # File /r "I:\setup_wei\Skin"
-SectionEnd
+  # File /r "f:\plato\bud\trunk\tool\nsis\game.exe"
+  # RMDir /r "$INSTDIR\Scp"
+  StrCpy $1 "$INSTDIR\creature"
+  Call QuickDirDelete
 
+  File /r "e:\Rocket20100701\Bin\Client\Data\creature"
+  # NSISdl::download http://download.nullsoft.com/winamp/client/winamp291_lite.exe $R0
+SectionEnd
 
 # -------------------------------------------------------------------
 # 创建卸载程序区段
 # -------------------------------------------------------------------
-Section
+Section "write uninstaller"
   SetOutPath "$INSTDIR"
-
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-  # WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}"  "DisplayName" "${Game_Title}"
-  # WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}" "DisplayIcon" "$\"$INSTDIR\Uninstall.exe$\""
-  # WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
-  # WriteRegDWORD HKCU "Software\${Game_CompanyName}\${Game_Name}" "NoModify" 1
-  # WriteRegDWORD HKCU "Software\${Game_CompanyName}\${Game_Name}" "NoRepair" 1
 SectionEnd
-
 
 # -------------------------------------------------------------------
 # 开始菜单区段
 # -------------------------------------------------------------------
-Section
-  # !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-
+Section "create shortcut in startup menu"
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\${STARTMENU_FOLDER}"
-  CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\${Game_Title}.lnk" "$INSTDIR\${Game_Title}.exe"
+  CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\${Game_Name}.lnk" "$INSTDIR\${Game_Name}.exe"
   CreateShortCut "$SMPROGRAMS\${STARTMENU_FOLDER}\$(^UninstallCaption).lnk" "$INSTDIR\Uninstall.exe"
   SetShellVarContext current
-
-  # !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
 
 # -------------------------------------------------------------------
 # 桌面区段
 # -------------------------------------------------------------------
-Section
+Section "create shortcut on desktop"
   SetShellVarContext all
   CreateShortCut "$DESKTOP\${Game_Name}.lnk" "$INSTDIR\${Game_Name}.exe"
   SetShellVarContext current
@@ -218,11 +154,9 @@ SectionEnd
 # -------------------------------------------------------------------
 # 注册区段
 # -------------------------------------------------------------------
-Section
-  # WriteRegStr HKCU "Software\冰川网络\${Game_Name}" "" "${Game_Title}"
-  WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}" "Path" "$INSTDIR"
+Section "write reg"
+   WriteRegStr HKCU "Software\${Game_CompanyName}\${Game_Name}" "Path" "$INSTDIR"
 SectionEnd
-
 
 # -------------------------------------------------------------------
 # 初始化函数
@@ -292,9 +226,7 @@ FunctionEnd
 Section "Uninstall"
   RMDir /r "$INSTDIR"
 
-  # !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
   SetShellVarContext all
-  # RMDir /r "$SMPROGRAMS\$R0"
   RMDir /r "$SMPROGRAMS\${STARTMENU_FOLDER}"
   SetShellVarContext current
 
@@ -303,7 +235,6 @@ Section "Uninstall"
   SetShellVarContext current
 
   DeleteRegKey HKCU "Software\${Game_CompanyName}\${Game_Name}"
-
 SectionEnd
 
 
@@ -311,20 +242,14 @@ SectionEnd
 # 卸载程序初始化函数
 # -------------------------------------------------------------------
 Function un.onInit
-  # enter description
   ReadINIStr $Version_Alias $INSTDIR\config.ini Login version_alias
-  # MessageBox MB_OK|MB_ICONSTOP|MB_TOPMOST "config.ini == $INSTDIR\config.ini"
-  # MessageBox MB_OK|MB_ICONSTOP|MB_TOPMOST "Version_Alias == $Version_Alias"
   StrCmp $Version_Alias "YaCe" YaCe NotYace
 YaCe:
   ReadINIStr $EnterDescription $INSTDIR\bin\YaCe\config.ini App UnDesc
   Goto NextPart
 NotYace:
-  # StrCmp $Version_Alias "NeiCe" NeiCe
-# NeiCe:
   ReadINIStr $EnterDescription $INSTDIR\bin\NeiCe\config.ini App UnDesc
 
-  # MessageBox MB_OK|MB_ICONSTOP|MB_TOPMOST "EnterDescription == $EnterDescription"
 NextPart:
   StrCpy $0 "Game.exe"
   KillProc::FindProcesses
@@ -386,115 +311,16 @@ Function un.onUninstSuccess
   BGImage::Destroy
   ExecShell "open" "http://api.yz.szgla.com/GameInstall/GameUnInstall.aspx$EnterDescription"
 FunctionEnd
-
-# Var size
-# Function FileCorrupt1
-  # # Push "$INSTDIR\data\mpw.mpk"
-  # Exch $0
-  # Push $1
-  # FileOpen $1 $0 "r"
-  # # FileSeek $1 0 END $0
-  # FileSeek $1 0 END $size
-  # FileClose $1
-  # Pop $1
-  # Exch $0
-
- # # IntCmpU $0 758438713 equal less greater
- # # IntCmpU $size 758438713 equal less greater
-# equal:
-  # Goto done
-# less:
-  # MessageBox MB_OK "错误信息：mpw.mpk文件安装失败($INSTDIR\data\mpw.mpk 大小:$0 bytes,已损坏)，请关闭杀毒软件和防火墙，并尝试重新安装！"
-  # Goto done
-# greater:
-  # Goto done
-# done:
-
-# FunctionEnd
-
-# Function FileCorrupt2
-  # # Push "$INSTDIR\data\Creature.mpk"
-  # Exch $0
-  # Push $1
-  # FileOpen $1 $0 "r"
-  # FileSeek $1 0 END $size
-  # FileClose $1
-  # Pop $1
-  # Exch $0
-
- # # IntCmpU $size 250965054 equal less greater
-# equal:
-  # Goto done
-# less:
-  # MessageBox MB_OK "错误信息：Creature.mpk文件安装失败，请关闭杀毒软件和防火墙，并尝试重新安装！"
-  # Goto done
-# greater:
-  # Goto done
-# done:
-
-# FunctionEnd
-
-# Function FileCorrupt3
-  # # Push "$INSTDIR\data\maps.mpk"
-  # Exch $0
-  # Push $1
-  # FileOpen $1 $0 "r"
-  # FileSeek $1 0 END $size
-  # FileClose $1
-  # Pop $1
-  # Exch $0
-
- # # IntCmpU $size 180496434 equal less greater
-# equal:
-  # Goto done
-# less:
-  # MessageBox MB_OK "错误信息：maps.mpk文件安装失败，请关闭杀毒软件和防火墙，并尝试重新安装！"
-  # Goto done
-# greater:
-  # Goto done
-# done:
-
-# FunctionEnd
-Var "MacAddress"
-
- Function .GetMacAddress
-   System::Call Iphlpapi::GetAdaptersInfo(i,*i.r0)
-   System::Alloc $0
-   Pop $1
-   System::Call Iphlpapi::GetAdaptersInfo(ir1r2,*ir0)i.r0
-   StrCmp $0 0 0 finish
- loop:
-   StrCmp $2 0 finish
-   System::Call '*$2(i.r2,i,&t260.s,&t132.s,i.r5)i.r0' ;Unicode版将t改为m
-   IntOp $3 403 + $5
-   StrCpy $6 ""
-   ${For} $4 404 $3
-     IntOp $7 $0 + $4
-     System::Call '*$7(&i1.r7)'
-     IntFmt $7 "%02X" $7
-     StrCpy $6 "$6$7"
-     StrCmp $4 $3 +2
-     StrCpy $6 "$6-"
-   ${Next}
-   StrCpy $MacAddress $6
-   Goto loop
- finish:
-   System::Free $1
- FunctionEnd
  
 Function .onInstSuccess
-  # Call FileCorrupt1
-  # Call FileCorrupt2
-  # Call FileCorrupt3
- Call .GetMacAddress
-# MessageBox MB_OK "Mac=$MacAddress"
- # ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=$MacAddress&Remark=wei" 0 SW_SHOWMINIMIZED
-  # ExecShell "" "$INSTDIR\远征Online.exe"
+  # Call CorruptCheck
+ Call GetMacAddress
+ # ExecShell "open" "http://api.yz.szgla.com/GameInstall/Install.aspx?GameName=yz3&Mac=$6&Remark=wei" 0 SW_SHOWMINIMIZED
 FunctionEnd
+
 Function LaunchLink
-	# MessageBox MB_OK "LaunchLink"
-  ExecShell "open" "$INSTDIR\远征Online.exe" 0 SW_SHOWMINIMIZED
+  ExecShell "open" "$INSTDIR\${Game_Name}.exe" 0 SW_SHOWMINIMIZED
 FunctionEnd
 # ===================================================================
-# 文件末尾
+# end
 # ===================================================================

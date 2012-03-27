@@ -13,7 +13,7 @@ namespace Euclid
 
 	}
 
-	IBuffer* BufferManager::createVertexBuffer( unsigned int Length, unsigned long Usage, ePool Pool )
+	IBuffer* BufferManager::createVertexBuffer( unsigned int Length, eUsage Usage, ePool Pool )
 	{
 		VertexBuffer* vb = new VertexBuffer;
 		if (vb)
@@ -29,7 +29,7 @@ namespace Euclid
 		return vb;
 	}
 
-	IBuffer* BufferManager::createIndexBuffer( unsigned int Length, unsigned long Usage, eFormat Format, ePool Pool )
+	IBuffer* BufferManager::createIndexBuffer( unsigned int Length, eUsage Usage, eFormat Format, ePool Pool )
 	{
 		IndexBuffer* ib = new IndexBuffer;
 		if (ib)

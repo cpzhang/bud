@@ -51,7 +51,12 @@ namespace Euclid
 	{
 		if (_effect)
 		{
-			_effect->OnResetDevice();
+			HRESULT hr = _effect->OnResetDevice();
+			if (S_OK != hr)
+			{
+				throw EDX(hr);
+			}
+			
 		}
 	}
 
@@ -114,13 +119,14 @@ namespace Euclid
 	bool Effect::loadFromFile( const std::string& filename )
 	{
 		DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE;
-
-#if defined( DEBUG)
+#define DEBUG
+#ifdef DEBUG
 		// Set the D3DXSHADER_DEBUG flag to embed debug information in the shaders.
 		// Setting this flag improves the shader debugging experience, but still allows 
 		// the shaders to be optimized and to run exactly the way they will run in 
 		// the release configuration of this program.
-		dwShaderFlags = D3DXSHADER_DEBUG | D3DXSHADER_SKIPOPTIMIZATION;
+		// D3DXSHADER_DEBUG，打开后，可在pix里面查看源码，否则，汇编
+		dwShaderFlags = D3DXSHADER_DEBUG | D3DXSHADER_SKIPOPTIMIZATION /*| D3DXSHADER_FORCE_VS_SOFTWARE_NOOPT | D3DXSHADER_FORCE_PS_SOFTWARE_NOOPT*/;
 #endif
 
 		// Create an effect from an ASCII or binary effect description

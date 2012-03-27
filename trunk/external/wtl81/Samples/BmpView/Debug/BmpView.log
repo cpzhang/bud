@@ -1,0 +1,2 @@
+﻿CVTRES : fatal error CVT1100: 资源重复。类型: MANIFEST，名称: 1，语言: 0x0409
+LINK : fatal error LNK1123: 转换到 COFF 期间失败: 文件无效或损坏

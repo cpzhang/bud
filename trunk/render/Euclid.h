@@ -21,4 +21,5 @@
 #include "ITextureManager.h"
 #include "ITexture.h"
 #include "FontManager.h"
+#include "Terrain.h"
 #endif // __Euclid_h__

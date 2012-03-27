@@ -14,8 +14,10 @@ namespace Euclid
 	class _EuclidExport_ CameraControllerThirdPerson
 	{
 	public:
+		CameraControllerThirdPerson();
 		CameraControllerThirdPerson(Camera *pCamera);
 	public:
+		void attachCamera(Camera *pCamera);
 		virtual void release();
 
 		virtual std::string getName();
@@ -39,6 +41,8 @@ namespace Euclid
 		virtual void onMButtonUp(u16 x,u16 y);
 		
 		virtual const Mat4& getMatrix();
+
+		void update();
 	private:
 		Camera*	m_pCamera;
 		bool		m_bLButtonDown;

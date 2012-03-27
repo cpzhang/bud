@@ -1,0 +1,779 @@
+// 	Script:	MMFileExportOptions.mel
+//	Author: zhujl
+
+global proc int MMFileExportOptions(string $parent,
+                                string $action,
+                                string $initialSettings,
+                                string $resultCallback)
+{
+	int		$intVal;
+	float		$floatVal;
+	int		$bResult;
+	string		$currentExportOptions;
+	string		$optionList[];
+	string		$optionBreakDown[];
+	int 		$index;
+	
+	global int 	$numAnimActions;
+	
+	if ($action == "post") 
+	{
+		setParent $parent;
+        	setUITemplate -pushTemplate DefaultTemplate;
+        	formLayout -e -vis true ExportOptionsBoxForm;
+        	columnLayout -adj true;
+	
+		// Mesh 选项	
+		frameLayout
+			-collapsable true
+			-label "Mesh ExportOptions::instance()" 
+		MeshFrame;
+			columnLayout
+				-parent MeshFrame 
+				-columnAttach "left" 20
+			MeshLayout;
+				checkBox
+					-parent MeshLayout
+					-value true 
+					-label "Export mesh"
+					-cc setExportMesh
+				ExportMesh;
+
+				checkBox
+					-parent MeshLayout
+					-value true 
+					-label "Export vertex colour"
+				ExportVertexColour;
+
+			setParent ..;    // columnLayout	
+		setParent ..;    // frameLayout
+
+		// Material选项
+		frameLayout
+			-collapsable true
+			-label "Material ExportOptions::instance()" 
+		MaterialFrame;
+			columnLayout
+				-parent MaterialFrame 
+				-columnAttach "left" 20
+			MaterialLayout;
+				checkBox
+					-parent MaterialLayout
+					-value true 
+					-label "Export Materials"
+					-cc setExportMaterials
+				ExportMaterial;
+
+				checkBox
+					-parent MaterialLayout
+					-value true 
+					-label "Copy texture files to output path"
+				CopyTextures;
+
+			setParent ..;    // columnLayout
+		setParent ..;    // frameLayout	
+		
+		// Animation选项
+		frameLayout
+			-collapsable true
+			-label "Animation ExportOptions::instance()" 
+		AnimationFrame;
+			columnLayout
+				-parent AnimationFrame 
+				-columnAttach "left" 20
+			AnimationLayout;
+				checkBox
+					-parent AnimationLayout
+					-value true 
+					-label "Export Skeleton"
+					-cc setExportSkeleton
+				ExportSkeleton;
+				
+				checkBox
+					-parent AnimationLayout
+					-value true 
+					-label "Export Animations"
+					-cc setExportAniamtion
+				ExportAnimation;
+				
+				checkBox
+					-parent AnimationLayout
+					-value true 
+					-label "Export All Frames"
+					-cc setExportAllFrames
+				ExportAllFrames;
+
+				rowLayout
+					-parent AnimationLayout
+					-numberOfColumns 2
+					-columnWidth2 173 95
+					-ct2 "left" "right"
+					-columnAttach 1 "left" 58
+					-cal 1 "center" 
+					-cal 2 "center"
+				AnimActionsButtonsLayout;
+					
+					button
+						-parent AnimActionsButtonsLayout
+						-label "Add Action"
+						-width 90
+						-command "addExportAnimationAction()"
+					ButtonAddAnimAction;
+	
+					button
+						-parent AnimActionsButtonsLayout
+						-label "Delete Action"
+						-width 90
+						-command "delExportAnimationAction()"
+					ButtonDelAnimAction;
+					
+				setParent ..;    // rowLayout
+      			setParent ..;    // columnLayout
+		setParent ..;    // frameLayout	
+		
+		// Pref选项
+		rowLayout
+			-numberOfColumns 2
+			-columnAttach 1 "left" 80 
+			-columnWidth2 195 95 
+			-ct2 "left" "right"
+			-cal 1 "center" 
+			-cal 2 "center"
+		ButtonsLayout;
+					
+			button
+				-parent ButtonsLayout
+				-label "Load Pref"
+				-align "center"
+				-width 90
+				-command "loadPref()"
+			ButtonLoadPref;
+	
+			button
+				-parent ButtonsLayout
+				-label "Save Pref"
+				-align "center"
+				-width 90
+				-command "savePref()"
+			ButtonSavePref;	
+		setParent ..;    // rowLayout
+		
+		formLayout -e -vis true ExportOptionsBoxForm;
+	        setUITemplate -popTemplate;
+	        return 1;;
+	}
+	else if ($action == "query") 
+	{
+		// 检测Mesh部分
+		if(`checkBox -q -v ExportMesh` == 0)
+		{
+			$currentExportOptions = $currentExportOptions + "exportMesh=false;";
+		}
+		else
+		{
+			$currentExportOptions = $currentExportOptions + "exportMesh=true;";
+			if(`checkBox -q -v ExportVertexColour` == 0)
+			{
+				$currentExportOptions = $currentExportOptions + "exportVertexColour=false;";
+			}
+			else
+			{
+				$currentExportOptions = $currentExportOptions + "exportVertexColour=true;";
+			}
+		}
+		
+		// 检测Material部分
+		if (`checkBox -q -v ExportMaterial` == 0) 
+		{
+			$currentExportOptions = $currentExportOptions + "exportMaterials=false;";
+	        }
+	        else 
+	        { 
+			$currentExportOptions = $currentExportOptions + "exportMaterials=true;";
+			if (`checkBox -q -v CopyTextures` == 0) 
+			{
+				$currentExportOptions = $currentExportOptions + "copyTextures=false;";
+			} 
+			else 
+			{
+				$currentExportOptions = $currentExportOptions + "copyTextures=true;";
+			}
+		
+		}
+		
+		// 检测Animation部分
+		if (`checkBox -q -v ExportSkeleton` == 0) 
+		{
+			$currentExportOptions = $currentExportOptions + "exportSkeleton=false;";
+	        }
+	        else 
+	        { 
+			$currentExportOptions = $currentExportOptions + "exportSkeleton=true;";
+			if (`checkBox -q -v ExportAnimation` == 0) 
+			{
+				$currentExportOptions = $currentExportOptions + "exportAnimation=false;";
+			} 
+			else 
+			{
+				$currentExportOptions = $currentExportOptions + "exportAnimation=true;";
+				if (`checkBox -q -v ExportAllFrames` == 0) 
+				{
+					$currentExportOptions = $currentExportOptions + "exportAllFrames=false;";
+					
+					$index = 0;
+					while($index < $numAnimActions)
+					{	
+						$index++;
+						$currentExportOptions = $currentExportOptions + "actionName=" + `textField -q -text ("AnimActionName"+$index)` + ";";
+						$currentExportOptions = $currentExportOptions + "startFrame=" + `textField -q -text ("AnimActionRangeStart"+$index)` + ";";
+						$currentExportOptions = $currentExportOptions + "endFrame=" + `textField -q -text ("AnimActionRangeEnd"+$index)` + ";";
+						$currentExportOptions = $currentExportOptions + "stepFrame=" + `textField -q -text ("AnimActionRangeStep"+$index)` + ";";
+					}
+				} 
+				else 
+				{
+					$currentExportOptions = $currentExportOptions + "exportAllFrames=true;";
+				}
+			}
+		}
+		
+		// 结束
+        	eval($resultCallback+" \""+$currentExportOptions+"\"");
+
+        	return 1;
+	}
+    	
+	return 0;
+}
+
+
+
+
+global proc setExportMesh() 
+{
+    	if (`checkBox -q -v ExportMesh` == 0) 
+    	{
+        	checkBox -e -en 0 ExportVertexColour;
+        	checkBox -e -v 0 ExportVertexColour;
+    	}
+    	else if (`checkBox -q -v ExportMesh` == 1) 
+    	{
+        	checkBox -e -en 1 ExportVertexColour;
+        	checkBox -e -v 1 ExportVertexColour;
+    	}
+}
+
+global proc setExportMaterials() 
+{
+    	if (`checkBox -q -v ExportMaterial` == 0) 
+    	{
+        	checkBox -e -en 0 CopyTextures;
+        	checkBox -e -v 0 CopyTextures;
+    	}
+    	else if (`checkBox -q -v ExportMaterial` == 1) 
+    	{
+        	checkBox -e -en 1 CopyTextures;
+        	checkBox -e -v 1 CopyTextures;
+    	}
+}
+
+global proc setExportSkeleton()
+{
+    	if (`checkBox -q -v ExportSkeleton` == 0) 
+    	{
+        	checkBox -e -en 0 ExportAnimation;
+       		checkBox -e -v 0 ExportAnimation;
+    	}
+    	else if (`checkBox -q -v ExportSkeleton` == 1) 
+    	{
+        	checkBox -e -en 1 ExportAnimation;
+        	checkBox -e -v 1 ExportAnimation;
+    	}
+    
+	setExportAniamtion();
+}
+
+global proc setExportAniamtion()
+{
+	if (`checkBox -q -v ExportAnimation` == 0) 
+	{
+		checkBox -e -en 0 ExportAllFrames;
+		checkBox -e -v 0 ExportAllFrames;
+	}
+	else if (`checkBox -q -v ExportAnimation` == 1) 
+	{
+		checkBox -e -en 1 ExportAllFrames;
+        	checkBox -e -v 1 ExportAllFrames;
+	}
+	setExportAllFrames();
+}
+
+global proc setExportAllFrames()
+{
+	global int $numAnimActions;
+	if (`checkBox -q -v ExportAllFrames` == 0 && `checkBox -q -v ExportAnimation` == 1) 
+	{
+		$numAnimActions = 0;
+		addExportAnimationAction();
+	}
+	else if (`checkBox -q -v ExportAllFrames` == 1 || `checkBox -q -v ExportAnimation` == 0 || `checkBox -q -v ExportSkeleton` == 0) 
+	{
+		while($numAnimActions > 0)
+		{
+			delExportAnimationAction();
+		}
+	}
+}
+
+global proc addExportAnimationAction()
+{
+	global int $numAnimActions;
+	
+	if (`checkBox -q -v ExportAllFrames` == 0 && `checkBox -q -v ExportAnimation` == 1 && `checkBox -q -v ExportSkeleton` == 1) 
+	{
+		$numAnimActions++;
+		frameLayout
+			-parent AnimationLayout
+			-width 309
+			-label ("Action"+$numAnimActions)
+		("AnimActionFrame"+$numAnimActions);
+	
+			columnLayout
+				-parent ("AnimActionFrame"+$numAnimActions)
+				-columnAttach "left" 0
+			("AnimActionLayout"+$numAnimActions);
+	
+			rowLayout
+				-parent ("AnimActionLayout"+$numAnimActions)
+				-numberOfColumns 2
+				-columnWidth2 100 200
+				-columnOffset2 5 5
+				-columnAlign2 "left" "left"
+			("AnimActionNameLayout"+$numAnimActions);
+								
+				checkBox
+					-parent ("AnimActionNameLayout"+$numAnimActions)
+					-value false
+					-label "Action Name"
+				("ExportAnimAction"+$numAnimActions);
+						
+				textField
+					-parent ("AnimActionNameLayout"+$numAnimActions)
+					-width 200
+					-text ("Action"+$numAnimActions)
+				("AnimActionName"+$numAnimActions);
+	
+				separator
+					-parent ("AnimActionLayout"+$numAnimActions) 
+					-style "in" 
+					-width 309
+					-height 5;
+	
+				columnLayout
+					-parent ("AnimActionLayout"+$numAnimActions)
+					-columnAttach "left" 20
+				("AnimActionRangeLayout"+$numAnimActions);
+	
+					rowLayout
+						-parent ("AnimActionRangeLayout"+$numAnimActions) 	
+						-numberOfColumns 4 
+						-columnAlign4 "right" "left" "right" "left"
+						-columnOffset4 5 5 5 5
+						-columnWidth4 70 70 70 70
+					("AnimActionRangeStartLayout"+$numAnimActions);
+							
+						text 
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-label "Start Frame:" 
+							-width 70
+						("AnimActionRangeStartLabel"+$numAnimActions);
+												
+						intField
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-width 70
+							-value 1
+						("AnimActionRangeStart"+$numAnimActions);
+											
+						text 
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-label "End Frame:" 
+							-width 70
+						("AnimActionRangeEndLabel"+$numAnimActions);
+												
+						intField
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-width 70
+							-value 2
+						("AnimActionRangeEnd"+$numAnimActions);
+							
+					rowLayout
+						-parent ("AnimActionRangeLayout"+$numAnimActions)
+						-numberOfColumns 2
+						-columnAlign2 "right" "left"
+						-columnOffset2 5 5
+						-columnWidth2 70 70
+					("AnimActionRangeStepLayout"+$numAnimActions);
+	
+						text
+							-parent ("AnimActionRangeStepLayout"+$numAnimActions)
+							-label "Step Frame:"
+							-width 70
+						("AnimActionRangeStepLabel"+$numAnimActions);
+							
+						intField
+							-parent ("AnimActionRangeStepLayout"+$numAnimActions)
+							-width 70
+							-value 1
+						("AnimActionRangeStep"+$numAnimActions);
+	}
+
+}
+
+
+global proc delExportAnimationAction()
+{
+	global int $numAnimActions;
+	
+	if ($numAnimActions > 1)
+	{
+		deleteUI("AnimActionFrame"+$numAnimActions);
+		$numAnimActions--;
+	}
+	else if($numAnimActions == 1)
+	{
+		deleteUI("AnimActionFrame"+$numAnimActions);
+		$numAnimActions--;
+		if (`checkBox -q -v ExportAnimation` == 1) 
+		{
+			checkBox -e -en 1 ExportAllFrames;
+        		checkBox -e -v 1 ExportAllFrames;
+		}
+	}
+}
+
+global proc int openFile(string $filename,string $fileType)
+{	
+	int $nextLine;
+	global int $numAnimActions;
+	
+	//处理打开文件
+	$fileId =`fopen $filename "r"`;
+	
+	// 模型部分
+	$nextLine = `fgetline $fileId`;
+	if($nextLine == 1)
+	{
+		checkBox -e -v 1 ExportMesh;
+	}
+	else
+	{
+		checkBox -e -v 0 ExportMesh;
+		checkBox -e -en 0 ExportVertexColour;
+        	checkBox -e -v 0 ExportVertexColour;
+	}
+	
+	$nextLine = `fgetline $fileId`;
+	if($nextLine == 1)
+	{
+		checkBox -e -v 1 ExportVertexColour;
+	}
+	else
+	{
+		checkBox -e -v 0 ExportVertexColour;
+	}
+	
+
+	// 材质部分
+	$nextLine = `fgetline $fileId`;
+	if($nextLine == 1)
+	{
+		checkBox -e -v 1 ExportMaterial;
+	}
+	else
+	{
+		checkBox -e -v 0 ExportMaterial;
+		checkBox -e -en 0 CopyTextures;
+        	checkBox -e -v 0 CopyTextures;
+	}
+	
+	$nextLine = `fgetline $fileId`;
+	if($nextLine == 1)
+	{
+		checkBox -e -v 1 CopyTextures;
+	}
+	else
+	{
+		checkBox -e -v 0 CopyTextures;
+	}
+	
+	// 动画部分
+	$nextLine = `fgetline $fileId`;
+	if($nextLine == 1)
+	{
+		checkBox -e -v 1 ExportSkeleton;
+	}
+	else
+	{
+		checkBox -e -v 0 ExportSkeleton;
+		checkBox -e -en 0 ExportAnimation;
+        	checkBox -e -v 0 ExportAnimation;
+        	checkBox -e -en 0 ExportAllFrames;
+        	checkBox -e -v 0 ExportAllFrames;
+	}
+	
+	$nextLine = `fgetline $fileId`;
+	if($nextLine == 1)
+	{
+		checkBox -e -v 1 ExportAnimation;
+	}
+	else
+	{
+		checkBox -e -v 0 ExportAnimation;
+		checkBox -e -en 0 ExportAllFrames;
+        	checkBox -e -v 0 ExportAllFrames;
+	}
+	
+	$nextLine = `fgetline $fileId`;
+	if($nextLine == 1)
+	{
+		checkBox -e -v 1 ExportAllFrames;
+	}
+	else
+	{
+		checkBox -e -v 0 ExportAllFrames;
+	}
+	
+	// 动画数
+	int $index = 0;
+	int $indexCount = `fgetline $fileId`; 
+	while($numAnimActions > 0)
+	{
+		delExportAnimationAction();
+	}
+	
+	while($index < $indexCount)
+	{
+		$index++;
+		string $actionName = `fgetline $fileId`;
+		int $startFrame = `fgetline $fileId`;
+		int $endFrame = `fgetline $fileId`;
+		int $stepFrame = `fgetline $fileId`;
+		addExportAction($actionName,$startFrame,$endFrame,$stepFrame);
+	}
+	
+	fclose $fileId;
+
+	return 1;
+}
+
+global proc loadPref()
+{
+	fileBrowserDialog -m 0 -ft "mel" -fc "openFile" -an "Load" -om "Import";
+}
+
+global proc int saveFile(string $filename,string $fileType)
+{
+	global int $numAnimActions;
+	//检测Mesh部分
+	$fileId=`fopen $filename "w"`;
+	
+	if(`checkBox -q -v ExportMesh` == 0)
+	{
+		fprint $fileId "0\n";
+	}
+	else
+	{
+		fprint $fileId "1\n";
+	}
+	
+	if(`checkBox -q -v ExportVertexColour` == 0)
+	{
+		fprint $fileId "0\n";
+	}
+	else
+	{
+		fprint $fileId "1\n";
+	}
+		
+	// 检测Material部分
+	if (`checkBox -q -v ExportMaterial` == 0) 
+	{
+		fprint $fileId "0\n";
+        }
+        else 
+        { 
+        	fprint $fileId "1\n";
+        }
+
+	if (`checkBox -q -v CopyTextures` == 0) 
+	{
+		fprint $fileId "0\n";
+	} 
+	else 
+	{
+		fprint $fileId "1\n";
+	}
+	
+	// 检测Animation部分
+	if (`checkBox -q -v ExportSkeleton` == 0) 
+	{
+		fprint $fileId "0\n";
+	} 
+	else 
+	{
+		fprint $fileId "1\n";
+	}
+	         
+	if (`checkBox -q -v ExportAnimation` == 0) 
+	{
+		fprint $fileId "0\n";
+	} 
+	else 
+	{
+		fprint $fileId "1\n";
+	}
+
+	if (`checkBox -q -v ExportAllFrames` == 0) 
+	{
+		fprint $fileId "0\n";
+	} 
+	else 
+	{
+		fprint $fileId "1\n";
+	}
+	
+	fprint $fileId $numAnimActions;
+	fprint $fileId "\n";
+	
+	string $text;
+	int $index = 0;
+	while($index < $numAnimActions)
+	{	
+		$index++;
+		$text = `textField -q -text ("AnimActionName"+$index)`;
+		fprint $fileId $text;
+		fprint $fileId "\n";
+		$text = `textField -q -text ("AnimActionRangeStart"+$index)`;
+		fprint $fileId $text;
+		fprint $fileId "\n";
+		$text = `textField -q -text ("AnimActionRangeEnd"+$index)`;
+		fprint $fileId $text;
+		fprint $fileId "\n";
+		$text = `textField -q -text ("AnimActionRangeStep"+$index)`;
+		fprint $fileId $text;
+		fprint $fileId "\n";
+	}
+
+	fclose $fileId;
+
+	return 1;
+}
+
+global proc savePref()
+{
+	fileBrowserDialog -m 1 -ft "mel" -fc "saveFile" -an "SaveAS" -om "Import";
+}
+
+global proc addExportAction(string $actionName,int $startFrame,int $endFrame,int $stepFrame)
+{
+	global int $numAnimActions;
+	
+	if (`checkBox -q -v ExportAllFrames` == 0 && `checkBox -q -v ExportAnimation` == 1 && `checkBox -q -v ExportSkeleton` == 1) 
+	{
+		$numAnimActions++;
+		frameLayout
+			-parent AnimationLayout
+			-width 309
+			-label ("Action"+$numAnimActions)
+		("AnimActionFrame"+$numAnimActions);
+	
+			columnLayout
+				-parent ("AnimActionFrame"+$numAnimActions)
+				-columnAttach "left" 0
+			("AnimActionLayout"+$numAnimActions);
+	
+			rowLayout
+				-parent ("AnimActionLayout"+$numAnimActions)
+				-numberOfColumns 2
+				-columnWidth2 100 200
+				-columnOffset2 5 5
+				-columnAlign2 "left" "left"
+			("AnimActionNameLayout"+$numAnimActions);
+								
+				checkBox
+					-parent ("AnimActionNameLayout"+$numAnimActions)
+					-value false
+					-label "Action Name"
+				("ExportAnimAction"+$numAnimActions);
+				
+				textField
+					-parent ("AnimActionNameLayout"+$numAnimActions)
+					-width 200
+					-text $actionName
+				("AnimActionName"+$numAnimActions);
+	
+				separator
+					-parent ("AnimActionLayout"+$numAnimActions) 
+					-style "in" 
+					-width 309
+					-height 5;
+	
+				columnLayout
+					-parent ("AnimActionLayout"+$numAnimActions)
+					-columnAttach "left" 20
+				("AnimActionRangeLayout"+$numAnimActions);
+	
+					rowLayout
+						-parent ("AnimActionRangeLayout"+$numAnimActions) 	
+						-numberOfColumns 4 
+						-columnAlign4 "right" "left" "right" "left"
+						-columnOffset4 5 5 5 5
+						-columnWidth4 70 70 70 70
+					("AnimActionRangeStartLayout"+$numAnimActions);
+							
+						text 
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-label "Start Frame:" 
+							-width 70
+						("AnimActionRangeStartLabel"+$numAnimActions);
+												
+						intField
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-width 70
+							-value $startFrame
+						("AnimActionRangeStart"+$numAnimActions);
+											
+						text 
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-label "End Frame:" 
+							-width 70
+						("AnimActionRangeEndLabel"+$numAnimActions);
+												
+						intField
+							-parent ("AnimActionRangeStartLayout"+$numAnimActions)
+							-width 70
+							-value $endFrame
+						("AnimActionRangeEnd"+$numAnimActions);
+							
+					rowLayout
+						-parent ("AnimActionRangeLayout"+$numAnimActions)
+						-numberOfColumns 2
+						-columnAlign2 "right" "left"
+						-columnOffset2 5 5
+						-columnWidth2 70 70
+					("AnimActionRangeStepLayout"+$numAnimActions);
+	
+						text
+							-parent ("AnimActionRangeStepLayout"+$numAnimActions)
+							-label "Step Frame:"
+							-width 70
+						("AnimActionRangeStepLabel"+$numAnimActions);
+							
+						intField
+							-parent ("AnimActionRangeStepLayout"+$numAnimActions)
+							-width 70
+							-value $stepFrame
+						("AnimActionRangeStep"+$numAnimActions);
+	}
+
+}

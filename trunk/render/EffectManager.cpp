@@ -56,4 +56,15 @@ namespace Euclid
 		}
 	}
 
+	void EffectManager::OnResetDevice()
+	{
+		for (NameEffectMap::iterator i = _effects.begin(); i != _effects.end(); ++i)
+		{
+			Effect* e = i->second;
+			if (e)
+			{
+				e->onResetDevice();
+			}
+		}
+	}
 }

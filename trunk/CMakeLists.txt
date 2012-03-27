@@ -37,7 +37,7 @@ add_subdirectory(render)
 
 # net
 set(NetName net)
-add_subdirectory(net)
+# add_subdirectory(net)
 
 # tutorial
 add_subdirectory(tutorial)

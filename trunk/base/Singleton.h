@@ -35,14 +35,18 @@ namespace Buddha
 
 		~SingletonEx()
 		{
-			_instance = 0;
+			_instance = NULL;
 		}
 
 		static T& getInstance()		{ return (*_instance); }
 		static T* getInstancePtr()	{ return _instance; }
+		static bool isNull()
+		{
+			return NULL == _instance;
+		}
 	};
 
-	template <typename T> T* SingletonEx<T>::_instance = 0;
+	template <typename T> T* SingletonEx<T>::_instance = NULL;
 }
 
 #endif // __SingletonEx_h__

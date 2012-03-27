@@ -10,6 +10,14 @@ namespace Euclid
 		m_bMButtonDown = false;
 	}
 
+	CameraControllerThirdPerson::CameraControllerThirdPerson()
+	{
+		m_pCamera = NULL;
+		m_mtxWorld = Mat4::IDENTITY;
+		m_bLButtonDown = false;
+		m_bMButtonDown = false;
+	}
+
 	void CameraControllerThirdPerson::release()
 	{
 		delete this;
@@ -132,6 +140,19 @@ namespace Euclid
 	const Mat4& CameraControllerThirdPerson::getMatrix()
 	{
 		return m_mtxWorld;
+	}
+
+	void CameraControllerThirdPerson::attachCamera( Camera *pCamera )
+	{
+		m_pCamera = pCamera;
+		m_mtxWorld = Mat4::IDENTITY;
+		m_bLButtonDown = false;
+		m_bMButtonDown = false;
+	}
+
+	void CameraControllerThirdPerson::update()
+	{
+
 	}
 
 }

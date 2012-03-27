@@ -6,3 +6,4 @@ include_directories(
 
 add_subdirectory(max)
 # add_subdirectory(photoshop)
+add_subdirectory(maya)

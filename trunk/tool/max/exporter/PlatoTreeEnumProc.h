@@ -332,7 +332,7 @@ public:
 	void addNode(INode* n);
 
 	bool read();
-
+	bool readTerrain();
 	void readBone();
 	bool readMesh();
 	void readParticle();
@@ -346,6 +346,7 @@ private:
 	bool _extractMaterial(INode* node, unsigned short& matID);
 
 	void _extractMesh(INode* node);
+	void _extractTerrain(INode* node);
 
 	void _extractSkin(INode* node);
 

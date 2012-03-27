@@ -14,6 +14,8 @@ namespace Euclid
 	{
 		//
 	public:
+		MaterialVertex();
+		virtual u32 getStride();
 	};
 
 	class _EuclidExport_ MaterialVertexTexture: public IMaterial
@@ -22,6 +24,7 @@ namespace Euclid
 		virtual void apply();
 		//
 		virtual void destroy();
+		virtual u32 getStride();
 		//
 	public:
 		MaterialVertexTexture();

@@ -3,6 +3,7 @@
 #include "Rect.h"
 #include "Buffer.h"
 #include "ITexture.h"
+#include "EffectManager.h"
 namespace Euclid
 {
 	bool RenderSystem::create()
@@ -20,7 +21,7 @@ namespace Euclid
 
 		
 //#define NV_PERF_HUD
-#ifdef PerfHUD
+#ifdef NV_PERF_HUD
 		// Look for 'NVIDIA PerfHUD' adapter
 		// If it is present, override default settings
 		for(UINT adpt = 0;adpt < _d3d9->GetAdapterCount();adpt++)
@@ -507,6 +508,7 @@ namespace Euclid
  		{
  			throw EDX(hr);
  		}
+		
 		//
 		r = _device->GetRenderTarget(0, &s_pRenderSurface);
 		if (D3D_OK != r)

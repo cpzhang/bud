@@ -4,8 +4,7 @@
 
 PlatoExporter::PlatoExporter()
 {
-	_exts.push_back("Mz");
-	//_exts.push_back("Fb");
+	_exts.push_back("terrain");
 }
 
 PlatoExporter::~PlatoExporter()
@@ -109,12 +108,11 @@ int PlatoExporter::DoExport( const MCHAR *name,ExpInterface *ei,Interface *i, BO
 			}
 		}
 
+		GetExportOptions()->exportMode = eExportMode_Terrain;
 		if (_enum.read())
 		{
 			_enum.write();
 		}
-		
-		GetExportOptions()->exportMode = eExportMode_MZ;
 	}
 	return 1;
 }
@@ -131,5 +129,5 @@ const std::string PlatoExporter::tName("Plato Exporter");
 const std::string PlatoExporter::tLongDesc("Plato 3D Max Exporter");
 const std::string PlatoExporter::tShortDesc("Plato Exporter");
 const std::string PlatoExporter::tAuthor("cpzhang");
-const std::string PlatoExporter::tCopyRight("Plato");
+const std::string PlatoExporter::tCopyRight("2012 Plato");
 const std::string PlatoExporter::tCategory("Plato");

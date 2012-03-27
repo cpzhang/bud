@@ -5,7 +5,7 @@
 #include "EffectManager.h"
 #include "TextureManager.h"
 #include "FontManager.h"
-
+#include "Common.h"
 namespace Euclid
 {
 	bool RenderEngine::create()
