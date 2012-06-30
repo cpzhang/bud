@@ -1,7 +1,7 @@
 #include "common.h"
 #include ".\submesh.h"
 #include "Math.h"
-
+#include "maya/MFnLayeredShader.h"
 SubMesh::SubMesh(void)
 {
 	m_bAnimated = false;
@@ -15,30 +15,109 @@ SubMesh::~SubMesh(void)
 
 void SubMesh::clear()
 {
-	m_pMaterial = NULL;
+	m_pMaterials.clear();
 	m_vertices.clear();
 	m_faces.clear();
 }
 
-MStatus SubMesh::loadMaterial(MObject& shader,MStringArray& uvsets)
+MObject getNodeConnectedTo ( const MPlug& plug )
 {
-	MPlug plug;
+	MStatus status;
+	MPlugArray connections;
+	plug.connectedTo ( connections, true, true, &status );
+	if ( status != MStatus::kSuccess ) return MObject::kNullObj;
+	if ( connections.length() <= 0 ) return MObject::kNullObj;
+
+	return connections[0].node();
+}
+
+MPlug getChildPlug ( const MPlug& parent, const MString& name, MStatus* rc )
+{
+	MStatus st;
+	uint childCount = parent.numChildren ( &st );
+	if ( st != MStatus::kSuccess )
+	{
+		if ( rc != NULL ) *rc = st;
+		return parent;
+	}
+
+	// Check shortNames first
+	for ( uint i = 0; i < childCount; ++i )
+	{
+		MPlug child = parent.child ( i, &st );
+		if ( st != MStatus::kSuccess )
+		{
+			if ( rc != NULL ) *rc = st;
+			return parent;
+		}
+
+		MFnAttribute attributeFn ( child.attribute() );
+		MString n = attributeFn.shortName();
+		if ( n == name )
+		{
+			if ( rc != NULL ) *rc = MStatus::kSuccess;
+			return child;
+		}
+	}
+
+	// Check longNames second, use shortNames!
+	for ( uint i = 0; i < childCount; ++i )
+	{
+		MPlug child = parent.child ( i, &st );
+		if ( st != MStatus::kSuccess )
+		{
+			if ( rc != NULL ) *rc = st;
+			return parent;
+		}
+
+		MFnAttribute attributeFn ( child.attribute() );
+		MString n = attributeFn.name();
+		if ( n == name )
+		{
+			if ( rc != NULL ) *rc = MStatus::kSuccess;
+			return child;
+		}
+	}
+
+	if ( rc != NULL ) *rc = MStatus::kNotFound;
+	return parent;
+}
+MStatus SubMesh::loadMaterial( MObject& shader,MStringArray& uvsets )
+{
 	MPlugArray srcplugarray;
 	bool foundShader = false;
 	MStatus stat;
 	//get shader from shading group
 	MFnDependencyNode shadingGroup(shader);
-	plug = shadingGroup.findPlug("surfaceShader");
-	plug.connectedTo(srcplugarray,true,false,&stat);
-	MFnDependencyNode *pShaderNode = 0;
-	for (int i=0; i<srcplugarray.length() && !foundShader; i++)
+	shadingGroup.findPlug("surfaceShader").connectedTo(srcplugarray,true,false,&stat);
+	MObject node;
+	unsigned count = srcplugarray.length();
+	for (int i=0; i < count; i++)
 	{
-		MObject node = srcplugarray[i].node();
-		pShaderNode = new MFnDependencyNode(node);
+		node = srcplugarray[i].node();
 		foundShader = true;
 	}
 
-	if(!pShaderNode)return MS::kFailure;
+	if (node.hasFn(MFn::kLayeredShader))
+	{
+		MPlug inputsPlug = MFnDependencyNode(node).findPlug("inputs");
+		unsigned nc = inputsPlug.numElements();
+		for (unsigned i = 0; i < nc; ++i)
+		{
+			MPlug input = inputsPlug.elementByPhysicalIndex ( i);
+			MPlug s = getChildPlug(input, "color", &stat);
+			MObject o = getNodeConnectedTo(s);
+			loadMaterialImp(o, uvsets);
+		}
+		return MS::kSuccess;
+	}
+	
+	return loadMaterialImp(node, uvsets);
+}
+
+MStatus SubMesh::loadMaterialImp(MObject& node,MStringArray& uvsets)
+{
+	MFnDependencyNode* pShaderNode = new MFnDependencyNode(node);
 
 	//check if this material has already been created
 	const char *name = pShaderNode->name().asChar();
@@ -46,14 +125,14 @@ MStatus SubMesh::loadMaterial(MObject& shader,MStringArray& uvsets)
 	//if the material has already been created, update the pointer
 	if (pMaterial)
 	{
-		m_pMaterial = pMaterial;
+		//m_pMaterial = pMaterial;
 	}
 	//else create it and add it to the material set
 	else
 	{
 		pMaterial = new material();
 		pMaterial->load(pShaderNode,uvsets);
-		m_pMaterial = pMaterial;
+		m_pMaterials.push_back( pMaterial);
 		MaterialSet::getSingleton().addMaterial(pMaterial);
 	}
 	//safeDelete(pShaderNode);

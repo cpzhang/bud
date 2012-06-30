@@ -1,21 +1,17 @@
-Microsoft Visual Studio Solution File, Format Version 7.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GuidGen", "GuidGen.vcproj", "{1A98BE97-763C-4724-9A72-8E8C96DA7A36}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GuidGen", "GuidGen.vcxproj", "{80C31EC1-03F8-B6EA-EFBD-61D1664431EC}"
 EndProject
 Global
-	GlobalSection(SolutionConfiguration) = preSolution
-		ConfigName.0 = Debug
-		ConfigName.1 = Release
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
-	GlobalSection(ProjectDependencies) = postSolution
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80C31EC1-03F8-B6EA-EFBD-61D1664431EC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{80C31EC1-03F8-B6EA-EFBD-61D1664431EC}.Release|Win32.ActiveCfg = Release|Win32
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{1A98BE97-763C-4724-9A72-8E8C96DA7A36}.Debug.ActiveCfg = Debug|Win32
-		{1A98BE97-763C-4724-9A72-8E8C96DA7A36}.Debug.Build.0 = Debug|Win32
-		{1A98BE97-763C-4724-9A72-8E8C96DA7A36}.Release.ActiveCfg = Release|Win32
-		{1A98BE97-763C-4724-9A72-8E8C96DA7A36}.Release.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

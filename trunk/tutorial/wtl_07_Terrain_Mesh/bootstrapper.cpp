@@ -38,6 +38,9 @@ int Run(LPTSTR /*lpstrCmdLine*/ = NULL, int nCmdShow = SW_SHOWMAXIMIZED)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lpstrCmdLine, int nCmdShow)
 {
+#if 0
+	MessageBox(NULL, "attach debugger", "tips", IDOK);
+#endif
 	//Initializes the COM library on the current thread and identifies the concurrency model as single-thread apartment (STA).
 	HRESULT hRes = ::CoInitialize(NULL);
 	ATLASSERT(SUCCEEDED(hRes));

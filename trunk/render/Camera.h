@@ -109,6 +109,7 @@ namespace Euclid
 		CameraControllerThirdPerson* getControllerThirdPerson();
 		void setDirty();
 		void makeQuaternion();
+		Ray getCameraToViewportRay(float x,float y) const;
 	private:
 		bool			m_dirty;
 		Vec3			m_vPosition;

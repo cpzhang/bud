@@ -44,6 +44,11 @@ namespace Euler
 		}
 
 	public:
+		inline void reset()
+		{
+			_min = Vec3::ZERO;
+			_max = Vec3::ZERO;
+		}
 		inline void updateMin(const Vec3& p)
 		{
 			if (p.x < _min.x)

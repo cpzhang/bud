@@ -15,7 +15,7 @@ namespace Euclid
 	{
 	public:
 		virtual ITexture*	createEmptyTexture(u32 Width, u32 Height, u32 Levels, eUsage Usage, eFormat Format, ePool Pool) = 0;
-		virtual ITexture*	createTextureFromFile(const std::string& fileName) = 0;
+		virtual ITexture*	createTextureFromFile(const tstring& fileName) = 0;
 		virtual ITexture*	createTexFromMemory(unsigned char* buffer, unsigned int length) = 0;
 		virtual ITexture*	createTextureFromRawData(unsigned char* pBuffer, unsigned int width, unsigned int height, unsigned int pitch, D3DFORMAT pf) = 0;
 		//virtual ITexture*	createTexture(u32 Width, u32 Height, u32 Levels, u32 Usage, eFormat Format, ePool Pool) = 0;

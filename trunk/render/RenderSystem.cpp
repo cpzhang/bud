@@ -116,6 +116,13 @@ namespace Euclid
 			_d3d9 = 0;
 		}
 */
+		tstring _reason;
+		{
+			std::ostringstream ss;
+			ss<<"dx error, string: "<<DXGetErrorString(D3DERR_OUTOFVIDEOMEMORY)<<";description: "<<DXGetErrorDescription(D3DERR_OUTOFVIDEOMEMORY);
+			//ascii2unicode(ss.str().c_str(), _reason);
+			_reason = ss.str();
+		}
 		// init vertex declaration
 		initVertexDeclarations();
 		return true;
@@ -277,7 +284,13 @@ namespace Euclid
 				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
 				D3DDECL_END()
 			},
-
+			//	eVertexDeclarationType_PositionBoneWeight
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{0,		20,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDINDICES,	0},
+				{0,		36,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDWEIGHT,	0},
+				D3DDECL_END()
+			},
 			//	eVertexDeclarationType_PositionColor
 			{
 				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
@@ -291,7 +304,23 @@ namespace Euclid
 				{0,		12,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
 				D3DDECL_END()
 			},
-
+			//	eVertexDeclarationType_PositionTextureBoneWeight
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{0,		12,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				{0,		20,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDINDICES,	0},
+				{0,		36,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDWEIGHT,	0},
+				D3DDECL_END()
+			},
+			//	eVertexDeclarationType_PositionTextureBoneWeightColor
+			{
+				{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+				{0,		12,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+				{0,		20,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDINDICES,	0},
+				{0,		36,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDWEIGHT,	0},
+				{0,		52,	D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
+				D3DDECL_END()
+			},
 			//	eVertexDeclarationType_PositionTextureNormal
 			{
 				{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
@@ -543,6 +572,14 @@ namespace Euclid
 		{
 			throw EDX(r);
 		}
+	}
+
+	Vec3* RenderSystem::objectSpace2ScreenSpace( __inout Vec3 *pOut, __in const Vec3 *pV, __in const sViewPort *pViewport, __in const Mat4 *pProjection, __in const Mat4 *pView, __in const Mat4 *pWorld )
+	{
+		sViewPort vp;
+		getViewPort(&vp);
+		D3DXVec3Project((D3DXVECTOR3*)pOut, (D3DXVECTOR3*)pV, &vp, (D3DXMATRIX*)(&pProjection->transpose()), (D3DXMATRIX*)(&pView->transpose()), (D3DXMATRIX*)(&pWorld->transpose()));
+		return pOut;
 	}
 
 	LPDIRECT3DSURFACE9 RenderSystem::s_pRenderSurface(NULL);

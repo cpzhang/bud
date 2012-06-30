@@ -16,6 +16,19 @@ typedef struct _submesh_base
 	uchar		nameLen;
 } SUBMESH_BASE;
 
+struct SUBMESH_BASE_MultiMaterial
+{
+	ushort matNum;			//材质数目
+	ushort mat0;
+	ushort mat1;
+	ushort vstart;			// first vertex
+	ushort vcount;			// num vertices
+	ushort istart;			// first index
+	ushort icount;			// num indices
+	bool		animated;
+	uchar		nameLen;
+};
+
 typedef struct _submesh
 {
 	ushort matId;			//材质id
@@ -27,6 +40,19 @@ typedef struct _submesh
 	char name[256];			// 子模型名称
 } SUBMESH;
 
+//
+struct sSubMesh_MultiMaterial
+{
+	ushort matNum;			//材质数目
+	ushort mat0;
+	ushort mat1;
+	ushort vstart;			// first vertex
+	ushort vcount;			// num vertices
+	ushort istart;			// first index
+	ushort icount;			// num indices
+	bool		animated;
+	char name[256];			// 子模型名称
+};
 typedef struct _modelvertex
 {
 	float pos[3];

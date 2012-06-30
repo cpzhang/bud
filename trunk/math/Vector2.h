@@ -54,6 +54,22 @@ namespace Euler
 
 		//
 	public:
+		//
+		inline Real operator [] ( const size_t i ) const
+		{
+			assert( i < 2 );
+
+			return *(&x+i);
+		}
+
+		//
+		inline Real& operator [] ( const size_t i )
+		{
+			assert( i < 2 );
+
+			return *(&x+i);
+		}
+
 		inline bool operator == ( const Vector2& rkVector ) const
 		{
 			return ( x == rkVector.x && y == rkVector.y );

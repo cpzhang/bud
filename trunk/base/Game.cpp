@@ -8,7 +8,7 @@ namespace Buddha
 	Game*	gGameClient = NULL;
 
 	Game::Game()
-		: _windowName("Game_Window"), _windowTitle("Game"), _clientHeight(600), _clientWidth(480),
+		: _windowName(TEXT("Game_Window")), _windowTitle(TEXT("Game")), _clientHeight(600), _clientWidth(480),
 		_windowX(0), _windowY(0), _hwnd(0), _fps(0.0f), _inputMessageHandler(NULL),
 		_process(eProcess_Begin)
 	{
@@ -280,7 +280,7 @@ namespace Buddha
 		return true;
 	}
 
-	void Game::setWindowTitle( const std::string& title )
+	void Game::setWindowTitle( const tstring& title )
 	{
 		_windowTitle = title;
 	}

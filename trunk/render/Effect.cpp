@@ -2,6 +2,7 @@
 #include "DXMapping.h"
 #include "RenderSystem.h"
 #include "ITexture.h"
+#include "EffectManager.h"
 //
 namespace Euclid
 {
@@ -11,12 +12,19 @@ namespace Euclid
 
 	void Effect::destroy()
 	{
-		if (_effect)
+		if (_references > 0)
 		{
-			_effect->Release();
-			_effect = NULL;
+			--_references;
 		}
-		//delete this;
+		if (_references == 0)
+		{
+			if (_effect)
+			{
+				_effect->Release();
+				_effect = NULL;
+			}
+			EffectManager::getInstancePtr()->onDestroyEffect(this);
+		}
 	}
 
 	bool Effect::begin( u32* count )
@@ -60,7 +68,7 @@ namespace Euclid
 		}
 	}
 
-	void Effect::setTexture( const std::string& name, ITexture *pTexture )
+	void Effect::setTexture( const tstring& name, ITexture *pTexture )
 	{
 		NameTextureMap::iterator it = _nameTextures.find(name);
 		if (it == _nameTextures.end())
@@ -86,37 +94,66 @@ namespace Euclid
 		}
 	}
 
-	void Effect::setMatrix( const std::string& name, const Mat4 *pMatrix )
+	void Effect::setMatrix( const tstring& name, const Mat4 *pMatrix )
 	{
-		_effect->SetMatrix(name.c_str(), &DXMapping::toDXMatrix(*pMatrix));
+		if (NULL == _effect)
+		{
+			return;
+		}
+		_effect->SetMatrixTranspose(name.c_str(), (D3DXMATRIX*)(pMatrix));
 	}
 
-	void Effect::setMatrix( const std::string& name, const Mat4& pMatrix )
+	void Effect::setMatrix( const tstring& name, const Mat4& pMatrix )
 	{
+		if (NULL == _effect)
+		{
+			return;
+		}
 		setMatrix(name, &pMatrix);
 	}
 
-	void Effect::setMatrixArray( const std::string& name, Mat4 *pMtxArray, u32 count )
+	void Effect::setMatrixArray( const tstring& name, Mat4 *pMtxArray, u32 count )
 	{
 		// wooops!	
+		if (NULL == _effect)
+		{
+			return;
+		}
+		HRESULT hr = _effect->SetMatrixTransposeArray(name.c_str(), (D3DXMATRIX*)(pMtxArray), count);
+		if (FAILED(hr))
+		{
+			throw EDX(hr);
+		}
 	}
 
-	void Effect::setTechnique( const std::string& name )
+	void Effect::setTechnique( const tstring& name )
 	{
+		if (NULL == _effect)
+		{
+			return;
+		}
 		_effect->SetTechnique(name.c_str());
 	}
 
-	void Effect::setFloatArray( const std::string& name, float *pFloatArray, u32 count )
+	void Effect::setFloatArray( const tstring& name, const float *pFloatArray, u32 count )
 	{
+		if (NULL == _effect)
+		{
+			return;
+		}
 		_effect->SetFloatArray(name.c_str(), pFloatArray, count);
 	}
 
 	void Effect::commitChanges()
 	{
+		if (NULL == _effect)
+		{
+			return;
+		}
 		_effect->CommitChanges();
 	}
 
-	bool Effect::loadFromFile( const std::string& filename )
+	bool Effect::loadFromFile( const tstring& filename )
 	{
 		DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE;
 #define DEBUG
@@ -131,7 +168,7 @@ namespace Euclid
 
 		// Create an effect from an ASCII or binary effect description
 		//
-		std::string data = filename;
+		tstring data = filename;
 		HRESULT r;
 		LPD3DXBUFFER error;
 		if (FAILED(r = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, &error)))
@@ -162,7 +199,7 @@ namespace Euclid
 				const char* szError = (const char*)pError->GetBufferPointer();
 				std::ostringstream buf;
 				buf<<"D3DXCreateEffect failed, reason:"<<szError;
-				Error(buf.str());
+				Error(buf.str().c_str());
 			}
 			else
 			{
@@ -174,7 +211,7 @@ namespace Euclid
 		return true;
 	}
 
-	void Effect::setValue( const std::string& name, void* data, u32 bytes )
+	void Effect::setValue( const tstring& name, void* data, u32 bytes )
 	{
 		if (_effect)
 		{
@@ -182,30 +219,50 @@ namespace Euclid
 		}
 	}
 
-	void Effect::setInt( const std::string& name, int value )
+	void Effect::setInt( const tstring& name, int value )
 	{
+		if (NULL == _effect)
+		{
+			return;
+		}
 		_effect->SetInt(name.c_str(), value);
 	}
 
-	void Effect::setFloat( const std::string& name, float value )
+	void Effect::setFloat( const tstring& name, float value )
 	{
+		if (NULL == _effect)
+		{
+			return;
+		}
 		_effect->SetFloat(name.c_str(), value);
 	}
 
-	void Effect::setBool( const std::string& name, bool value )
+	void Effect::setBool( const tstring& name, bool value )
 	{
+		if (NULL == _effect)
+		{
+			return;
+		}
 		_effect->SetBool(name.c_str(), value);
 	}
 
-	bool Effect::getBool( const std::string& name )
+	bool Effect::getBool( const tstring& name )
 	{
+		if (NULL == _effect)
+		{
+			return false;
+		}
 		BOOL value;
 		_effect->GetBool(name.c_str(), &value);
 		return value;
 	}
 
-	bool Effect::setVector( const std::string& name, const Vec4* pVector )
+	bool Effect::setVector( const tstring& name, const Vec4* pVector )
 	{
+		if (NULL == _effect)
+		{
+			return false;
+		}
 		HRESULT r = _effect->SetVector(name.c_str(), (D3DXVECTOR4*)pVector);
 		if (D3D_OK == r)
 		{
@@ -215,8 +272,12 @@ namespace Euclid
 		return false;
 	}
 
-	bool Effect::setVector( const std::string& name, Vec4* pVector )
+	bool Effect::setVector( const tstring& name, Vec4* pVector )
 	{
+		if (NULL == _effect)
+		{
+			return false;
+		}
 		HRESULT r = _effect->SetVector(name.c_str(), (D3DXVECTOR4*)pVector);
 		if (D3D_OK == r)
 		{
@@ -226,8 +287,12 @@ namespace Euclid
 		return false;
 	}
 
-	bool Effect::setVectorArray( const std::string& name, const Vec4* pVector, u32 Count )
+	bool Effect::setVectorArray( const tstring& name, const Vec4* pVector, u32 Count )
 	{
+		if (NULL == _effect)
+		{
+			return false;
+		}
 		HRESULT r = _effect->SetVectorArray(name.c_str(), (D3DXVECTOR4*)pVector, Count);
 		if (D3D_OK == r)
 		{
@@ -237,8 +302,12 @@ namespace Euclid
 		return false;
 	}
 
-	bool Effect::setVectorArray( const std::string& name, Vec4* pVector, u32 Count )
+	bool Effect::setVectorArray( const tstring& name, Vec4* pVector, u32 Count )
 	{
+		if (NULL == _effect)
+		{
+			return false;
+		}
 		HRESULT r = _effect->SetVectorArray(name.c_str(), (D3DXVECTOR4*)pVector, Count);
 		if (D3D_OK == r)
 		{
@@ -261,5 +330,22 @@ namespace Euclid
 	void Effect::onRestoreDevice()
 	{
 		loadFromFile(_effectfFile);
+	}
+
+	void Effect::addReference()
+	{
+		++_references;
+	}
+
+	void Effect::_clear()
+	{
+		_effect = NULL;
+		_effectfFile.clear();
+		_references = 0;
+	}
+
+	void Effect::getMatrix( const tstring& name, const Mat4 *pMatrix )
+	{
+		_effect->GetMatrixTranspose(name.c_str(), (D3DXMATRIX*)pMatrix);
 	}
 }

@@ -57,6 +57,7 @@ public:
 
 	void clear();
 	MStatus loadMaterial(MObject& shader,MStringArray& uvsets);
+	MStatus loadMaterialImp(MObject& shader,MStringArray& uvsets);
 	MStatus load(std::vector<face>& faces, std::vector<vertexInfo>& vertInfo, MFloatPointArray& points,
 		MFloatVectorArray& normals,bool opposite = false); 
 	MStatus load_(std::vector<face>& faces, std::vector<vertexInfo>& vertInfo, MFloatPointArray& points,
@@ -67,7 +68,7 @@ public:
 	//internal members
 	MString m_name;
 	bool	m_bAnimated;
-	material* m_pMaterial;
+	std::vector<material*> m_pMaterials;
 	std::vector<vertex> m_vertices;
 	std::vector<face> m_faces;
 };

@@ -43,6 +43,7 @@ target_link_libraries(${ItemName}
   "Math.lib"
   "Base.lib"
   "zlib.lib"
+  tinyxml2.lib
   )
 
 set_target_properties(${ItemName} PROPERTIES 
@@ -51,3 +52,9 @@ DEFINE_SYMBOL "${ItemName}_EXPORTS"
 # COMPILE_DEFINITIONS "NV_PERF_HUD"
 #COMPILE_FLAGS "/Zp1"
 )
+
+add_custom_command(
+  TARGET ${ItemName}
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy "${LIBRARY_OUTPUT_PATH}/debug/${ItemName}.dll" "${LIBRARY_OUTPUT_PATH}/tools/viewer/bin/${ItemName}.dll"
+  )

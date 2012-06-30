@@ -49,6 +49,10 @@ namespace Euler
 			return cos(rValue._radian);
 		}
 
+		static inline Real Tan (const Radian& rValue ) 
+		{
+			return tan(rValue._radian); 
+		}
 		//
 		static inline Real Max(const Real a, const Real b)
 		{
@@ -88,7 +92,10 @@ namespace Euler
 			return Vector3(randomReal(a.x, b.x), randomReal(a.y, b.y), randomReal(a.z, b.z));
 		}
 
-		static inline Radian ATan2 (Real fY, Real fX) { return Radian(atan2(fY,fX)); }
+		static inline Radian ATan2 (Real fY, Real fX) 
+		{
+			return Radian(atan2(fY,fX)); 
+		}
 
 		static inline Radian ACos (Real f) { return Radian(acos(f)); }
 

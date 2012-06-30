@@ -35,6 +35,7 @@ namespace Euler
 		kRot[2][2] = 1.0f-(fTxx+fTyy);
 	}
 
+	//这个函数有问题，用dx的数学库替代了，原因有待查找
 	Quaternion Quaternion::Slerp( Real fT, const Quaternion& rkP, const Quaternion& rkQ, bool shortestPath /*= false*/ )
 	{
 		Real fCos = rkP.Dot(rkQ);

@@ -8,6 +8,7 @@
 #define __ITexture_h__
 
 #include "Common.h"
+class IFlashDXPlayer;
 namespace Euclid
 {
 	class ITexture
@@ -24,7 +25,7 @@ namespace Euclid
 		}
 	public:
 		virtual IDirect3DTexture9*		getTexture()	= 0;
-		virtual bool					loadFromFile(const std::string& fileName)	= 0;
+		virtual bool					loadFromFile(const tstring& fileName)	= 0;
 		virtual bool					loadFromMemory(unsigned char* buffer, unsigned int length) = 0;
 		virtual bool					loadFromRawData(unsigned char* buffer, unsigned int width, unsigned int height, unsigned int pitch, D3DFORMAT format) = 0;
 		virtual bool					setSubData(unsigned int level, unsigned int left, unsigned int top, unsigned int width, unsigned int height, unsigned int pitch, void* pData, D3DFORMAT pf) = 0;
@@ -33,6 +34,7 @@ namespace Euclid
 		virtual void					release() = 0;
 		virtual void onInvalidateDevice() = 0;
 		virtual void onRestoreDevice() = 0;
+		virtual bool update(IFlashDXPlayer* p) = 0;
 	};
 }
 

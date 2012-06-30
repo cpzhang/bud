@@ -5,6 +5,7 @@
 #ifndef __Terrain_h__
 #define __Terrain_h__
 #include "Common.h"
+#include "Mesh.h"
 namespace Euclid
 {
 	class _EuclidExport_ Terrain
@@ -13,10 +14,13 @@ namespace Euclid
 		Terrain();
 		~Terrain();
 
-		bool create(const std::string& fileName);
+		bool create(const tstring& fileName);
+		bool create();
 		void destroy();
 		void clear();
 		void render();
+		int getFaceNumber();
+		int getVertexNumber();
 	private:
 		bool _initBuffer();
 	public:
@@ -31,17 +35,13 @@ namespace Euclid
 			char name[32];
 		};
 
-		struct sFace
-		{
-			u16 index[3];
-		};
-	private:
+	public:
 		char _version;
 		typedef std::vector<sPositionTexture> VertexVec;
 		VertexVec	_vertices;
 		typedef std::vector<sSubMesh> SubMeshVec;
 		SubMeshVec	_submeshes;
-		typedef std::vector<sFace> FaceVec;
+		typedef std::vector<Mesh::sFace> FaceVec;
 		FaceVec	_faces;
 		IBuffer* _vertexBuffer;
 		IBuffer* _indexBuffer;

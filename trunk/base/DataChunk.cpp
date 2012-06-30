@@ -144,7 +144,7 @@ namespace Buddha
 		return _currentChunk->buffer.write(b, s);
 	}
 
-	void ChunkSet::save(std::string& fileName)
+	void ChunkSet::save(const std::string& fileName)
 	{
 		std::ofstream o(fileName.c_str(), std::ios::binary);
 

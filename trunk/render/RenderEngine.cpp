@@ -6,6 +6,7 @@
 #include "TextureManager.h"
 #include "FontManager.h"
 #include "Common.h"
+#include "VDTManager.h"
 namespace Euclid
 {
 	bool RenderEngine::create()
@@ -32,12 +33,17 @@ namespace Euclid
 		//
 		new FontManager;
 
+		//
+		new VDTManager;
 		return true;
 	}
 
 
 	bool RenderEngine::destroy()
 	{
+		//
+		delete VDTManager::getInstancePtr();
+
 		//
 		delete FontManager::getInstancePtr();
 

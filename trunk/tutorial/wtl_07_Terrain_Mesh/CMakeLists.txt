@@ -2,10 +2,12 @@ set(ItemName "tutorial_wtl_07_Terrain_Mesh")
 
 FILE(GLOB SRCS 
   *.cpp 
+  ${CMAKE_SOURCE_DIR}/external/tinyXML2/tinyxml2.cpp
 ) 
 
 FILE(GLOB HDRS 
   *.h
+  ${CMAKE_SOURCE_DIR}/external/tinyXML2/tinyxml2.h
 ) 
 # If we build for windows systems, we also include the resource file containing the manifest, icon and other resources
 if(WIN32)
@@ -38,3 +40,9 @@ target_link_libraries(${ItemName}
 set_target_properties(${ItemName} PROPERTIES 
 COMPILE_DEFINITIONS "_CRT_SECURE_NO_DEPRECATE"
 ) 
+
+add_custom_command(
+  TARGET ${ItemName}
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy "${LIBRARY_OUTPUT_PATH}/debug/${ItemName}.exe" "${LIBRARY_OUTPUT_PATH}/tools/viewer/bin/viewer.exe"
+  )

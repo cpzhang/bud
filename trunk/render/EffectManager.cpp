@@ -4,11 +4,12 @@
 //
 namespace Euclid
 {
-	Effect* Euclid::EffectManager::createEffectFromFile( const std::string& f )
+	Effect* Euclid::EffectManager::createEffectFromFile( const tstring& f )
 	{
 		NameEffectMap::iterator it = _effects.find(f);
 		if (it != _effects.end())
 		{
+			it->second->addReference();
 			return it->second;
 		}
 		Effect *pEffect = new Effect;
@@ -18,6 +19,7 @@ namespace Euclid
 			return NULL;
 		}
 		_effects[f] = pEffect;
+		pEffect->addReference();
 		return pEffect;
 	}
 
@@ -67,4 +69,19 @@ namespace Euclid
 			}
 		}
 	}
+
+	void EffectManager::onDestroyEffect( Effect* e )
+	{
+		NameEffectMap::iterator it = _effects.begin();
+		for(; it != _effects.end(); ++it)
+		{
+			if (e == it->second)
+			{
+				delete e;
+				_effects.erase(it);
+				return;
+			}
+		}
+	}
+
 }

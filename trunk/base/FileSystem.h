@@ -21,15 +21,19 @@ namespace Buddha
 		FileSystem();
 		~FileSystem();
 	public:
-		void getWindowDirectory(std::string& dir);
-		void getModuleFileName(std::string& file);
-		void getDataDirectory(std::string& dir);
-		std::string getDataDirectory();
-		void getBinDirectory(std::string& dir);
-		void getParent(std::string& dir);
+		void getWindowDirectory(tstring& dir);
+		void getModuleFileName(tstring& file);
+		void getDataDirectory(tstring& dir);
+		tstring getDataDirectory();
+		void getBinDirectory(tstring& dir);
+		tstring getParent(const tstring& dir);
+		tstring removeParent(const tstring& dir);
 		//
-		bool isFileExist(std::string& fileName);
-		std::string getFileExtension(const std::string& fileName);
+		bool isFileExist(tstring& fileName);
+		tstring getFileExtension(const tstring& fileName);
+		tstring removeFileExtension(const tstring& fileName);
+		tstring standardFilePath(const tstring& path);
+		void createFolder(const tstring& path);
 	private:
 	private:
 		static const unsigned long Max_Path;

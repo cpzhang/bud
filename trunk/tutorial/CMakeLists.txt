@@ -44,6 +44,7 @@ include_directories(
 # win32 api tutorial
 # add_subdirectory(win32API_00_AccelerationLevel)
 # add_subdirectory(win32API_01_Dbg)
+# add_subdirectory(win32API_02_FindFirstChangeNotification)
 
 # net tutorial
 # add_subdirectory(net_00_empty) 
@@ -81,17 +82,84 @@ include_directories(
 # add_subdirectory(cplusplus_09_const)
 # add_subdirectory(cplusplus_10_template)
 # add_subdirectory(cplusplus_11_default_parameter)
-
+# add_subdirectory(cplusplus_12_virtual_private)
 # wtl tutorial
 # add_subdirectory(wtl_00_hello)
+# add_subdirectory(wtl_00_hello_formview)
 # add_subdirectory(wtl_01_clear)
+# add_subdirectory(wtl_01_clear_form)
 # add_subdirectory(wtl_02_triangle)
+# add_subdirectory(wtl_02_triangle_form)
 # add_subdirectory(wtl_03_fx)
 # add_subdirectory(wtl_04_freetype)
 # add_subdirectory(wtl_00_hello_visible)
-add_subdirectory(wtl_05_mz)
-add_subdirectory(wtl_06_treeview)
-add_subdirectory(wtl_07_Terrain_Mesh)
+# add_subdirectory(wtl_05_mz)
+# add_subdirectory(wtl_06_treeview)
+# add_subdirectory(wtl_07_Terrain_Mesh)
+# add_subdirectory(wtl_08_flash)
+# add_subdirectory(wtl_09_mz_withoutMaterial)
+# add_subdirectory(wtl_10_mz_group)
+# add_subdirectory(wtl_11_mz_group_enitty_mesh)
+# add_subdirectory(wtl_12_mz_skeleton)
+# add_subdirectory(wtl_13_freetype)
+# add_subdirectory(wtl_14_mz_skin)
+# add_subdirectory(wtl_15_list)
+# add_subdirectory(wtl_16_mz_skin_split)
+# add_subdirectory(wtl_17_model_preview)
+# add_subdirectory(wtl_18_model_material)
+# add_subdirectory(wtl_19_model_animation)
+# add_subdirectory(wtl_20_model_material_animation)
+# add_subdirectory(wtl_21_model_terrain)
+# add_subdirectory(wtl_21_model_terrain_form)
+# add_subdirectory(wtl_22_terrain)
+# add_subdirectory(wtl_23_group)
+# add_subdirectory(wtl_24_CWindowImp)
+# add_subdirectory(wtl_25_CDialogImp)
+# add_subdirectory(wtl_26_CListBox)
+# add_subdirectory(wtl_27_CContainedWindow)
+# add_subdirectory(wtl_28_ChainMsgMap)
+# add_subdirectory(wtl_29_CFrameWindowImpl)
+# add_subdirectory(wtl_30_CUpdateUI)
+# add_subdirectory(wtl_31_MultiPaneStatus)
+# add_subdirectory(wtl_32_CWinDataExchange)
+# add_subdirectory(wtl_33_SubclassWindow)
+# add_subdirectory(wtl_34_COwnerDraw)
+# add_subdirectory(wtl_35_COwnerDraw)
+# add_subdirectory(wtl_36_CTreeViewCtrlEx)
+# add_subdirectory(wtl_37_CBitmapButton)
+# add_subdirectory(wtl_38_CCheckListViewCtrl)
+# add_subdirectory(wtl_39_CHyperLink)
+# add_subdirectory(wtl_40_CSplitterImpl)
+# add_subdirectory(wtl_41_CPaneContainer)
+# add_subdirectory(wtl_42_CPropertySheetWindow)
 
+# add_subdirectory(ModelViewer_00_hello)
+# add_subdirectory(ModelViewer_01_travel)
+# add_subdirectory(SceneEditor_00_hello)
 # assembly language
 # add_subdirectory(assembly_00_MMX)
+
+# flash
+# add_subdirectory(flash_01_hello)
+
+# terrain
+# add_subdirectory(Terrain_00_hello)
+# add_subdirectory(Terrain_01_heightmap)
+# add_subdirectory(Terrain_02_geomipmapping)
+
+# programmingWindows
+# add_subdirectory(ProgrammingWindows/00_hello)
+# add_subdirectory(ProgrammingWindows/01_unicode)
+
+# Ä£ÐÍÔ¤ÀÀ£¬±à¼­
+# add_subdirectory(Model_00_hello)
+# add_subdirectory(Model_01_clear)
+# add_subdirectory(Model_02_triangle)
+# add_subdirectory(Model_03_freetype)
+# add_subdirectory(Model_04_treeview)
+add_subdirectory(Model_05_preview)
+
+# fmod
+# add_subdirectory(fmod_00_hello)
+# add_subdirectory(fmod_01_new)
+# add_subdirectory(fmod_02_old)

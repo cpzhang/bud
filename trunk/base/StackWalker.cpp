@@ -3,7 +3,7 @@ namespace Buddha
 {
 
 	StackWalker::StackWalker()
-		:m_szDumpFileName("crash.dmp"),
+		:m_szDumpFileName(TEXT("crash.dmp")),
 		m_previousFilter(NULL),
 		_dumpCallBack(NULL)
 	{
@@ -30,14 +30,11 @@ namespace Buddha
 
 	LONG WINAPI StackWalker::UnhandledExceptionFilter( PEXCEPTION_POINTERS pExceptionInfo )
 	{
-		MessageBox(NULL, "lucky dog", "woops", MB_OK);
 		if (pExceptionInfo == NULL) 
 		{
-			MessageBox(NULL, "null exception", "woops", MB_OK);
 			// Generate exception to get proper context in dump
 			__try 
 			{
-				OutputDebugString(("raising exception\r\n"));
 				RaiseException(EXCEPTION_BREAKPOINT, 0, 0, NULL);
 			} 
 			__except(GetInstancePtr()->DumpMiniDump(GetExceptionInformation()),

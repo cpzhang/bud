@@ -66,7 +66,7 @@ namespace Buddha
 
 		bool write(void* b, size_t s);
 
-		void save(std::string& fileName);
+		void save(const std::string& fileName);
 
 		MemoryFileWriter* getCurrentMemoryFileWriter();
 	};

@@ -321,7 +321,7 @@ MStatus MWriter::write()
 	int istart = 0;
 	std::vector<MODELVERTEX_19> vVertexes;
 	std::vector<MODELFACE> vFaces;
-	std::vector<SUBMESH> vSubmeshes;
+	std::vector<sSubMesh_MultiMaterial> vSubmeshes;
 
 	if(m_pMesh && m_pMesh->m_pSkeleton)
 	{
@@ -368,18 +368,23 @@ MStatus MWriter::write()
 		SubMesh * subMesh = m_pMesh->m_submeshes[i];
 
 		int matId = -1;
+		std::vector<int> matVec;
 		for(int l = 0;l< m_pMaterialSet->m_materials.size();l++)
 		{	
 			material* mat = m_pMaterialSet->m_materials[l];
-			if (mat == subMesh->m_pMaterial)
+			for (size_t m = 0; m != subMesh->m_pMaterials.size(); ++m)
 			{
-				matId = l;
-				break;
+				if (mat == subMesh->m_pMaterials[m])
+				{
+					matVec.push_back(l);
+				}
 			}
 		}
 
-		SUBMESH sm;
-		sm.matId = matId;
+		sSubMesh_MultiMaterial sm;
+		sm.matNum = matVec.size();
+		sm.mat0 = matVec.size() > 0 ? matVec[0] : -1;
+		sm.mat1 = matVec.size() > 1 ? matVec[1] : -1;
 		sm.vstart = vstart;
 		sm.vcount = subMesh->m_vertices.size();
 		sm.istart = istart;
@@ -476,7 +481,8 @@ MStatus MWriter::write()
 
 	// 版本号
 	writeChunk.beginChunk("MVER");	
-	uint ver = 29;
+	uint ver = 30;
+	//版本30，支持多层材质，目前最多双层，但很容易扩展
 	//版本29，增加uv旋转缩放关键帧
 	//(登陆动画版本竟然是28！)
 	//版本27，增加additiveLayer
@@ -496,12 +502,14 @@ MStatus MWriter::write()
 	//writeSequence(writeChunk.getCurrentMemoryFileWriter(),vSubmeshes);
 	for(size_t i = 0;i < vSubmeshes.size();i++)
 	{
-		SUBMESH &sm = vSubmeshes[i];
-		SUBMESH_BASE sb;
+		sSubMesh_MultiMaterial &sm = vSubmeshes[i];
+		SUBMESH_BASE_MultiMaterial sb;
 		sb.animated = sm.animated;
 		sb.icount = sm.icount;
 		sb.istart = sm.istart;
-		sb.matId = sm.matId;
+		sb.matNum = sm.matNum;
+		sb.mat0 = sm.mat0;
+		sb.mat1 = sm.mat1;
 		sb.vcount = sm.vcount;
 		sb.vstart = sm.vstart;
 		sb.nameLen = strlen(sm.name);

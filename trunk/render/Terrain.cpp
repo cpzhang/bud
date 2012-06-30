@@ -2,8 +2,9 @@
 #include "RenderSystem.h"
 #include "Buffer.h"
 #include "BufferManager.h"
-#include "EffectManager.h"
-#include "Effect.h"
+//#include "EffectManager.h"
+//#include "Effect.h"
+#include "MZ.h"
 //
 namespace Euclid
 {
@@ -17,12 +18,9 @@ namespace Euclid
 
 	}
 
-	bool Terrain::create( const std::string& fileName )
+	bool Terrain::create( const tstring& fileName )
 	{
-		std::string data;
-		Buddha::FileSystem::getInstancePtr()->getDataDirectory(data);
-		data += fileName;
-		std::ifstream f(data.c_str(), std::ios::binary);
+		std::ifstream f(fileName.c_str(), std::ios::binary);
 		if (!f.good())
 		{
 			return false;
@@ -72,13 +70,19 @@ namespace Euclid
 				break;
 			case 'MFAC':
 				{
-					_faces.resize(s / sizeof(sFace));
+					_faces.resize(s / sizeof(Mesh::sFace));
 					f.read((char*)&_faces[0], s);
 				}
 				break;
 			}
 		}
 
+		//_initBuffer();
+		return true;
+	}
+
+	bool Terrain::create( )
+	{
 		_initBuffer();
 		return true;
 	}
@@ -119,9 +123,9 @@ namespace Euclid
 		}
 		//
 		{
-			_indexBuffer = BufferManager::getInstancePtr()->createIndexBuffer(_faces.size() * sizeof(sFace), eUsage_Null, eFormat_Index16, ePool_Manager);
+			_indexBuffer = BufferManager::getInstancePtr()->createIndexBuffer(_faces.size() * sizeof(Mesh::sFace), eUsage_Null, eFormat_Index16, ePool_Manager);
 			void* data = _indexBuffer->lock(0, 0, Euclid::eLock_Null);
-			memcpy(data, &_faces[0], _faces.size() * sizeof(sFace));
+			memcpy(data, &_faces[0], _faces.size() * sizeof(Mesh::sFace));
 			_indexBuffer->unLock();
 		}
 
@@ -138,5 +142,15 @@ namespace Euclid
 			const sSubMesh& s = _submeshes[i];
 			RenderSystem::getInstancePtr()->drawIndexedPrimitive(ePrimitive_TriangleList, 0, 0, s.vcount, s.istart, s.icount / 3);
 		}
+	}
+
+	int Terrain::getFaceNumber()
+	{
+		return _faces.size();
+	}
+
+	int Terrain::getVertexNumber()
+	{
+		return _vertices.size();
 	}
 }

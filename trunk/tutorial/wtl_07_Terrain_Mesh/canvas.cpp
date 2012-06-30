@@ -1,8 +1,13 @@
 #include "canvas.h"
 #include "global.h"
 #include <sstream>
+#include "tinyxml2.h"
 void Canvas::_renderGeometry()
 {
+	if (_vb == NULL || _material == NULL)
+	{
+		return;
+	}
 	RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->setStreamSource(0, _vb, 0, _material->getStride());
 	_material->apply();
 	u32 passes = 0;
@@ -16,16 +21,8 @@ void Canvas::_renderGeometry()
 	_fx->end();
 
 	//
-	// vertex declaration
-	if (_font)
-	{
-		std::ostringstream ss;
-		ss<<"FPS "<<_fps<<std::endl;
-		_font->render(Vec3(10, 10, 0), Vec3(1, 0, 0), Euclid::Color::Red, ss.str());
-	}
-
-	//
 	//RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->setRenderState(Euclid::eRenderState_FillMode, Euclid::eFillMode_WireFrame);
+	if(_isTerrainOK)
 	{
 		u32 passes = 0;
 		_fxTerrain->begin(&passes);
@@ -37,11 +34,26 @@ void Canvas::_renderGeometry()
 		}
 		_fxTerrain->end();
 	}
+
+	// ÎÄ×Ö×îºó»­
+	// vertex declaration
+	if (_font)
+	{
+		std::ostringstream ss;
+		ss<<"FPS: "<<_fps<<std::endl;
+		if (_isTerrainOK)
+		{
+			ss<<"vertices: "<<_terrain.getVertexNumber()<<std::endl;
+			ss<<"faces: "<<_terrain.getFaceNumber()<<std::endl;
+		}
+		_font->render(Vec3(10, 10, 0), Vec3(1, 0, 0), Euclid::Color::Red, ss.str());
+	}
 	//RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->setRenderState(Euclid::eRenderState_FillMode, Euclid::eFillMode_Solid);
 }
 
 void Canvas::_clear()
 {
+	_isOK = false;
 	_material = NULL;
 	_vb = NULL;
 	_fx = NULL;
@@ -49,7 +61,7 @@ void Canvas::_clear()
 	_fps = 0.0f;
 	_fx = NULL;
 	_fxTerrain = NULL;
-	_texTerrain = NULL;
+	_clearTerrain();
 }
 
 bool Canvas::_create()
@@ -76,30 +88,26 @@ bool Canvas::_create()
 	_fx = RenderEngineImp::getInstancePtr()->getRenderEngine()->getEffectManager()->createEffectFromFile("shader\\Position.fx");
 
 	//
-	_fxTerrain = RenderEngineImp::getInstancePtr()->getRenderEngine()->getEffectManager()->createEffectFromFile("shader\\PositionTexture.fx");
-	//
 	RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\simkai.ttf"), 18, Euclid::eFontProperty_Normal, "free");
 	_font = RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont(std::string("free"));
 
 	//
-	_terrain.create("terrain\\00.terrain");
+	_fxTerrain = RenderEngineImp::getInstancePtr()->getRenderEngine()->getEffectManager()->createEffectFromFile("shader\\aPT.fx");
 
-	//
-	_texTerrain = RenderEngineImp::getInstancePtr()->getRenderEngine()->getTextureManager()->createTextureFromFile("terrain\\00.dds");
-	_fxTerrain->setTexture("g_MeshTexture", _texTerrain);
 	//
 	_camera.setPosition(Vec3(0.0f, 0.0f, 50.0f));
 	_cameraController.attachCamera(&_camera);
 
 	//
 	RenderEngineImp::getInstancePtr()->setCanvas(this);
+	_isOK = true;
 	//
 	return true;
 }
 
 bool Canvas::_isInitialized()
 {
-	return _material != NULL && _vb != NULL;
+	return _isOK;
 }
 
 void Canvas::render()
@@ -154,13 +162,7 @@ void Canvas::destroy()
 		delete _vb;
 		_vb = NULL;
 	}
-	if (_texTerrain)
-	{
-		_texTerrain->destroy();
-		_texTerrain = NULL;
-	}
-
-	_terrain.destroy();
+	_destroyTerrain();
 	RenderEngineImp::getInstancePtr()->destroy();
 	delete RenderEngineImp::getInstancePtr();
 
@@ -213,7 +215,7 @@ void Canvas::update()
 	if (_fxTerrain)
 	{
 		Mat4 m = _camera.getProjectionMatrix() * _camera.getViewMatrix() * _cameraController.getMatrix();
-		_fxTerrain->setMatrix("g_mWorldViewProjection", m);
+		_fxTerrain->setMatrix("gWorldViewProj", m);
 	}
 }
 
@@ -301,4 +303,73 @@ LRESULT Canvas::OnMouseWheel( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 	short delta = HIWORD(wParam);
 	_cameraController.onMouseWheel(delta);
 	return 0;
+}
+
+void Canvas::changeTerrainFile( const std::string& fileName )
+{
+	_destroyTerrain();
+	_clearTerrain();
+	tinyxml2::XMLDocument doc;
+	if (tinyxml2::XML_SUCCESS != doc.LoadFile(fileName.c_str()))
+	{
+		return;
+	}
+	tinyxml2::XMLElement* r = doc.RootElement();
+	if (NULL == r)
+	{
+		return;
+	}
+	tinyxml2::XMLElement* mes = r->FirstChildElement("mesh");
+	if (NULL == mes)
+	{
+		return;
+	}
+	tinyxml2::XMLElement* mat = r->FirstChildElement("material");
+	if (NULL == mat)
+	{
+		return;
+	}
+	_terrainMeshName = mes->Attribute("file");
+	_terrainMaterialName = mat->Attribute("file");
+	_terrainFileName = fileName;
+	_createTerrain();
+}
+
+void Canvas::_clearTerrain()
+{
+	_texTerrain = NULL;
+	_terrainFileName.clear();
+	_terrainMaterialName.clear();
+	_terrainMeshName.clear();
+	_isTerrainOK = false;
+}
+
+bool Canvas::_createTerrain()
+{
+	//
+	if (!_terrain.create(_terrainMeshName))
+	{
+		return false;
+	}
+
+	//
+	_texTerrain = RenderEngineImp::getInstancePtr()->getRenderEngine()->getTextureManager()->createTextureFromFile(_terrainMaterialName);
+	if (NULL == _texTerrain)
+	{
+		return false;
+	}
+	_fxTerrain->setTexture("g_Texture0", _texTerrain);	
+
+	_isTerrainOK = true;
+	return true;
+}
+
+void Canvas::_destroyTerrain()
+{
+	if (_texTerrain)
+	{
+		_texTerrain->destroy();
+		_texTerrain = NULL;
+	}
+	_terrain.destroy();
 }

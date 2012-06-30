@@ -88,10 +88,25 @@ LRESULT CMainFrame::OnFileExit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCt
 	PostMessage(WM_CLOSE);
 	return 0;
 }
-
+LRESULT CMainFrame::OnFileOpen(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+	// TODO: add code to initialize document
+	CFileDialog fd(true, "xml", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "模型配置文件(.xml)");
+	if (fd.DoModal() == IDOK)
+	{
+		std::string buf(512, 0);
+		buf = fd.m_szFileName;
+		if (!buf.empty() && _canvas)
+		{
+			_canvas->changeTerrainFile(buf);
+		}
+	}
+	return 0;
+}
 LRESULT CMainFrame::OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// TODO: add code to initialize document
+#if 0
 	CColorDialog cd;
 	if (cd.DoModal() == IDOK)
 	{
@@ -103,6 +118,7 @@ LRESULT CMainFrame::OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl
 			RenderEngineImp::getInstancePtr()->setClearColor(e);
 		}
 	}
+#endif
 
 	//
 	return 0;

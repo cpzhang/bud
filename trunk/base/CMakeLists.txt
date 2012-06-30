@@ -27,3 +27,8 @@ set_target_properties(${ItemName} PROPERTIES
   DEFINE_SYMBOL "${ItemName}_EXPORTS"
   COMPILE_DEFINITIONS "_CRT_SECURE_NO_DEPRECATE"
   )
+add_custom_command(
+  TARGET ${ItemName}
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy "${LIBRARY_OUTPUT_PATH}/debug/${ItemName}.dll" "${LIBRARY_OUTPUT_PATH}/tools/viewer/bin/${ItemName}.dll"
+  )

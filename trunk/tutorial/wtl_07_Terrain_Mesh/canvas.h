@@ -26,12 +26,18 @@ public:
 	//
 	LRESULT OnMouseMove(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnMouseWheel(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+
+public:
+	void changeTerrainFile(const std::string& fileName);
 private:
 	void _renderGeometry();
 	void _clear();
+	void _clearTerrain();
 	bool _create();
+	bool _createTerrain();
 	bool _isInitialized();
 	void _calcFPS();
+	void _destroyTerrain();
 	//
 private:
 	HWND					_hwnd;
@@ -40,9 +46,14 @@ private:
 	Euclid::Effect*			_fx;
 	Euclid::FreeType*		_font;
 	float					_fps;
+	std::string				_terrainFileName;
+	std::string				_terrainMeshName;
+	std::string				_terrainMaterialName;
 	Euclid::Terrain			_terrain;
 	Euclid::Camera			_camera;
 	Euclid::CameraControllerThirdPerson _cameraController;
 	Euclid::Effect*			_fxTerrain;
 	Euclid::ITexture*		_texTerrain;
+	bool					_isTerrainOK;
+	bool					_isOK;
 };

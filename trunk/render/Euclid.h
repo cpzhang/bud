@@ -22,4 +22,7 @@
 #include "ITexture.h"
 #include "FontManager.h"
 #include "Terrain.h"
+#include "MZ.h"
+#include "Mesh.h"
+#include "Skeleton.h"
 #endif // __Euclid_h__

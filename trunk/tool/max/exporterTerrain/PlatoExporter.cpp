@@ -4,7 +4,7 @@
 
 PlatoExporter::PlatoExporter()
 {
-	_exts.push_back("terrain");
+	_exts.push_back("mesh");
 }
 
 PlatoExporter::~PlatoExporter()
@@ -98,9 +98,9 @@ BOOL PlatoExporter::SupportsOptions( int ext, DWORD options )
 const SClass_ID PlatoExporter::tSID(SCENE_EXPORT_CLASS_ID);
 const Class_ID PlatoExporter::tCID(tMaxExporterCID);
 const int PlatoExporter::tVersion(1);
-const std::string PlatoExporter::tName("Plato Exporter of Terrain");
-const std::string PlatoExporter::tLongDesc("Plato 3D Max Exporter of Terrain");
-const std::string PlatoExporter::tShortDesc("Plato Exporter of Terrain");
+const std::string PlatoExporter::tName("Plato Exporter of Mesh");
+const std::string PlatoExporter::tLongDesc("Plato 3D Max Exporter of Mesh");
+const std::string PlatoExporter::tShortDesc("Plato Exporter of Mesh");
 const std::string PlatoExporter::tAuthor("cpzhang");
 const std::string PlatoExporter::tCopyRight("2012 Plato");
 const std::string PlatoExporter::tCategory("Plato");

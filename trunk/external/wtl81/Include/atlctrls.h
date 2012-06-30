@@ -6514,7 +6514,7 @@ public:
 		return TBase::Create(GetWndClassName(), hWndParent, rect.m_lpRect, szWindowName, dwStyle, dwExStyle, MenuOrID.m_hMenu, lpCreateParam);
 	}
 
-// Attributes
+	// Attributes
 	static LPCTSTR GetWndClassName()
 	{
 		return TRACKBAR_CLASS;

@@ -28,9 +28,9 @@ namespace Euclid
 		return tex;
 	}
 
-	ITexture* TextureManager::createTextureFromFile(const std::string& fileName )
+	ITexture* TextureManager::createTextureFromFile(const tstring& fileName )
 	{
-		std::map<std::string, ITexture*>::iterator it = _textures.find(fileName);
+		std::map<tstring, ITexture*>::iterator it = _textures.find(fileName);
 		if (it != _textures.end())
 		{
 			it->second->addReference();
@@ -83,7 +83,7 @@ namespace Euclid
 
 	void TextureManager::onReleaseTexture( ITexture* tex )
 	{
-		std::map<std::string, ITexture*>::iterator it = _textures.begin();
+		std::map<tstring, ITexture*>::iterator it = _textures.begin();
 		for(; it != _textures.end(); ++it)
 		{
 			if (tex == it->second)

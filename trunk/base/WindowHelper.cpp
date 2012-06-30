@@ -63,13 +63,13 @@ namespace Buddha
 
 	void WindowHelper::setAccelerationLevel(int level)
 	{
-		char originalLevel[10]={0};
+		TCHAR originalLevel[10]={0};
 
-		char regDevicePath[1024]={0};
-		char regDeviceKeyName[]="Acceleration.Level";
+		TCHAR regDevicePath[1024]={0};
+		TCHAR regDeviceKeyName[]= TEXT("Acceleration.Level");
 		DISPLAY_DEVICE  dv;
 		HKEY hKey;
-		char *p;
+		TCHAR *p;
 		int i;
 
 		ZeroMemory(&dv,sizeof(DISPLAY_DEVICE));
@@ -82,8 +82,8 @@ namespace Buddha
 			dv.DeviceKey[i++]=toupper(dv.DeviceKey[i]);
 		}
 
-		p=(char *)strstr(dv.DeviceKey,"\\SYSTEM");
-		lstrcpy(regDevicePath,p + 1);
+		p=(TCHAR*)_tcsstr(dv.DeviceKey, TEXT("\\SYSTEM"));
+		StringCchCopy(regDevicePath, 1024, p + 1);
 
 		if(ERROR_SUCCESS== RegOpenKeyEx(HKEY_LOCAL_MACHINE,regDevicePath,0,KEY_ALL_ACCESS,&hKey))
 		{
@@ -97,13 +97,13 @@ namespace Buddha
 
 	int WindowHelper::getAccelerationLevel()
 	{
-		char originalLevel[10]={0};
+		TCHAR originalLevel[10]={0};
 
-		char regDevicePath[1024]={0};
-		char regDeviceKeyName[]="Acceleration.Level";
+		TCHAR regDevicePath[1024]={0};
+		TCHAR regDeviceKeyName[]= TEXT("Acceleration.Level");
 		DISPLAY_DEVICE  dv;
 		HKEY hKey;
-		char *p;
+		TCHAR *p;
 		int i;
 
 		ZeroMemory(&dv,sizeof(DISPLAY_DEVICE));
@@ -116,8 +116,8 @@ namespace Buddha
 			dv.DeviceKey[i++]=toupper(dv.DeviceKey[i]);
 		}
 
-		p=(char *)strstr(dv.DeviceKey,"\\SYSTEM");
-		lstrcpy(regDevicePath,p + 1);
+		p=(TCHAR*)_tcsstr(dv.DeviceKey, TEXT("\\SYSTEM"));
+		StringCchCopy(regDevicePath, 1024, p + 1);
 
 		if(ERROR_SUCCESS== RegOpenKeyEx(HKEY_LOCAL_MACHINE,regDevicePath,0,KEY_ALL_ACCESS,&hKey))
 		{

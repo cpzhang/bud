@@ -76,6 +76,11 @@ namespace Euler
 		}
 
 		//
+		inline Radian operator / ( Real f ) const 
+		{
+			return Radian ( _radian / f );
+		}
+		//
 		Radian operator * ( const Radian& f ) const
 		{
 			return Radian ( _radian * f._radian );

@@ -2,6 +2,15 @@
 
 namespace Buddha
 {
+	bool IsRealEqual(const float& a, const float& b)
+	{
+		if (a > b)
+		{
+			return (a - b) <= 0.0001f;
+		}
+		return (b - a) <= 0.0001f;
+	}
+
 	Exception::Exception()
 		:_reason("unkonwn exception")
 	{

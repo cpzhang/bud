@@ -29,6 +29,7 @@ namespace Euclid
 		RGBA getARGB() const;
 
 		void setABGR(u32 i);
+		void setRGBA(u32 i);
 		void random();
 
 	public:
@@ -64,6 +65,26 @@ namespace Euclid
 			b = v;
 
 			return *this;
+		}
+		inline Color3 operator = (const Color3 v)
+		{
+			r = v.r;
+			g = v.g;
+			b = v.b;
+
+			return *this;
+		}
+		inline Color3 operator * (const Real v) const
+		{
+			return Color3(r*v, g*v, b*v);
+		}
+		inline Color3 operator + (const Color3& c)
+		{
+			return Color3(r + c.r, g + c.g, b + c.b);
+		}
+		friend Color3 operator * (const Real v, const Color3& c)
+		{
+			return Color3(c.r*v, c.g*v, c.b*v);
 		}
 	public:
 		static const Color3 Black;

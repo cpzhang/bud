@@ -6,4 +6,6 @@ include_directories(
 set(MaxSDK "d:/Autodesk/3ds Max 2012 SDK/maxsdk")
 SET(MaxPlugins  "d:/Autodesk/3ds Max 2012/plugins/")
 add_subdirectory(exporterTerrain)
+add_subdirectory(exporterMaterial)
+add_subdirectory(exporter)
 # add_subdirectory(photoshop)

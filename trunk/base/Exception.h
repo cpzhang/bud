@@ -7,6 +7,8 @@
 #include "Common.h"
 namespace Buddha
 {
+	bool _BUHHDA_EXPORT_ IsRealEqual(const float& a, const float& b);
+
 	class _BUHHDA_EXPORT_ Exception : public std::exception
 	{
 	protected:

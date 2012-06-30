@@ -9,7 +9,7 @@ namespace Euclid
 		m_qtnOrientation = Quaternion::IDENTITY;
 		m_fNearDistance = 1.0f;
 		m_fFarDistance = 10000.0;
-		m_radFOVy = Radian(Euler::PI / 4.0f);
+		m_radFOVy = Radian(Euler::PI / 2.0f);
 		m_dirty = true;
 		m_mtxView = Mat4::IDENTITY;
 		m_mtxProjection = Mat4::IDENTITY;
@@ -64,7 +64,7 @@ namespace Euclid
 		float width = vp.Width;
 		float height = vp.Height;
 
-		D3DXMatrixPerspectiveFovRH(&m, /*m_radFOVy._radian*/D3DX_PI * 0.45, width / height, m_fNearDistance, m_fFarDistance);
+		D3DXMatrixPerspectiveFovRH(&m, m_radFOVy._radian, width / height, m_fNearDistance, m_fFarDistance);
 		m_mtxProjection = DXMapping::fromDXMatrix(m);
 	}
 
@@ -260,5 +260,33 @@ namespace Euclid
 		m_qtnOrientation = y * p;
 		m_dirty = true;
 	}
+	Ray Camera::getCameraToViewportRay(float x,float y) const
+	{
+		D3DVIEWPORT9 vp;
+		RenderSystem::getInstancePtr()->getViewPort(&vp);
+		float width = vp.Width;
+		float height = vp.Height;
 
+		float screenX = x / width;
+		float screenY = y / height;
+		float centeredScreenX = (screenX - 0.5f);
+		float centeredScreenY = (0.5f - screenY);
+
+		float normalizedSlope = Euler::Basic::Tan(m_radFOVy / 2);
+		float viewportYToWorldY = normalizedSlope * m_fNearDistance * 2;
+		float viewportXToWorldX = viewportYToWorldY * (width / height);
+
+		Vec3 rayDirection, rayOrigin;
+
+		// From camera centre
+		rayOrigin = m_vPosition;
+		// Point to perspective projected position
+		rayDirection.x = centeredScreenX * viewportXToWorldX;
+		rayDirection.y = centeredScreenY * viewportYToWorldY;
+		rayDirection.z = -m_fNearDistance;
+		rayDirection = m_qtnOrientation * rayDirection;
+		rayDirection.normalise();
+
+		return Ray(rayDirection, rayOrigin);
+	} 
 }

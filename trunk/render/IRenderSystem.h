@@ -113,6 +113,17 @@ namespace Euclid
 			ITexture* tex
 			//IDirect3DSurface9 *pRenderTarget
 			) = 0;
+
+		//
+		virtual Vec3* objectSpace2ScreenSpace(
+			__inout  Vec3 *pOut,
+			__in     const Vec3 *pV,
+			__in     const sViewPort *pViewport,
+			__in     const Mat4 *pProjection,
+			__in     const Mat4 *pView,
+			__in     const Mat4 *pWorld
+			) = 0;
+
 	};
 }
 

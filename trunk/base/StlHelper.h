@@ -88,5 +88,14 @@ template<class T,class TS>void STLDeleteAssociateSequence(T& t)
 	}
 	t.clear();
 }
+// void ascii2unicode(const char* buffer, tstring& result)
+// {
+// 	size_t len = strlen(buffer);
+// 	size_t wlen = MultiByteToWideChar(CP_ACP, 0, buffer, int(len), NULL, 0);
+// 	wchar_t *wBuf = new wchar_t[wlen + 1];
+// 	MultiByteToWideChar(CP_ACP, 0, buffer, int(len), wBuf, int(wlen));
+// 	result = wBuf;
+// 	delete[] wBuf;
+// }
 
 #endif // __StlHelper_h__

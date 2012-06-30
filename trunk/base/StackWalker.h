@@ -33,7 +33,7 @@ namespace Buddha
 		static LONG WINAPI UnhandledExceptionFilter(PEXCEPTION_POINTERS pExceptionInfo);
 	private:
 		LPTOP_LEVEL_EXCEPTION_FILTER m_previousFilter;
-		std::string m_szDumpFileName;
+		tstring m_szDumpFileName;
 		IDumpCallBack*	_dumpCallBack;
 	};
 }

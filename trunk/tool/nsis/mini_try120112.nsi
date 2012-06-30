@@ -147,6 +147,7 @@ SectionEnd
 Section "create shortcut on desktop"
   SetShellVarContext all
   CreateShortCut "$DESKTOP\${Game_Name}.lnk" "$INSTDIR\${Game_Name}.exe"
+  CreateShortCut "$QUICKLAUNCH\${Game_Name}.lnk" "$INSTDIR\${Game_Name}.exe"
   SetShellVarContext current
 SectionEnd
 

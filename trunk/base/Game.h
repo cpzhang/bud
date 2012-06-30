@@ -96,7 +96,7 @@ namespace Buddha
 		bool adjustClientArea();
 
 		//
-		void setWindowTitle(const std::string& title);
+		void setWindowTitle(const tstring& title);
 
 		//
 		bool isActive();
@@ -119,10 +119,10 @@ namespace Buddha
 		static std::string	_dragDropFile;
 
 		//
-		std::string		_windowName;
+		tstring		_windowName;
 
 		//
-		std::string		_windowTitle;
+		tstring		_windowTitle;
 
 		//
 		unsigned int	_clientWidth;

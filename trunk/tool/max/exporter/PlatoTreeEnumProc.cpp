@@ -117,7 +117,8 @@ void PlatoTreeEnumProc::write()
 	//============================================================================
 	// 版本号
 	cs.beginChunk("MVER");	
-	uint ver = 29;
+	uint ver = 30;//支持多个材质球
+	//uint ver = 29;
 	cs.write(&ver,sizeof(ver));
 	cs.endChunk();
 
@@ -190,9 +191,15 @@ void PlatoTreeEnumProc::write()
 			cs.write(&lighting,sizeof(lighting));
 
 			// ambient diffuse specular emissive
-			cs.write(&mat->m_ambient,sizeof(mat->m_ambient));
-			cs.write(&mat->m_diffuse,sizeof(mat->m_diffuse));
-			cs.write(&mat->m_specular,sizeof(mat->m_specular));
+			Color ambient;
+			cs.write(&ambient,sizeof(ambient));
+			//
+			Color diffuse;
+			cs.write(&diffuse,sizeof(diffuse));
+			//
+			Color specular;
+			cs.write(&specular,sizeof(specular));
+			//
 			cs.write(&mat->m_emissive,sizeof(mat->m_emissive));
 			uchar iTrans = true;
 			cs.write(&iTrans,sizeof(iTrans));

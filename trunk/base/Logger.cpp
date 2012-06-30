@@ -5,9 +5,9 @@ namespace Buddha
 {
 	Logger::Logger()
 	{
-		std::string path;
+		tstring path;
 		FileSystem::getInstancePtr()->getBinDirectory(path);
-		path += "\\log.html";
+		path += TEXT("\\log.html");
 		
 		_path = path;
 		_log.open(path.c_str());
@@ -21,7 +21,7 @@ namespace Buddha
 		_log.close();
 	}
 
-	void Logger::add( const std::string& content, eLevel level, bool newLine /*= true*/ )
+	void Logger::add( const char* content, eLevel level, bool newLine /*= true*/ )
 	{
 		switch(level)
 		{
@@ -56,12 +56,12 @@ namespace Buddha
 		std::ostringstream buf;
 		buf<<content;
 
-		add(buf.str(), level, newLine);
+		add(buf.str().c_str(), level, newLine);
 	}
 
 	void Logger::add(std::ostringstream& content, eLevel level, bool newLine /*= true*/ )
 	{
-		add(content.str(), level, newLine);
+		add(content.str().c_str(), level, newLine);
 	}
 
 	void Logger::addDate()
@@ -72,7 +72,7 @@ namespace Buddha
 		_log<<"["<<t.wYear<<"-"<<t.wMonth<<"-"<<t.wDay<<" "<<t.wHour<<":"<<t.wMinute<<":"<<t.wSecond<<"]";
 	}
 
-	std::string Logger::getPath()
+	tstring Logger::getPath()
 	{
 		return _path;
 	}

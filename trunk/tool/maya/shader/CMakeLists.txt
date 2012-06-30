@@ -34,8 +34,8 @@ add_library(${ItemName} SHARED
 
 # Add dependent external Libraries
 target_link_libraries(${ItemName}
-  "Math.lib"
-  "Base.lib"
+ # "Math.lib"
+ # "Base.lib"
   Foundation.lib 
   OpenMaya.lib 
   OpenMayaAnim.lib 

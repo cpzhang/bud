@@ -24,7 +24,10 @@ namespace Euclid
 	enum eFontProperty
 	{
 		//
-		eFontProperty_Normal,
+		eFontProperty_Normal = 0,
+		eFontProperty_Offset_1,
+		eFontProperty_BG_1,
+		eFontProperty_Size,
 	};
 
 	//
@@ -52,16 +55,16 @@ namespace Euclid
 		~FreeType();
 
 	public:
-		virtual bool create(std::string& faceFile, unsigned int fontSize, eFontProperty fontProperty);
+		virtual bool create(tstring& faceFile, unsigned int fontSize, eFontProperty fontProperty);
 		virtual bool destroy();
-		virtual bool render(Vec3& basePoint, Vec3& direction, const Color& color, std::string& text);
+		virtual bool render(Vec3& basePoint, Vec3& direction, const Color& color, tstring& text);
 		void onInvalidateDevice();
 		void onRestoreDevice();
 	private:
 		//
-		unsigned short _computeUnicode(std::string& character);
-		FTex* _parse(unsigned short unicode);
-		void _addCode(unsigned short unicode);
+		unsigned short _computeUnicode(tstring& character);
+		FTex* _parse(unsigned short unicode, bool chinese = false);
+		void _addCode(unsigned short unicode, bool chinese = false);
 		void _renderImpl(FTex* fft, const Color& color, Vec3& direction);
 
 		//
@@ -87,6 +90,7 @@ namespace Euclid
 		Vec2			_pen;
 		Real			_baseX;
 		Effect*			_fx;
+		static ITexture* _diffuseTexture;
 	};
 }
 

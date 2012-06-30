@@ -31,8 +31,11 @@ namespace Euclid
 	{
 		eVertexDeclarationType_Null,
 		eVertexDeclarationType_Position,
+		eVertexDeclarationType_PositionBoneWeight,
 		eVertexDeclarationType_PositionColor,
 		eVertexDeclarationType_PositionTexture,
+		eVertexDeclarationType_PositionTextureBoneWeight,
+		eVertexDeclarationType_PositionTextureBoneWeightColor,
 		eVertexDeclarationType_PositionTextureNormal,
 		eVertexDeclarationType_PositionColorTexture,
 		eVertexDeclarationType_PositionTTexture,
@@ -42,6 +45,10 @@ namespace Euclid
 		eVertexDeclarationType_Size,
 	};
 
+	struct sNull
+	{
+
+	};
 	//
 	struct sPosition
 	{
@@ -52,6 +59,7 @@ namespace Euclid
 	//
 	struct sPositionColor
 	{
+		
 		//
 		Vec3	position;
 		//
@@ -60,14 +68,45 @@ namespace Euclid
 	//
 	struct sPositionTexture
 	{
+		
 		//
 		Vec3	position;
 		//
 		Vec2	texcoord;
 	};
+
+	//
+	struct sPositionTextureBoneWeight
+	{
+	
+		//
+		Vec3	position;
+		//
+		Vec2	texcoord;
+		//
+		Vec4	bones;
+		//
+		Vec4    weights;
+	};
+	//
+	struct sPositionTextureBoneWeightColor
+	{
+		
+		//
+		Vec3	position;
+		//
+		Vec2	texcoord;
+		//
+		Vec4	bones;
+		//
+		Vec4    weights;
+		//
+		u32		color_ARGB;
+	};
 	//
 	struct sPositionTTexture
 	{
+			
 		//
 		Vec4	position;
 		//
@@ -76,6 +115,7 @@ namespace Euclid
 	//
 	struct sPositionColorTexture
 	{
+		
 		//
 		Vec3	position;
 		//
@@ -86,6 +126,7 @@ namespace Euclid
 	//
 	struct sPositionTextureNormal
 	{
+		
 		//
 		Vec3	position;
 		//
@@ -177,7 +218,17 @@ namespace Euclid
 	//
 	enum eRenderState
 	{
+		eRenderState_ZEnable = D3DRS_ZENABLE,
+		eRenderState_ZWriteEnable = D3DRS_ZWRITEENABLE,
+		eRenderState_AlphaTestEnable = D3DRS_ALPHATESTENABLE,
+		eRenderState_SrcBlend = D3DRS_SRCBLEND,
+		eRenderState_DestBlend = D3DRS_DESTBLEND,
 		eRenderState_FillMode = D3DRS_FILLMODE,
+		eRenderState_AlphaFunc = D3DRS_ALPHAFUNC,
+		eRenderState_AlphaRef = D3DRS_ALPHAREF,
+		eRenderState_AlphaBlendEnable = D3DRS_ALPHABLENDENABLE,
+		eRenderState_ZFunc = D3DRS_ZFUNC,
+		eRenderState_CullMode = D3DRS_CULLMODE,
 	};
 
 	//
@@ -189,6 +240,56 @@ namespace Euclid
 		eFillMode_Size,
 	};
 
+	enum eCullMode
+	{
+		eCullMode_None = D3DCULL_NONE,
+		eCullMode_ClockWise = D3DCULL_CW,
+		eCullMode_CounterClockWise = D3DCULL_CCW,
+		eCullMode_Size,
+		eCullMode_FORCE_DWORD=0x7fffffff
+	};
+	enum eZBufferType
+	{
+		eZBufferType_False = D3DZB_FALSE,
+		eZBufferType_True = D3DZB_TRUE,
+		eZBufferType_UseW = D3DZB_USEW,
+		eZBufferType_Size,
+		D3DZB_FORCE_DWORD   = 0x7fffffff 
+	};
+
+	enum eBlend
+	{
+		eBlend_Zero = D3DBLEND_ZERO,
+		eBlend_One = D3DBLEND_ONE,
+		eBlend_SrcColor = D3DBLEND_SRCCOLOR,
+		eBlend_InvSrcColor = D3DBLEND_INVSRCCOLOR,
+		eBlend_SrcAlpha = D3DBLEND_SRCALPHA,
+		eBlend_InvSrcAlpha = D3DBLEND_INVSRCALPHA,
+		eBlend_DestAlpha = D3DBLEND_DESTALPHA,
+		eBlend_InvDestAlpha = D3DBLEND_INVDESTALPHA,
+		eBlend_DestColor = D3DBLEND_DESTCOLOR,
+		eBlend_InvDestColor = D3DBLEND_INVDESTCOLOR,
+		eBlend_SrcAlphaSat = D3DBLEND_SRCALPHASAT,
+		eBlend_BothSrcAlpha = D3DBLEND_BOTHSRCALPHA,
+		eBlend_BothInvSrcAlpha = D3DBLEND_BOTHINVSRCALPHA,
+		eBlend_BlendFactor = D3DBLEND_BLENDFACTOR,
+		eBlend_InvBlendFactor = D3DBLEND_INVBLENDFACTOR,
+		eBlend_SrcColor2 = D3DBLEND_SRCCOLOR2,
+		eBlend_InvSrcColor2 = D3DBLEND_INVSRCCOLOR2,
+		D3DBLEND_FORCE_DWORD       = 0x7fffffff 
+	};
+	enum eCmpFunc
+	{
+		eCmpFunc_Never = D3DCMP_NEVER,
+		eCmpFunc_Less = D3DCMP_LESS,
+		eCmpFunc_Equal = D3DCMP_EQUAL,
+		eCmpFunc_LessEqual = D3DCMP_LESSEQUAL,
+		eCmpFunc_Greater = D3DCMP_GREATER,
+		eCmpFunc_NotEqual = D3DCMP_NOTEQUAL,
+		eCmpFunc_GreaterEqual = D3DCMP_GREATEREQUAL,
+		eCmpFunc_Always = D3DCMP_ALWAYS,
+		D3DCMP_FORCE_DWORD    = 0x7fffffff 
+	};
 	//
 	typedef D3DVIEWPORT9 sViewPort;
 

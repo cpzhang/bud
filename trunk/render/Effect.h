@@ -14,8 +14,8 @@ namespace Euclid
 	{
 	public:
 		Effect()
-			:_effect(NULL)
 		{
+			_clear();
 		}
 
 		~Effect();
@@ -27,35 +27,41 @@ namespace Euclid
 		virtual void			endPass();
 		virtual void			onLostDevice();
 		virtual void			onResetDevice();
-		virtual void			setTexture(const std::string& name, ITexture *pTexture);
-		virtual void			setMatrix(const std::string& name, const Mat4 *pMatrix);
-		virtual void			setMatrix(const std::string& name, const Mat4& pMatrix);
-		virtual void			setInt(const std::string& name, int value);
-		virtual void			setBool(const std::string& name, bool value);
-		virtual bool			getBool(const std::string& name);
-		virtual void			setFloat(const std::string& name, float value);
-		virtual void			setValue(const std::string& name, void* data, u32 bytes);
-		virtual void			setMatrixArray(const std::string& name, Mat4 *pMtxArray, u32 count);
-		virtual void			setTechnique(const std::string&  name);
-		virtual void			setFloatArray(const std::string&  name, float *pFloatArray, u32 count);
+		virtual void			setTexture(const tstring& name, ITexture *pTexture);
+		virtual void			setMatrix(const tstring& name, const Mat4 *pMatrix);
+		virtual void			setMatrix(const tstring& name, const Mat4& pMatrix);
+		virtual void			setInt(const tstring& name, int value);
+		virtual void			setBool(const tstring& name, bool value);
+		virtual bool			getBool(const tstring& name);
+		virtual void			setFloat(const tstring& name, float value);
+		virtual void			setValue(const tstring& name, void* data, u32 bytes);
+		virtual void			setMatrixArray(const tstring& name, Mat4 *pMtxArray, u32 count);
+		virtual void			setTechnique(const tstring&  name);
+		virtual void			setFloatArray(const tstring&  name, const float *pFloatArray, u32 count);
 		//
-		virtual bool			setVector(const std::string&  name, const Vec4* pVector);
-		virtual bool			setVector(const std::string&  name, Vec4* pVector);
-		virtual bool			setVectorArray(const std::string&  name, const Vec4* pVector, u32 Count);
-		virtual bool			setVectorArray(const std::string&  name, Vec4* pVector, u32 Count);
+		virtual bool			setVector(const tstring&  name, const Vec4* pVector);
+		virtual bool			setVector(const tstring&  name, Vec4* pVector);
+		virtual bool			setVectorArray(const tstring&  name, const Vec4* pVector, u32 Count);
+		virtual bool			setVectorArray(const tstring&  name, Vec4* pVector, u32 Count);
 
 		virtual void			commitChanges();
 	public:
-		bool loadFromFile(const std::string& filename);
+		bool loadFromFile(const tstring& filename);
 		bool loadFromMemory(const u8* data, u32 len);
 		void onInvalidateDevice();
 		void onRestoreDevice();
-		typedef std::map<std::string, ITexture*> NameTextureMap;
+		void			addReference();
+		typedef std::map<tstring, ITexture*> NameTextureMap;
+		//
+		void getMatrix(const tstring& name, const Mat4 *pMatrix);
+	public:
+		void _clear();
 	private:
 		ID3DXEffect*	_effect;
 
 		NameTextureMap  _nameTextures;
-		std::string		_effectfFile;
+		tstring		_effectfFile;
+		s32				_references;
 	};
 }
 

@@ -25,16 +25,14 @@ namespace Euclid
 		//
 		virtual void destroy();
 		virtual u32 getStride();
+		virtual bool setTexture(const tstring& name, const tstring& fileName);
 		//
 	public:
 		MaterialVertexTexture();
-
-		bool setTexture(const std::string& fileName);
-		bool setLightmapping(const std::string& fileName);
 	public:
-		std::string _textureFileName;
-		ITexture*    _texture;
-		ITexture*    _lightmapping;
+		typedef std::pair<tstring, ITexture*> TexturePair;
+		typedef std::vector<TexturePair> TexturePairVec;
+		TexturePairVec _textures;
 	};
 
 	class MaterialManager: public IMaterialManager, public Buddha::SingletonEx<MaterialManager>

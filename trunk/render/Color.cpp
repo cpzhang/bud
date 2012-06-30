@@ -86,6 +86,21 @@ namespace Euclid
 		r = static_cast<u8>(val32) / 255.0f;
 	}
 
+	void Color::setRGBA( u32 val32 )
+	{
+		// Alpha
+		r = static_cast<u8>(val32 >> 24) / 255.0f;
+
+		// Blue
+		g = static_cast<u8>(val32 >> 16) / 255.0f;
+
+		// Green
+		b = static_cast<u8>(val32 >> 8) / 255.0f;
+
+		// Red
+		a = static_cast<u8>(val32) / 255.0f;
+	}
+
 	const Color Color::Blue = Color(0.0f, 0.0f, 1.0f); 
 
 	const Color Color::Green = Color(0.0f, 1.0f, 0.0f);

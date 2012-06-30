@@ -54,6 +54,16 @@
 #include <iomanip>
 #include <sstream>
 
+//
+#include <tchar.h>
+#include <strsafe.h>
+//
+#ifdef  UNICODE                     
+	#define tstring std::wstring      
+#else   /* UNICODE */               
+	#define tstring std::string
+#endif /* UNICODE */ 
+
 #pragma warning (disable : 4251)
 
 //#	pragma pack( push, 1 )

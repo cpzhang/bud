@@ -30,14 +30,14 @@ namespace Buddha
 		};
 
 	public:
-		void add(const std::string& content, eLevel level, bool newLine = true);
+		void add(const char* content, eLevel level, bool newLine = true);
 		void add(std::ostringstream& content, eLevel level, bool newLine = true);
 		void add(int content, eLevel level, bool newLine = true);
 		void addDate();
-		std::string getPath();
+		tstring getPath();
 	private:
 		std::ofstream		_log;
-		std::string			_path;
+		tstring			_path;
 	};
 
 #define Record(content)\

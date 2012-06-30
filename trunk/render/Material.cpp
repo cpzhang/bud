@@ -2,6 +2,7 @@
 #include "RenderSystem.h"
 #include "TextureManager.h"
 #include "ITexture.h"
+#include "Effect.h"
 namespace Euclid
 {
 	IMaterial* MaterialManager::createMaterial( eMaterialType e )
@@ -23,7 +24,6 @@ namespace Euclid
 	}
 
 	MaterialVertexTexture::MaterialVertexTexture()
-		:_texture(NULL), _lightmapping(NULL)
 	{
 		setVertexDeclaration(eVertexDeclarationType_PositionTexture);
 	}
@@ -31,46 +31,41 @@ namespace Euclid
 	void MaterialVertexTexture::apply()
 	{
 		IMaterial::apply();
-		//RenderSystem::getInstancePtr()->setTexture(0, _texture);
+		if (NULL == _effect)
+		{
+			return;
+		}
+		for (size_t i = 0; i != _textures.size(); ++i)
+		{
+			_effect->setTexture(_textures[i].first, _textures[i].second);
+		}
 	}
 
-	bool MaterialVertexTexture::setTexture( const std::string& fileName )
+	bool MaterialVertexTexture::setTexture( const tstring& name, const tstring& fileName )
 	{
-		_textureFileName = fileName;
-		_texture = TextureManager::getInstancePtr()->createTextureFromFile(_textureFileName);
-		if (NULL == _texture)
+		ITexture* tex = TextureManager::getInstancePtr()->createTextureFromFile(fileName);
+		if (NULL == tex)
 		{
 			return false;
 		}
-
+		_textures.push_back(std::make_pair(name, tex));
 		return true;
 	}
 
 	void MaterialVertexTexture::destroy()
 	{
-		if (_texture)
+		IMaterial::destroy();
+		for (size_t i = 0; i != _textures.size(); ++i)
 		{
-			_texture->release();
-			_texture = NULL;
+			ITexture* tex = _textures[i].second;
+			if (tex)
+			{
+				tex->release();
+			}
 		}
-		//
-		if (_lightmapping)
-		{
-			_lightmapping->release();
-			_lightmapping = NULL;
-		}
+		_textures.clear();
 	}
 
-	bool MaterialVertexTexture::setLightmapping( const std::string& fileName )
-	{
-		_lightmapping = TextureManager::getInstancePtr()->createTextureFromFile(fileName);
-		if (NULL == _lightmapping)
-		{
-			return false;
-		}
-
-		return true;
-	}
 
 	u32 MaterialVertexTexture::getStride()
 	{

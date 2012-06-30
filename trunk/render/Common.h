@@ -50,7 +50,11 @@ namespace Euclid
 	class TextureManager;
 	class FontManager;
 	class FreeType;
+	class Terrain;
+	class MZ;
+	class Mesh;
 }
+const int MODEL_NAME_NODE_SIZE             = 80;
 
 //
 #endif // __EuclidCommon_h__

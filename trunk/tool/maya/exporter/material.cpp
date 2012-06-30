@@ -281,7 +281,7 @@ MStatus material::loadKeyframe(float time)
 	return MS::kSuccess;
 }
 
-// Load material data
+// Load material data 
 MStatus material::load(MFnDependencyNode *pShaderNode,MStringArray& uvsets)
 {	
 	clear();
@@ -334,6 +334,7 @@ MStatus material::load(MFnDependencyNode *pShaderNode,MStringArray& uvsets)
 		plug = pShaderNode->findPlug("tcFlowV",&status);
 		if(status)
 		{
+
 			plug.getValue(tcFlowV);
 		}
 		m_tcFlowV = tcFlowV;
@@ -489,6 +490,7 @@ MStatus material::loadTexture(MFnDependencyNode* pTexNode,BlendModes& blendModes
 	tex.filename = filename;
 	tex.uvsetIndex = 0;
 	tex.uvsetName = "";
+	const char* tempChar = absFilename.asChar();
 	// Set texture operation type
 	tex.blendModes = blendModes;
 	// Get connections to uvCoord attribute of texture node

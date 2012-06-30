@@ -22,10 +22,10 @@ namespace Euclid
 		//
 	public:
 		//
-		bool createFont(std::string& faceFile, unsigned int fontSize, eFontProperty fp, std::string fontName);
+		bool createFont(tstring& faceFile, unsigned int fontSize, eFontProperty fp, tstring fontName);
 		
 		//
-		FreeType* getFont(std::string& fontName = std::string(""));
+		FreeType* getFont(const tstring& fontName);
 
 		//
 		void destroy();
@@ -37,7 +37,7 @@ namespace Euclid
 
 	private:
 		//
-		typedef std::map<std::string, FreeType*> NameFreetypeMap;
+		typedef std::map<tstring, FreeType*> NameFreetypeMap;
 		NameFreetypeMap				_fonts;
 	};
 }
