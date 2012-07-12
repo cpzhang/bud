@@ -1,0 +1,261 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource."
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英语(美国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_RAINPARAM DIALOGEX 0, 0, 124, 897
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_PARTICLE_SPEED,"CustEdit",WS_TABSTOP,64,33,32,10
+    CONTROL         "",IDC_SPEED_VARIATION,"CustEdit",WS_TABSTOP,64,46,32,10
+    CONTROL         "",IDC_PARTICLE_SPEEDSPIN,"SpinnerControl",0x0,98,33,7,10
+    RTEXT           "Speed",IDC_STATIC,2,33,60,8
+    CONTROL         "",IDC_SPINNER_SPEED_VARIATIONSPIN,"SpinnerControl",0x0,98,46,7,10
+    RTEXT           "Speed Variation",IDC_STATIC,2,46,60,8
+    CONTROL         "Enable",IDC_ENABLE,"Button",BS_AUTOCHECKBOX,6,7,102,10
+    CONTROL         "Visible",IDC_VISIBLE,"Button",BS_AUTOCHECKBOX,6,18,102,10
+    CONTROL         "",IDC_CONE_ANGLE,"CustEdit",WS_TABSTOP,64,59,32,10
+    CONTROL         "",IDC_CONE_ANGLE_SPINNER,"SpinnerControl",0x0,98,59,7,10
+    RTEXT           "Cone Angle",IDC_STATIC,2,59,60,8
+    CONTROL         "",IDC_GRAVITY,"CustEdit",WS_TABSTOP,64,72,32,10
+    CONTROL         "",IDC_GRAVITY_SPINNER,"SpinnerControl",0x0,98,72,7,10
+    RTEXT           "Gravity",IDC_STATIC,2,72,60,8
+    CONTROL         "",IDC_EXPLOSIVE_FORCE,"CustEdit",WS_TABSTOP,64,84,32,10
+    CONTROL         "",IDC_EXPLOSIVE_FORCE_SPINNER,"SpinnerControl",0x0,98,84,7,10
+    RTEXT           "Exlosive Force",IDC_STATIC,2,84,60,8
+    CONTROL         "",IDC_LIFE,"CustEdit",WS_TABSTOP,64,97,32,10
+    CONTROL         "",IDC_LIFE_SPINNER,"SpinnerControl",0x0,98,97,7,10
+    RTEXT           "Life",IDC_STATIC,2,97,60,8
+    CONTROL         "",IDC_LIFE_VARIATION,"CustEdit",WS_TABSTOP,64,109,32,10
+    CONTROL         "",IDC_LIFE_VARIATION_SPINNER,"SpinnerControl",0x0,98,109,7,10
+    RTEXT           "Life Variation",IDC_STATIC,2,109,60,8
+    CONTROL         "",IDC_EMISSION_RATE,"CustEdit",WS_TABSTOP,64,121,32,10
+    CONTROL         "",IDC_EMISSION_RATE_SPINNER,"SpinnerControl",0x0,98,121,7,10
+    RTEXT           "Emission Rate",IDC_STATIC,2,121,60,8
+    CONTROL         "",IDC_INITIAL_NUM,"CustEdit",WS_TABSTOP,64,133,32,10
+    CONTROL         "",IDC_INITIAL_NUM_SPINNER,"SpinnerControl",0x0,98,133,7,10
+    RTEXT           "Initial Num",IDC_STATIC,2,133,60,8
+    CONTROL         "",IDC_LIMIT_NUM,"CustEdit",WS_TABSTOP,64,146,32,10
+    CONTROL         "",IDC_LIMIT_NUM_SPINNER,"SpinnerControl",0x0,98,146,7,10
+    RTEXT           "Limit Num",IDC_STATIC,2,146,60,8
+    CONTROL         "Attach to Emitter",IDC_ATTACH_TO_EMITTER,"Button",BS_AUTOCHECKBOX,6,161,102,10
+    CONTROL         "Move With Emitter",IDC_MOVE_WITH_EMITTER,"Button",BS_AUTOCHECKBOX,6,173,102,10
+    CONTROL         "For the Sword",IDC_FOR_THE_SWORD,"Button",BS_AUTOCHECKBOX,6,186,102,10
+    CONTROL         "",IDC_SWORD_INITIAL_ANGLE,"CustEdit",WS_TABSTOP,64,208,32,10
+    CONTROL         "",IDC_SPINNER_SWORD_INITIAL_ANGLE,"SpinnerControl",0x0,98,209,7,10
+    LTEXT           "Sword Init Angle:",IDC_STATIC,2,198,106,8
+    CONTROL         "",IDC_ASPECT_RATIOI,"CustEdit",WS_TABSTOP,64,221,32,10
+    CONTROL         "",IDC_SPINNER_ASPECT_RATIO,"SpinnerControl",0x0,98,221,7,10
+    RTEXT           "Aspect Ratio",IDC_STATIC,2,221,60,8
+    CONTROL         "",IDC_INIT_ANGLE_BEGIN,"CustEdit",WS_TABSTOP,64,244,32,10
+    CONTROL         "",IDC_SPINNER_INIT_ANGLE_BEGIN,"SpinnerControl",0x0,98,244,7,10
+    LTEXT           "Init Angle Begin:",IDC_STATIC,2,234,106,8
+    CONTROL         "",IDC_INIT_ANGLE_END,"CustEdit",WS_TABSTOP,64,267,32,10
+    CONTROL         "",IDC_SPINNER_INIT_ANGLE_END,"SpinnerControl",0x0,98,267,7,10
+    LTEXT           "Init Angle End:",IDC_STATIC,2,256,106,8
+    CONTROL         "",IDC_ROTATION_SPEED,"CustEdit",WS_TABSTOP,64,280,32,10
+    CONTROL         "",IDC_SPINNER_ROTATION_SPEED,"SpinnerControl",0x0,98,280,7,10
+    RTEXT           "Rotation Speed",IDC_STATIC,2,280,60,8
+    CONTROL         "",IDC_ROTATION_SPEED_VARIATION,"CustEdit",WS_TABSTOP,63,304,32,10
+    CONTROL         "",IDC_SPINNER_ROTATION_SPEED_VARIATION,"SpinnerControl",0x0,98,304,7,10
+    LTEXT           "Rotation Speed Variation:",IDC_STATIC,2,294,106,8
+    CONTROL         "",IDC_EMITTER_WIDTH,"CustEdit",WS_TABSTOP,63,316,32,10
+    CONTROL         "",IDC_SPINNER_EMITTER_WIDTH,"SpinnerControl",0x0,98,316,7,10
+    RTEXT           "Emitter Width",IDC_STATIC,2,316,60,8
+    CONTROL         "",IDC_EMITTER_LENGTH,"CustEdit",WS_TABSTOP,63,329,32,10
+    CONTROL         "",IDC_SPINNER_EMITTER_LENGTH,"SpinnerControl",0x0,98,329,7,10
+    RTEXT           "Emitter Length",IDC_STATIC,2,329,60,8
+    CONTROL         "",IDC_EMITTER_HEIGHT,"CustEdit",WS_TABSTOP,63,341,32,10
+    CONTROL         "",IDC_SPINNER_EMITTER_HEIGHT,"SpinnerControl",0x0,98,341,7,10
+    RTEXT           "Emitter Height",IDC_STATIC,2,342,60,8
+    CONTROL         "",IDC_TAIL_LENGTH,"CustEdit",WS_TABSTOP,63,354,32,10
+    CONTROL         "",IDC_SPINNER_TAIL_LENGTH,"SpinnerControl",0x0,98,354,7,10
+    RTEXT           "Tail Length",IDC_STATIC,2,356,60,8
+    CONTROL         "",IDC_TIME_MIDDLE,"CustEdit",WS_TABSTOP,63,366,32,10
+    CONTROL         "",IDC_SPINNER_TIME_MIDDLE,"SpinnerControl",0x0,98,366,7,10
+    RTEXT           "Time Middle",IDC_STATIC,2,368,60,8
+    RTEXT           "Color Start",IDC_STATIC,2,380,60,8
+    RTEXT           "Color Middle",IDC_STATIC,2,391,60,8
+    RTEXT           "Color End",IDC_STATIC,2,406,60,8
+    CONTROL         "",IDC_ALPHA_R,"CustEdit",WS_TABSTOP,63,437,32,10
+    CONTROL         "",IDC_SPINNER_ALPHA_R,"SpinnerControl",0x0,98,436,7,10
+    CONTROL         "",IDC_ALPHA_GREEN,"CustEdit",WS_TABSTOP,63,449,32,10
+    CONTROL         "",IDC_SPINNER_ALPHA_G,"SpinnerControl",0x0,98,449,7,10
+    CONTROL         "",IDC_ALPHA_B,"CustEdit",WS_TABSTOP,63,461,32,10
+    CONTROL         "",IDC_SPINNER_ALPHA_B,"SpinnerControl",0x0,98,461,7,10
+    RTEXT           "X",IDC_STATIC,15,484,47,8
+    CONTROL         "",IDC_SCALE_X,"CustEdit",WS_TABSTOP,63,484,32,10
+    CONTROL         "",IDC_SPINNER_SCALE_X,"SpinnerControl",0x0,98,484,7,10
+    CONTROL         "",IDC_SCALE_Y,"CustEdit",WS_TABSTOP,63,496,32,10
+    CONTROL         "",IDC_SPINNER_SCALE_Y,"SpinnerControl",0x0,98,496,7,10
+    CONTROL         "",IDC_SCALE_Z,"CustEdit",WS_TABSTOP,63,509,32,10
+    CONTROL         "",IDC_SPINNER_SCALE_Z,"SpinnerControl",0x0,98,509,7,10
+    CONTROL         "",IDC_SCALE_VARIATION_X,"CustEdit",WS_TABSTOP,64,532,32,10
+    CONTROL         "",IDC_SPINNER_SCALE_VARIATION_X,"SpinnerControl",0x0,98,532,7,10
+    CONTROL         "",IDC_SCALE_VARIATION_Y,"CustEdit",WS_TABSTOP,64,544,32,10
+    CONTROL         "",IDC_SPINNER_SCALE_VARIATION_Y,"SpinnerControl",0x0,98,544,7,10
+    CONTROL         "",IDC_SCALE_VARIATION_Z,"CustEdit",WS_TABSTOP,63,556,32,10
+    CONTROL         "",IDC_SPINNER_SCALE_VARIATION_Z,"SpinnerControl",0x0,97,556,7,10
+    CONTROL         "Fixed Size",IDC_FIXED_SIZE,"Button",BS_AUTOCHECKBOX,6,573,102,10
+    CONTROL         "",IDC_HEAD_LIFE_SPAN_X,"CustEdit",WS_TABSTOP,65,594,32,10
+    CONTROL         "",IDC_SPINNER_HEAD_LIFE_SPAN_X,"SpinnerControl",0x0,99,594,7,10
+    CONTROL         "",IDC_HEAD_LIFE_SPAN_Y,"CustEdit",WS_TABSTOP,65,606,32,10
+    CONTROL         "",IDC_SPINNER_HEAD_LIFE_SPAN_Y,"SpinnerControl",0x0,99,606,7,10
+    CONTROL         "",IDC_HEAD_LIFE_SPAN_Z,"CustEdit",WS_TABSTOP,65,618,32,10
+    CONTROL         "",IDC_SPINNER_HEAD_LIFE_SPAN_Z,"SpinnerControl",0x0,99,618,7,10
+    CONTROL         "",IDC_HEAD_DECAY_X,"CustEdit",WS_TABSTOP,66,641,32,10
+    CONTROL         "",IDC_SPINNER_HEAD_DECAY_X,"SpinnerControl",0x0,100,641,7,10
+    CONTROL         "",IDC_HEAD_DECAY_Y,"CustEdit",WS_TABSTOP,66,652,32,10
+    CONTROL         "",IDC_SPINNER_HEAD_DECAY_Y,"SpinnerControl",0x0,100,652,7,10
+    CONTROL         "",IDC_HEAD_DECAY_Z,"CustEdit",WS_TABSTOP,66,664,32,10
+    CONTROL         "",IDC_SPINNER_HEAD_DECAY_Z,"SpinnerControl",0x0,99,664,7,10
+    CONTROL         "",IDC_TAIL_LIFE_SPAN_X,"CustEdit",WS_TABSTOP,65,690,32,10
+    CONTROL         "",IDC_SPINNER_TAIL_LIFE_SPAN_X,"SpinnerControl",0x0,99,690,7,10
+    CONTROL         "",IDC_TAIL_LIFE_SPAN_Y,"CustEdit",WS_TABSTOP,65,702,32,10
+    CONTROL         "",IDC_SPINNER_TAIL_LIFE_SPAN_Y,"SpinnerControl",0x0,99,702,7,10
+    CONTROL         "",IDC_TAIL_LIFE_SPAN_Z,"CustEdit",WS_TABSTOP,65,714,32,10
+    CONTROL         "",IDC_SPINNER_TAIL_LIFE_SPAN_Z,"SpinnerControl",0x0,100,714,7,10
+    CONTROL         "",IDC_TAIL_DECAY_X,"CustEdit",WS_TABSTOP,65,738,32,10
+    CONTROL         "",IDC_SPINNER_TAIL_DECAY_X,"SpinnerControl",0x0,99,738,7,10
+    CONTROL         "",IDC_TAIL_DECAY_Y,"CustEdit",WS_TABSTOP,65,750,32,10
+    CONTROL         "",IDC_SPINNER_TAIL_DECAY_Y,"SpinnerControl",0x0,99,750,7,10
+    CONTROL         "",IDC_TAIL_DECAY_Z,"CustEdit",WS_TABSTOP,66,762,32,10
+    CONTROL         "",IDC_SPINNER_TAIL_DECAY_Z,"SpinnerControl",0x0,100,762,7,10
+    CONTROL         "Head",IDC_HEAD,"Button",BS_AUTOCHECKBOX,6,779,102,10
+    CONTROL         "Tail",IDC_TAIL,"Button",BS_AUTOCHECKBOX,6,791,102,10
+    CONTROL         "UnShaded",IDC_UNSHADED,"Button",BS_AUTOCHECKBOX,6,803,102,10
+    CONTROL         "UnFogged",IDC_UNFOGGED,"Button",BS_AUTOCHECKBOX,6,814,102,10
+    CONTROL         "Block By Y0",IDC_BLOCKBYY0,"Button",BS_AUTOCHECKBOX,6,825,102,10
+    CONTROL         "???1",IDC_COLOR_START,"ColorSwatch",WS_TABSTOP,63,378,32,10
+    CONTROL         "???1",IDC_COLOR_MIDDLE,"ColorSwatch",WS_TABSTOP,63,391,32,10
+    CONTROL         "???1",IDC_COLOR_END,"ColorSwatch",WS_TABSTOP,63,404,32,10
+    GROUPBOX        "Alpha",IDC_STATIC,4,427,104,46
+    RTEXT           "Start",IDC_STATIC,15,439,47,8
+    RTEXT           "Middle",IDC_STATIC,15,449,47,8
+    RTEXT           "End",IDC_STATIC,15,460,47,8
+    GROUPBOX        "Scale",IDC_STATIC,3,475,105,46
+    RTEXT           "Y",IDC_STATIC,15,496,47,8
+    RTEXT           "Z",IDC_STATIC,15,509,47,8
+    GROUPBOX        "Scale Variation",IDC_STATIC,3,523,105,46
+    RTEXT           "X",IDC_STATIC,15,532,47,8
+    RTEXT           "Y",IDC_STATIC,15,543,47,8
+    RTEXT           "Z",IDC_STATIC,15,556,47,8
+    GROUPBOX        "Head Life Span",IDC_STATIC,3,585,105,46
+    RTEXT           "X",IDC_STATIC,15,595,47,8
+    RTEXT           "Y",IDC_STATIC,15,605,47,8
+    RTEXT           "Z",IDC_STATIC,15,619,47,8
+    GROUPBOX        "Head Decay",IDC_STATIC,3,633,105,46
+    RTEXT           "X",IDC_STATIC,15,642,47,8
+    RTEXT           "Y",IDC_STATIC,15,652,47,8
+    RTEXT           "Z",IDC_STATIC,15,666,47,8
+    GROUPBOX        "Tail Life Span",IDC_STATIC,3,681,105,46
+    GROUPBOX        "Tail Decay",IDC_STATIC,3,729,105,46
+    RTEXT           "X",IDC_STATIC,15,692,47,8
+    RTEXT           "Y",IDC_STATIC,15,703,47,8
+    RTEXT           "Z",IDC_STATIC,15,716,47,8
+    RTEXT           "X",IDC_STATIC,15,739,47,8
+    RTEXT           "Y",IDC_STATIC,15,749,47,8
+    RTEXT           "Z",IDC_STATIC,15,763,47,8
+    GROUPBOX        "Wander",IDC_STATIC,3,838,103,53
+    CONTROL         "Wander",IDC_HEAD2,"Button",BS_AUTOCHECKBOX,6,848,86,10
+    CONTROL         "",IDC_ROTATION_SPEED2,"CustEdit",WS_TABSTOP,62,862,32,10
+    CONTROL         "",IDC_SPINNER_ROTATION_SPEED2,"SpinnerControl",0x0,96,862,7,10
+    RTEXT           "Wander Radius",IDC_STATIC,7,862,53,8
+    CONTROL         "",IDC_ROTATION_SPEED3,"CustEdit",WS_TABSTOP,62,874,32,10
+    CONTROL         "",IDC_SPINNER_ROTATION_SPEED3,"SpinnerControl",0x0,96,874,7,10
+    RTEXT           "Wander Speed",IDC_STATIC,7,874,53,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_RAINPARAM, DIALOG
+    BEGIN
+        RIGHTMARGIN, 108
+        VERTGUIDE, 107
+        VERTGUIDE, 108
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 893
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // 英语(美国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

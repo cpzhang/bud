@@ -14,7 +14,7 @@ namespace Euclid
 		destroy();
 	}
 
-	bool FontManager::createFont(tstring& faceFile, unsigned int fontSize, eFontProperty fp, tstring fontName )
+	bool FontManager::createFont(std::string& faceFile, unsigned int fontSize, eFontProperty fp, std::string fontName )
 	{
 		//
 		FreeType* font = new FreeType(Vec3::ZERO);
@@ -31,7 +31,7 @@ namespace Euclid
 		return (font != 0);
 	}
 
-	FreeType* FontManager::getFont( const tstring& fontName)
+	FreeType* FontManager::getFont( const std::string& fontName)
 	{
 		if (fontName.size() == 0)
 		{

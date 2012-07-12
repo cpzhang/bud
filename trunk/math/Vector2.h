@@ -168,6 +168,14 @@ namespace Euler
 			return *this;
 		}
 
+		inline Vector2& operator *= ( const Real fScalar )
+		{
+			x *= fScalar;
+			y *= fScalar;
+
+			return *this;
+		}
+
 		inline Vector2& operator /= ( const Real fScalar )
 		{
 			assert( fScalar != 0.0 );

@@ -55,14 +55,14 @@ namespace Euclid
 		~FreeType();
 
 	public:
-		virtual bool create(tstring& faceFile, unsigned int fontSize, eFontProperty fontProperty);
+		virtual bool create(std::string& faceFile, unsigned int fontSize, eFontProperty fontProperty);
 		virtual bool destroy();
-		virtual bool render(Vec3& basePoint, Vec3& direction, const Color& color, tstring& text);
+		virtual bool render(Vec3& basePoint, Vec3& direction, const Color& color, std::string& text);
 		void onInvalidateDevice();
 		void onRestoreDevice();
 	private:
 		//
-		unsigned short _computeUnicode(tstring& character);
+		unsigned short _computeUnicode(std::string& character);
 		FTex* _parse(unsigned short unicode, bool chinese = false);
 		void _addCode(unsigned short unicode, bool chinese = false);
 		void _renderImpl(FTex* fft, const Color& color, Vec3& direction);

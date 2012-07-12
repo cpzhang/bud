@@ -158,7 +158,7 @@ namespace Euclid
 		m_dirty = true;
 	}
 
-	void Camera::setDirection( const Vec3& vec )
+	void Camera::setDirection( const Vec3& vec , const Vec3& up /*= Vec3::UNIT_Y*/)
 	{
 		// Do nothing if given a zero vector
 		// (Replaced assert since this could happen with auto tracking camera and
@@ -170,7 +170,7 @@ namespace Euclid
 		Vec3 zAdjustVec = -vec;
 		zAdjustVec.normalise();
 
-		Vec3 mYawFixedAxis = Vec3(0,1,0);
+		Vec3 mYawFixedAxis = up;
 		Vec3 xVec = mYawFixedAxis.crossProduct( zAdjustVec );
 		xVec.normalise();
 
@@ -181,9 +181,9 @@ namespace Euclid
 		m_dirty = true;
 	}
 
-	void Camera::lookAt( const Vec3& targetPoint )
+	void Camera::lookAt( const Vec3& targetPoint , const Vec3& up /*= Vec3::UNIT_Y*/)
 	{
-		setDirection(targetPoint - m_vPosition);
+		setDirection(targetPoint - m_vPosition, up);
 		m_dirty = true;
 	}
 

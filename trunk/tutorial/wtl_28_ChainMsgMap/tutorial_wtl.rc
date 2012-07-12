@@ -1,0 +1,170 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU MENU 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "New",                         ID_FILE_NEW
+        MENUITEM "Open",                        ID_FILE_OPEN
+        MENUITEM "Save",                        ID_FILE_SAVE40003
+        MENUITEM "Quit",                        ID_FILE_QUIT
+    END
+    MENUITEM "Edit",                        0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FORMVIEW DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | WS_POPUP | WS_BORDER
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    LTEXT           "TODO: 布局窗体视图",IDC_STATIC,55,42,74,8
+    PUSHBUTTON      "Ok",IDOK,55,63,50,14,0,WS_EX_DLGMODALFRAME
+    PUSHBUTTON      "No",IDCANCEL,114,65,50,14,0,WS_EX_DLGMODALFRAME
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 186, 93
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,129,7,50,14
+    PUSHBUTTON      "取消",IDCANCEL,129,24,50,14
+END
+
+IDD_FORMVIEW1 DIALOGEX 0, 0, 185, 96
+STYLE DS_SETFONT | WS_CAPTION
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    LTEXT           "TODO: 布局窗体视图",IDC_STATIC,55,42,74,8
+    PUSHBUTTON      "Ok",IDOK,55,81,50,14,0,WS_EX_DLGMODALFRAME
+    PUSHBUTTON      "Button1",IDC_BUTTON1,1,1,50,14
+    LISTBOX         IDC_LIST1,83,2,48,40,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,25,57,40,14,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_FORMVIEW1, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 95
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TOOLBAR1 TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_BUTTON40005
+    BUTTON      ID_BUTTON40006
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TOOLBAR1            BITMAP                  "toolbar1.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON                    "icon1.ico"
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

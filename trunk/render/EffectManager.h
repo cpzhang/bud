@@ -14,7 +14,8 @@ namespace Euclid
 	{
 	public:
 		//
-		virtual Effect*		createEffectFromFile(const tstring& f);
+		virtual Effect*		createEffectFromFile(const std::string& f);
+		virtual Effect*		getEffectByFile(const std::string& f);
 		//
 		virtual Effect*		createEffectFromMemory(const u8 *pBuffer,u8 len);
 		//
@@ -23,7 +24,7 @@ namespace Euclid
 		void OnResetDevice();
 		void onDestroyEffect(Effect* e);
 	private:
-		typedef std::map<tstring, Effect*> NameEffectMap;
+		typedef std::map<std::string, Effect*> NameEffectMap;
 		NameEffectMap _effects;
 	};
 }

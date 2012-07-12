@@ -157,7 +157,9 @@ include_directories(
 # add_subdirectory(Model_02_triangle)
 # add_subdirectory(Model_03_freetype)
 # add_subdirectory(Model_04_treeview)
-add_subdirectory(Model_05_preview)
+# add_subdirectory(Model_05_preview)
+# add_subdirectory(Model_06_property)
+add_subdirectory(Model_07_propertyTree)
 
 # fmod
 # add_subdirectory(fmod_00_hello)

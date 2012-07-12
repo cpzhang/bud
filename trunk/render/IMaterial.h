@@ -42,10 +42,10 @@ namespace Euclid
 		//
 		virtual void destroy();
 		//
-		virtual void setEffect(const tstring& name);
+		virtual void setEffect(const std::string& name);
 		virtual Effect* getEffect(){return _effect;};
-		virtual bool setTexture(const tstring& name, const tstring& fileName){return true;};
-		void loadAnimation(const tstring& name);
+		virtual bool setTexture(const std::string& name, const std::string& fileName){return true;};
+		void loadAnimation(const std::string& name);
 		void update(u32 delta);
 	private:
 		void _clear()

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MaxMaterial", "MaxMaterial.vcproj", "{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugUnicode|Win32 = DebugUnicode|Win32
+		Hybrid|Win32 = Hybrid|Win32
+		HybridUnicode|Win32 = HybridUnicode|Win32
+		Release|Win32 = Release|Win32
+		ReleaseUnicode|Win32 = ReleaseUnicode|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.Debug|Win32.Build.0 = Debug|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.DebugUnicode|Win32.ActiveCfg = DebugUnicode|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.DebugUnicode|Win32.Build.0 = DebugUnicode|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.Hybrid|Win32.ActiveCfg = Hybrid|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.Hybrid|Win32.Build.0 = Hybrid|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.HybridUnicode|Win32.ActiveCfg = HybridUnicode|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.HybridUnicode|Win32.Build.0 = HybridUnicode|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.Release|Win32.ActiveCfg = Release|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.Release|Win32.Build.0 = Release|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.ReleaseUnicode|Win32.ActiveCfg = ReleaseUnicode|Win32
+		{6B4AFD50-CC0F-494C-BEB5-F6096AB0185C}.ReleaseUnicode|Win32.Build.0 = ReleaseUnicode|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

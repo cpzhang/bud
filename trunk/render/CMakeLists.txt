@@ -17,6 +17,7 @@ SOURCE_GROUP(FX FILES ${FX})
 include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/external/freetype-2.4.4/Include
+  ${CMAKE_SOURCE_DIR}/external/directx/Include
 )
 
 link_directories(
@@ -48,7 +49,7 @@ target_link_libraries(${ItemName}
 
 set_target_properties(${ItemName} PROPERTIES 
 DEFINE_SYMBOL "${ItemName}_EXPORTS"
-# COMPILE_DEFINITIONS "_CRT_SECURE_NO_DEPRECATE;"
+	COMPILE_DEFINITIONS "_CRT_SECURE_NO_DEPRECATE;D3D_DEBUG_INFO"
 # COMPILE_DEFINITIONS "NV_PERF_HUD"
 #COMPILE_FLAGS "/Zp1"
 )

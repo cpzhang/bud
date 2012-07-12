@@ -1,0 +1,16 @@
+/*
+	The DEF file is a module definition file. The DEF lists the exported DLL functions. 
+	A DEF file is an ASCII text file containing one or more module statements that describe various attributes of a DLL. 
+	A DLL requires a DEF file to create an import library (LIB) file and an export (EXP) file. 
+	The linker uses the import library to build any executable module that uses the DLL, and uses the export file to build the DLL file.
+*/
+LIBRARY	MaxExporter.dle
+
+EXPORTS
+   LibDescription       @1       PRIVATE
+   LibNumberClasses     @2       PRIVATE
+   LibClassDesc         @3       PRIVATE
+   LibVersion           @4       PRIVATE
+   CanAutoDefer			@5       PRIVATE	
+SECTIONS
+	.data READ WRITE

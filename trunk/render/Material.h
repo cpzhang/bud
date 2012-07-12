@@ -25,12 +25,12 @@ namespace Euclid
 		//
 		virtual void destroy();
 		virtual u32 getStride();
-		virtual bool setTexture(const tstring& name, const tstring& fileName);
+		virtual bool setTexture(const std::string& name, const std::string& fileName);
 		//
 	public:
 		MaterialVertexTexture();
 	public:
-		typedef std::pair<tstring, ITexture*> TexturePair;
+		typedef std::pair<std::string, ITexture*> TexturePair;
 		typedef std::vector<TexturePair> TexturePairVec;
 		TexturePairVec _textures;
 	};

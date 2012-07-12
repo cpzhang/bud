@@ -20,17 +20,17 @@ namespace Euclid
 		return _texture;
 	}
 
-	bool Texture::loadFromFile( const tstring& fileName )
+	bool Texture::loadFromFile( const std::string& fileName )
 	{
 		HRESULT hr = D3DXCreateTextureFromFile(RenderSystem::getInstancePtr()->getDevice(),
 			fileName.c_str(), &_texture);
 		if (FAILED(hr))
 		{
-			tstring dataFile;
+			std::string dataFile;
 			Buddha::FileSystem::getInstancePtr()->getDataDirectory(dataFile);
 			dataFile += TEXT("\\");
 			//
-			tstring path(fileName);
+			std::string path(fileName);
 			path = dataFile + fileName;
 			HRESULT hr = D3DXCreateTextureFromFileEx(RenderSystem::getInstancePtr()->getDevice(), path.c_str(), D3DX_DEFAULT, D3DX_DEFAULT, D3DX_FROM_FILE, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &_texture);
 			if (FAILED(hr))

@@ -45,12 +45,12 @@ namespace Euclid
 		_clear();
 	}
 
-	void IMaterial::setEffect( const tstring& name )
+	void IMaterial::setEffect( const std::string& name )
 	{
 		_effect = EffectManager::getInstancePtr()->createEffectFromFile(name);
 	}
 
-	void IMaterial::loadAnimation( const tstring& name )
+	void IMaterial::loadAnimation( const std::string& name )
 	{
 		std::ifstream f(name.c_str(), std::ios::binary);
 		if (!f.good())

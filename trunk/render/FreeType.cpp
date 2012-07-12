@@ -19,7 +19,7 @@ namespace Euclid
 
 	}
 
-	bool FreeType::create( tstring& faceFile, unsigned int fontSize, eFontProperty fontProperty )
+	bool FreeType::create( std::string& faceFile, unsigned int fontSize, eFontProperty fontProperty )
 	{
 		int err = 0;
 		//
@@ -33,7 +33,7 @@ namespace Euclid
 		err = FT_New_Face(_library, faceFile.c_str(), 0, &_face);
 		if (err != 0)
 		{
-			tstring data = Buddha::FileSystem::getInstancePtr()->getDataDirectory();
+			std::string data = Buddha::FileSystem::getInstancePtr()->getDataDirectory();
 			data += faceFile;
 			err = FT_New_Face(_library, data.c_str(), 0, &_face);
 			if (err != 0)
@@ -101,7 +101,7 @@ namespace Euclid
 	}	
 
 
-	bool FreeType::render( Vec3& basePoint, Vec3& direction, const Color& color, tstring& text )
+	bool FreeType::render( Vec3& basePoint, Vec3& direction, const Color& color, std::string& text )
 	{
 		if (text.size() == 0)
 		{
@@ -213,7 +213,7 @@ namespace Euclid
 		_baseX += fft->_width;
 	}
 
-	unsigned short FreeType::_computeUnicode( tstring& character)
+	unsigned short FreeType::_computeUnicode( std::string& character)
 	{
 		wchar_t wc = 0;
 		::MultiByteToWideChar(CP_ACP, 0, character.c_str(), -1, &wc, 1);

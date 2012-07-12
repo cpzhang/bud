@@ -41,7 +41,7 @@ namespace Euclid
 		}
 	}
 
-	bool MaterialVertexTexture::setTexture( const tstring& name, const tstring& fileName )
+	bool MaterialVertexTexture::setTexture( const std::string& name, const std::string& fileName )
 	{
 		ITexture* tex = TextureManager::getInstancePtr()->createTextureFromFile(fileName);
 		if (NULL == tex)

@@ -20,7 +20,7 @@ namespace Euclid
 		void attachCamera(Camera *pCamera);
 		virtual void release();
 
-		virtual tstring getName();
+		virtual std::string getName();
 		
 		virtual void onKeyDown(char c);
 		

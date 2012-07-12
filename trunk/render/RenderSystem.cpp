@@ -17,6 +17,7 @@ namespace Euclid
 
 		UINT adapter = D3DADAPTER_DEFAULT;
 		D3DDEVTYPE deviceType = D3DDEVTYPE_HAL;
+		//deviceType = D3DDEVTYPE_REF;
 		HWND hFocusWindow = RenderEngineCreationParameters::getInstancePtr()->hFocusWindow;
 
 		
@@ -38,7 +39,6 @@ namespace Euclid
 		}
 #endif
 		//
-		D3DCAPS9				_caps;
 		_d3d9->GetDeviceCaps(adapter, deviceType, &_caps);
 		DWORD behaviorFlags = D3DCREATE_HARDWARE_VERTEXPROCESSING;
 		if (_caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)
@@ -79,10 +79,10 @@ namespace Euclid
 			RECT rect;
 			GetClientRect(hFocusWindow, &rect);
 			// Width of the new swap chain's back buffers, in pixels
-			_presentationParameters.BackBufferWidth	= rect.right - rect.left;
+			_presentationParameters.BackBufferWidth	= RenderEngineCreationParameters::getInstancePtr()->fWidth;//rect.right - rect.left;
 
 			// Height of the new swap chain's back buffers, in pixels. 
-			_presentationParameters.BackBufferHeight = rect.bottom - rect.top;
+			_presentationParameters.BackBufferHeight = RenderEngineCreationParameters::getInstancePtr()->fHeight;//rect.bottom - rect.top;
 
 			// Multisampling is supported only if the swap effect is D3DSWAPEFFECT_DISCARD.
 			_presentationParameters.MultiSampleType			= D3DMULTISAMPLE_NONE;
@@ -116,7 +116,7 @@ namespace Euclid
 			_d3d9 = 0;
 		}
 */
-		tstring _reason;
+		std::string _reason;
 		{
 			std::ostringstream ss;
 			ss<<"dx error, string: "<<DXGetErrorString(D3DERR_OUTOFVIDEOMEMORY)<<";description: "<<DXGetErrorDescription(D3DERR_OUTOFVIDEOMEMORY);
@@ -321,6 +321,16 @@ namespace Euclid
 				{0,		52,	D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
 				D3DDECL_END()
 			},
+			//	eVertexDeclarationType_PositionTextureBoneWeightColorNormal
+				{
+					{0,		0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
+					{0,		12,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},
+					{0,		20,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDINDICES,	0},
+					{0,		36,	D3DDECLTYPE_FLOAT4,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDWEIGHT,	0},
+					{0,		52,	D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},
+					{ 0,	56, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,		0},
+					D3DDECL_END()
+				},
 			//	eVertexDeclarationType_PositionTextureNormal
 			{
 				{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},
@@ -582,5 +592,13 @@ namespace Euclid
 		return pOut;
 	}
 
+	DWORD RenderSystem::getVertexShaderVersion()
+	{
+		return _caps.VertexShaderVersion;
+	}
+	DWORD RenderSystem::getPixelShaderVersion()
+	{
+		return _caps.PixelShaderVersion;
+	}
 	LPDIRECT3DSURFACE9 RenderSystem::s_pRenderSurface(NULL);
 }

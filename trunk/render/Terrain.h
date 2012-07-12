@@ -14,7 +14,7 @@ namespace Euclid
 		Terrain();
 		~Terrain();
 
-		bool create(const tstring& fileName);
+		bool create(const std::string& fileName);
 		bool create();
 		void destroy();
 		void clear();

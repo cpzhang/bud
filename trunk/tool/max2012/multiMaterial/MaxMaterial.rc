@@ -1,0 +1,277 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英语(美国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PANEL DIALOGEX 0, 0, 357, 446
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    COMBOBOX        IDC_COMBO1,109,29,108,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Blend Mode",IDC_STATIC,67,31,41,8
+    CONTROL         "Tc Flow U",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,44,52,10
+    CONTROL         "Tc Flow V",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,194,44,52,10
+    CONTROL         "Tc Rotate",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,55,52,10
+    CONTROL         "Tc Angle Reset",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,194,55,72,10
+    CONTROL         "Tc Position Reset",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,66,84,10
+    LTEXT           "Tc Flow Speed U",IDC_STATIC,44,77,61,8
+    LTEXT           "Tc Flow Speed V",IDC_STATIC,44,92,61,8
+    LTEXT           "Tc Rotate Speed",IDC_STATIC,44,107,61,8
+    LTEXT           "Bitmap",IDC_STATIC,80,122,25,8
+    CONTROL         "",IDC_EDIT4,"CustEdit",WS_TABSTOP,109,77,40,14
+    CONTROL         "",IDC_EDIT5,"CustEdit",WS_TABSTOP,109,92,40,14
+    LTEXT           "Unnamed Transparency",IDC_STATIC,24,134,81,8
+    LTEXT           "Unnamed Color",IDC_STATIC,52,149,53,8
+    LTEXT           "Texture Rows",IDC_STATIC,56,164,49,8
+    LTEXT           "Texture Cols",IDC_STATIC,56,179,49,8
+    LTEXT           "Texture Change Style",IDC_STATIC,24,194,81,8
+    COMBOBOX        IDC_COMBO2,109,194,108,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Texture Changed Interval",IDC_STATIC,8,210,97,8
+    CONTROL         "Dont Cast Shadow",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,225,80,10
+    CONTROL         "Unlit",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,194,225,36,10
+    CONTROL         "No Depth Check",IDC_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,235,72,10
+    CONTROL         "No Depth Write",IDC_CHECK10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,194,235,72,10
+    GROUPBOX        "Unnamed Texture Attibute",IDC_STATIC,1,5,352,241
+    LTEXT           "Texture Channel",IDC_STATIC,44,261,61,8
+    COMBOBOX        IDC_COMBO3,109,261,108,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Texture Resolution",IDC_STATIC,32,276,73,8
+    COMBOBOX        IDC_COMBO4,109,276,108,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Texture Filter",IDC_STATIC,48,291,57,8
+    COMBOBOX        IDC_COMBO5,109,291,108,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Hardware Texturing ",IDC_STATIC,5,252,352,54
+    CONTROL         "Caching",IDC_CHECK11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,317,44,10
+    LTEXT           "Node State",IDC_STATIC,64,327,41,8
+    COMBOBOX        IDC_COMBO6,109,327,108,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Node Behavior",IDC_STATIC,5,310,352,32
+    CONTROL         "Additive Layer",IDC_CHECK12,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,356,72,10
+    LTEXT           "Translucence Coeff",IDC_STATIC,32,367,73,8
+    LTEXT           "Diffuse Reflectivity",IDC_STATIC,24,382,81,8
+    LTEXT           "Incandescence",IDC_STATIC,52,396,53,8
+    LTEXT           "Transparency",IDC_STATIC,56,412,49,8
+    GROUPBOX        "Extra Attributes",IDC_STATIC,5,348,352,83
+    CONTROL         "Two Sides",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,19,52,10
+    CONTROL         "",IDC_SPIN1,"SpinnerControl",0x0,150,77,12,14
+    CONTROL         "",IDC_SPIN2,"SpinnerControl",0x0,150,92,12,14
+    CONTROL         "",IDC_DOSTUFF,"ColorSwatch",WS_TABSTOP,109,149,50,14
+    CONTROL         "",IDC_CHECK13,"CustButton",WS_TABSTOP,109,122,146,10
+    CONTROL         "",IDC_EDIT8,"CustEdit",WS_TABSTOP,109,107,40,14
+    CONTROL         "",IDC_SPIN3,"SpinnerControl",0x0,150,107,12,14
+    CONTROL         "",IDC_EDIT14,"CustEdit",WS_TABSTOP,109,134,40,14
+    CONTROL         "",IDC_SPIN4,"SpinnerControl",0x0,150,134,12,14
+    CONTROL         "",IDC_EDIT15,"CustEdit",WS_TABSTOP,109,164,40,14
+    CONTROL         "",IDC_EDIT16,"CustEdit",WS_TABSTOP,109,179,40,14
+    CONTROL         "",IDC_SPIN5,"SpinnerControl",0x0,150,164,12,14
+    CONTROL         "",IDC_SPIN6,"SpinnerControl",0x0,150,179,12,14
+    CONTROL         "",IDC_EDIT17,"CustEdit",WS_TABSTOP,109,210,40,14
+    CONTROL         "",IDC_SPIN7,"SpinnerControl",0x0,150,210,12,14
+    CONTROL         "",IDC_EDIT18,"CustEdit",WS_TABSTOP,109,367,40,14
+    CONTROL         "",IDC_EDIT19,"CustEdit",WS_TABSTOP,109,382,40,14
+    CONTROL         "",IDC_SPIN8,"SpinnerControl",0x0,150,367,12,14
+    CONTROL         "",IDC_SPIN9,"SpinnerControl",0x0,150,382,12,14
+    CONTROL         "",IDC_DOSTUFF2,"ColorSwatch",WS_TABSTOP,109,396,40,14
+    CONTROL         "",IDC_CHECK14,"CustButton",WS_TABSTOP,109,412,146,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_PANEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 353
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 439
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBDESCRIPTION      "Rocket Max Material"
+    IDS_CATEGORY            "Rocket"
+    IDS_CLASS_NAME          "Unnamed Shader"
+    IDS_PARAMS              "Unnamed Shader Params"
+    IDS_SPIN                "Spin"
+    IDS_TWOSIDES            "Two Sides"
+    IDS_MTL1                "Material"
+    IDS_MTL1ON              "MaterialState"
+    IDS_DONTCASTSHADOW      "Dont Cast Shadow"
+    IDS_UNLIT               "Unlit"
+    IDS_NODEPTHCHECK        "No Depth Check"
+    IDS_NODEPTHWRITE        "No Depth Write"
+    IDS_CACHING             "Caching"
+    IDS_ADDITIVELAYER       "Additive Layer"
+    IDS_TEXTUREDCHANNEL     "Textured Channel"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BLENDMODE           "Blend Mode"
+    IDS_BLENDMODE_OPAQUE    "OPaque"
+    IDS_BLENDMODE_TRANSPARENT "Transparent"
+    IDS_BLENDMODE_ALPHABLEND "AlphaBlend"
+    IDS_BLENDMODE_ADDITIVE  "Additive"
+    IDS_BLENDMODE_ADDITIVEALPHA "AdditiveAlpha"
+    IDS_BLENDMODE_MODULATE  "Modulate"
+    IDS_TCFLOWU             "Tc Flow U"
+    IDS_TCFLOWV             "Tc Flow V"
+    IDS_TCROTATE            "Tc Rotate"
+    IDS_TCANGLERESET        "Tc Angle Reset"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TCPOSITIONRESET     "Tc Position Reset"
+    IDS_TCFLOWSPEEDU        "Tc Flow Speed U"
+    IDS_TCFLOWSPEEDV        "Tc Flow Speed V"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TEXTUREDCHANNEL_NONE "None"
+    IDS_TEXTUREDCHANNEL_COLOR "Color"
+    IDS_TEXTUREDCHANNEL_TRANSPARENCY "Transparency"
+    IDS_TEXTUREDCHANNEL_INCADESCENCE "Incandescence"
+    IDS_TEXTUREDCHANNEL_BUMPMAP "Bump Map"
+    IDS_TEXTUREDCHANNEL_COMBINEDTEXTURES "Combined Textures"
+    IDS_TEXTURECHANGESTYLE  "Texture Change Style"
+    IDS_TEXTURECHANGESTYLE_SEQUENCE "Sequence"
+    24                      "Random"
+    25                      "Stop"
+    IDS_TEXTURERESOLUTION   "Texture Resolution"
+    IDS_TEXTURERESOLUTION_DEFAULT "Default"
+    IDS_TEXTURERESOLUTION_LOW "Low (32 x 32)"
+    IDS_TEXTURERESOLUTION_MEDIUM "Medium (64 x 64)"
+    IDS_TEXTURERESOLUTION_HIGH "High (128 x 128)"
+    IDS_TEXTURERESOLUTION_HIGHEST "Highest (256 x 256)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TEXTUREFILTER       "Texture Filter"
+    IDS_TEXTUREFILTER_USEGLOBALSETTING "Use Global Setting"
+    IDS_TEXTUREFILTER_NEAREST "Nearest (Unfiltered)"
+    IDS_TEXTUREFILTER_BILINEAR "Bilinear"
+    IDS_TEXTUREFILTER_MIPMAP_NEAREST "Mipmap Nearest"
+    IDS_TEXTUREFILTER_MIPMAP_LINEAR "Mipmap Linear"
+    IDS_TEXTUREFILTER_MIPMAP_BILINEAR "Mipmap Bilinear"
+    IDS_TEXTUREFILTER_MIPMAP_TRILINEAR "Mipmap Trilinear"
+    IDS_NODESTATE           "Node State"
+    IDS_NODESTATE_NORMAL    "Normal"
+    IDS_NODESTATE_HASNOEFFECT "HasNoEffect"
+    IDS_NODESTATE_BLOCKING  "Blocking"
+    IDS_NODESTATE_WAITING_NORMAL "Waiting-Normal"
+    IDS_NODESTATE_WAITING_HASNOEFFECT "Waiting-HasNoEffect"
+    IDS_NODESTATE_WAITING_BLOCKING "Waiting-Blocking"
+    IDS_COLOR               "Diffuse"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_UNNAMEDCOLOR        "Unnamed Color"
+    IDS_TCROTATESPEED       "Tc Rotate Speed"
+    IDS_TEXTUREROWS         "Texture Rows"
+    IDS_TEXTURECOLS         "Texture Cols"
+    IDS_TEXTURECHANGEINTERVAL "Texture Change Interval"
+    IDS_TRANSLUSCENCECOEFF  "Transluscence Coeff"
+    IDS_DIFFUSEREFECTIVITY  "Diffuse Reflectivity"
+    IDS_INCANDESCENCE       "Incandescence"
+    IDS_MATERIAL            "Material"
+    IDS_UNNAMEDTRANSPARENCY "Unnamed Transparency"
+END
+
+#endif    // 英语(美国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

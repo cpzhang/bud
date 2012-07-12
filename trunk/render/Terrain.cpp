@@ -18,7 +18,7 @@ namespace Euclid
 
 	}
 
-	bool Terrain::create( const tstring& fileName )
+	bool Terrain::create( const std::string& fileName )
 	{
 		std::ifstream f(fileName.c_str(), std::ios::binary);
 		if (!f.good())

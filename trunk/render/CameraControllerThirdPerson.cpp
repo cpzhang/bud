@@ -23,7 +23,7 @@ namespace Euclid
 		delete this;
 	}
 
-	tstring CameraControllerThirdPerson::getName()
+	std::string CameraControllerThirdPerson::getName()
 	{
 		return "CameraControllerThirdPerson";
 	}

@@ -1139,7 +1139,6 @@ public:
 #endif // (_WIN32_IE >= 0x0500) && !defined(_WIN32_WCE)
 };
 
-
 template <class T, class TBase = ATL::CWindow, class TWinTraits = ATL::CFrameWinTraits>
 class ATL_NO_VTABLE CFrameWindowImpl : public CFrameWindowImplBase< TBase, TWinTraits >
 {

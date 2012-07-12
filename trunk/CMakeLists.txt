@@ -36,7 +36,7 @@ add_subdirectory(net)
 add_subdirectory(tutorial)
 
 # tool
-#add_subdirectory(tool)
+add_subdirectory(tool)
 
 # music
 set(MusicName music)

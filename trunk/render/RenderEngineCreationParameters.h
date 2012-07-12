@@ -16,8 +16,12 @@ namespace Euclid
 		RenderEngineCreationParameters()
 		{
 			hFocusWindow = 0;
+			fWidth = 600;
+			fHeight = 800;
 		}
 		HWND hFocusWindow;
+		float fWidth;
+		float fHeight;
 	};
 
 	enum eClearFlags
@@ -36,6 +40,7 @@ namespace Euclid
 		eVertexDeclarationType_PositionTexture,
 		eVertexDeclarationType_PositionTextureBoneWeight,
 		eVertexDeclarationType_PositionTextureBoneWeightColor,
+		eVertexDeclarationType_PositionTextureBoneWeightColorNormal,
 		eVertexDeclarationType_PositionTextureNormal,
 		eVertexDeclarationType_PositionColorTexture,
 		eVertexDeclarationType_PositionTTexture,
@@ -102,6 +107,23 @@ namespace Euclid
 		Vec4    weights;
 		//
 		u32		color_ARGB;
+	};
+	//
+	struct sPositionTextureBoneWeightColorNormal
+	{
+
+		//
+		Vec3	position;
+		//
+		Vec2	texcoord;
+		//
+		Vec4	bones;
+		//
+		Vec4    weights;
+		//
+		u32		color_ARGB;
+
+		Vec3	normal;
 	};
 	//
 	struct sPositionTTexture

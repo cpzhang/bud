@@ -4,7 +4,7 @@
 //
 namespace Euclid
 {
-	Effect* Euclid::EffectManager::createEffectFromFile( const tstring& f )
+	Effect* Euclid::EffectManager::createEffectFromFile( const std::string& f )
 	{
 		NameEffectMap::iterator it = _effects.find(f);
 		if (it != _effects.end())
@@ -82,6 +82,16 @@ namespace Euclid
 				return;
 			}
 		}
+	}
+
+	Effect* EffectManager::getEffectByFile( const std::string& f )
+	{
+		NameEffectMap::iterator it = _effects.find(f);
+		if (it != _effects.end())
+		{
+			return it->second;
+		}
+		return NULL;
 	}
 
 }

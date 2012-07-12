@@ -5,8 +5,8 @@ include_directories(
 )
 
 # add_subdirectory(max)
-# add_subdirectory(max2012)
+add_subdirectory(max2012)
 # add_subdirectory(max8)
 # add_subdirectory(photoshop)
-add_subdirectory(maya)
+# add_subdirectory(maya)
 # add_subdirectory(flash)

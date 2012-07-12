@@ -53,7 +53,7 @@ namespace Euclid
         void moveRelative(const Vec3& vec);
         /** Sets the camera's direction vector.
         */
-        void setDirection(const Vec3& vec);
+		void setDirection(const Vec3& vec, const Vec3& up = Vec3::UNIT_Y);
 
         /** Points the camera at a location in worldspace.
             @remarks
@@ -63,7 +63,7 @@ namespace Euclid
             @param
                 targetPoint A vector specifying the look at point.
         */
-        void lookAt( const Vec3& targetPoint );
+        void lookAt( const Vec3& targetPoint , const Vec3& up = Vec3::UNIT_Y);
         /** Sets the position of the near clipping plane.
             @remarks
                 The position of the near clipping plane is the distance from the frustums position to the screen
