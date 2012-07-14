@@ -159,7 +159,8 @@ include_directories(
 # add_subdirectory(Model_04_treeview)
 # add_subdirectory(Model_05_preview)
 # add_subdirectory(Model_06_property)
-add_subdirectory(Model_07_propertyTree)
+# add_subdirectory(Model_07_propertyTree)
+add_subdirectory(Model_08_terrain_chunk)
 
 # fmod
 # add_subdirectory(fmod_00_hello)

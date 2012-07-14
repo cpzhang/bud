@@ -1519,6 +1519,92 @@ public:
 	}
 };
 
+class CEditImpl : public CWindowImpl<CEditImpl, CEdit>
+{
+public:
+	BEGIN_MSG_MAP(CEditImpl)
+	END_MSG_MAP()
+};
+
+class CCreateTerrainDlg : public CDialogImpl<CCreateTerrainDlg>
+	,public CWinDataExchange<CCreateTerrainDlg>
+
+{
+private:
+	//
+	CEditImpl   mEditWidth;
+	int			mWidth;
+	//
+	CEditImpl   mEditHeight;
+	int			mHeight;
+private:
+	void clear()
+	{
+		mWidth = 1;
+		mHeight = 1;
+	}
+public:
+	CCreateTerrainDlg()
+	{
+
+	}
+	~CCreateTerrainDlg()
+	{
+		clear();
+	}
+	enum { IDD = IDD_CreateTerrain};
+
+	BEGIN_MSG_MAP(CCreateTerrainDlg)
+		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
+		COMMAND_HANDLER(IDOK, BN_CLICKED, OnBnClickedOk)
+		COMMAND_HANDLER(IDCANCEL, BN_CLICKED, OnBnClickedCancel)
+	END_MSG_MAP()
+
+	BEGIN_DDX_MAP(CCreateTerrainDlg)
+		DDX_CONTROL(IDC_EDIT_Width, mEditWidth)//功能等价于SubclassWindow，接管消息回调
+		DDX_INT_RANGE(IDC_EDIT_Width, mWidth, 1, 200)//做校验
+		DDX_CONTROL(IDC_EDIT_Width, mEditHeight)//功能等价于SubclassWindow，接管消息回调
+		DDX_INT_RANGE(IDC_EDIT_Height, mHeight, 1, 200)//做校验
+	END_DDX_MAP()
+
+	LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	{
+		//
+		clear();
+		// First DDX call, hooks up variables to controls.
+		DoDataExchange(false); 
+		//
+		CenterWindow();
+		ShowWindow(SW_NORMAL);
+		return TRUE;
+	}
+public:
+	LRESULT OnBnClickedOk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		// TODO: 在此添加控件通知处理程序代码
+		// Transfer data from the controls to member variables.
+		if (DoDataExchange(true))
+		{
+			//
+			EndDialog(0);
+		}
+		return 0;
+	}
+
+	LRESULT OnBnClickedCancel(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		// TODO: 在此添加控件通知处理程序代码
+		EndDialog(0);
+		return 0;
+	}
+	void OnDataValidateError ( UINT nCtrlID, BOOL bSave, _XData& data )
+	{
+		MessageBox("width and height range [1, 200]");
+		return;
+	}
+
+};
+
 class CMainWindow : 
 	public CFrameWindowImpl<CMainWindow>
 	,public IdleHandler
@@ -1531,6 +1617,7 @@ public:
 		MESSAGE_HANDLER(WM_CREATE, onCreate)
 		COMMAND_ID_HANDLER(ID_HELP_ABOUT, OnHelpAbout)
 		NOTIFY_HANDLER(IDC_TREE, TVN_SELCHANGED, OnTVSelChanged) 
+		COMMAND_ID_HANDLER(ID_EDIT_CREATETERRAIN, OnEditCreateterrain)
 		CHAIN_MSG_MAP(CFrameWindowImpl<CMainWindow>)
 		REFLECT_NOTIFICATIONS()
 	END_MSG_MAP()
@@ -1658,6 +1745,14 @@ private:
 	CSplitterWindow m_wndSplitVertical;
 	CSplitterWindow m_wndSplitVerticalProperty;
 	CMultiPaneStatusBarCtrl m_wndStatusBar;
+
+	LRESULT OnEditCreateterrain(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		// TODO: 在此添加命令处理程序代码
+		CCreateTerrainDlg dlg;
+		dlg.DoModal();
+		return 0;
+	}
 };
 void CViewWindow::onIdle()
 {

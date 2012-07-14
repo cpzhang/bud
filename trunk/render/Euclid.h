@@ -25,4 +25,5 @@
 #include "MZ.h"
 #include "Mesh.h"
 #include "Skeleton.h"
+#include "VDTManager.h"
 #endif // __Euclid_h__

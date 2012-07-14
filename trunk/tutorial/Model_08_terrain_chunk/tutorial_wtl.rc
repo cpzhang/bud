@@ -1,0 +1,262 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "New",                         ID_FILE_NEW
+        MENUITEM "Open",                        ID_FILE_OPEN
+        MENUITEM "Save",                        ID_FILE_SAVE40003
+        MENUITEM "Quit",                        ID_FILE_QUIT
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM SEPARATOR
+        MENUITEM "Create Terrain",              ID_EDIT_CREATETERRAIN
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "About",                       ID_HELP_ABOUT
+    END
+END
+
+IDR_MENU2 MENU 
+BEGIN
+    POPUP "Options"
+    BEGIN
+        MENUITEM "Animation",                   ID_MATERIAL_SKINNEDANIMATION
+        MENUITEM "Mesh",                        ID_MATERIAL_MESH
+        MENUITEM "Material",                    ID_MATERIAL_MATERIAL
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FORMVIEW DIALOGEX 0, 0, 186, 454
+STYLE DS_SETFONT | WS_CHILD | WS_BORDER
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_LINESATROOT | WS_BORDER | WS_GROUP | WS_TABSTOP,3,5,178,441
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 186, 93
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_VISIBLE | WS_CAPTION
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "OK",IDC_BUTTON_OK,111,62,50,14
+    CONTROL         111,IDC_STATIC,"Static",SS_BITMAP,24,19,21,20,WS_EX_ACCEPTFILES
+END
+
+IDD_FORMVIEW_PROPERTY DIALOGEX 0, 0, 185, 451
+STYLE DS_SETFONT | WS_CHILD | WS_BORDER
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | TVS_LINESATROOT | WS_BORDER | WS_GROUP | WS_TABSTOP,3,5,179,433
+END
+
+IDD_FORMVIEW_GEOMETRY DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    LTEXT           "TODO: 布局窗体视图",IDC_STATIC,55,42,74,8
+    LTEXT           "Vertices",IDD_FORMVIEW_GEOMETRY,12,11,33,8
+END
+
+IDD_FORMVIEW_MATERIAL DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    LTEXT           "Name",IDC_STATIC,12,11,17,8
+    LTEXT           "Texture",IDC_STATIC,9,31,29,8
+END
+
+IDD_FORMVIEW_SubEntity DIALOGEX 0, 0, 174, 140
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    LTEXT           "Name",IDD_FORMVIEW_GEOMETRY,12,11,17,8
+    EDITTEXT        IDC_EDIT_Name,36,12,126,14,ES_AUTOHSCROLL
+END
+
+IDD_FORMVIEW_Entity DIALOGEX 0, 0, 174, 140
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    LTEXT           "Name",IDD_FORMVIEW_GEOMETRY,12,11,17,8
+    EDITTEXT        IDC_EDIT_Name,36,12,126,14,ES_AUTOHSCROLL
+    LISTBOX         IDC_LIST1,35,49,122,80,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "SubEntity",IDC_STATIC,11,38,37,8
+END
+
+IDD_CreateTerrain DIALOGEX 0, 0, 247, 255
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Terrain"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,43,217,50,14
+    PUSHBUTTON      "取消",IDCANCEL,121,218,50,14
+    EDITTEXT        IDC_EDIT_Width,42,29,40,14,ES_AUTOHSCROLL
+    LTEXT           "Width",IDC_STATIC,15,31,20,8
+    LTEXT           "Height",IDC_STATIC,13,57,22,8
+    EDITTEXT        IDC_EDIT_Height,42,55,40,14,ES_AUTOHSCROLL
+    LTEXT           " * Chunk",IDC_STATIC,81,30,29,8
+    LTEXT           " * Chunk",IDC_STATIC,81,56,29,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_FORMVIEW_PROPERTY, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 450
+    END
+
+    IDD_FORMVIEW_SubEntity, DIALOG
+    BEGIN
+        RIGHTMARGIN, 173
+    END
+
+    IDD_FORMVIEW_Entity, DIALOG
+    BEGIN
+        RIGHTMARGIN, 173
+    END
+
+    IDD_CreateTerrain, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 240
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 248
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 15
+BEGIN
+    BUTTON      IDR_MAINFRAME
+    BUTTON      ID_BUTTON40006
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "toolbar1.bmp"
+IDB_LOGO                BITMAP                  "SelectionMask.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "logo.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "Model"
+    ID_DEFAULT_PANE_1       "Mouse State Mouse Move Postion Client"
+    ID_DEFAULT_PANE_2       "Op State"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

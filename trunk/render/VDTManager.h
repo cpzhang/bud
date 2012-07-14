@@ -76,7 +76,7 @@ namespace Euclid
 		sPositionTextureBoneWeightColorNormal mData;
 	};
 	typedef std::vector<sVDTNull*> VDTLayoutMap;
-	class VDTManager: public Buddha::SingletonEx<VDTManager>
+	class _EuclidExport_ VDTManager: public Buddha::SingletonEx<VDTManager>
 	{
 	public:
 		VDTManager();
