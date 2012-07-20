@@ -16,6 +16,9 @@
 #include "tinyXML2/tinyxml2.h"
 #include "Event.h"
 #include "SphereCoordinate.h"
+#include "Chunk.h"
+//
+Chunks      gTerrain;
 // idle handler
 class IdleHandler
 {
@@ -139,10 +142,13 @@ public:
 		//
 		std::string parentPath = Buddha::FileSystem::getInstancePtr()->getParent(fileName);
 		parentPath = Buddha::FileSystem::getInstancePtr()->getParent(parentPath);
-		setSkin(parentPath + "/" + mAnimations.begin()->second.skinFile);
-		mAniTime.current = 0;
-		mAniTime.start = 0;
-		mAniTime.end = mAnimations.begin()->second.duration;
+		if (!mAnimations.empty())
+		{
+			setSkin(parentPath + "/" + mAnimations.begin()->second.skinFile);
+			mAniTime.current = 0;
+			mAniTime.start = 0;
+			mAniTime.end = mAnimations.begin()->second.duration;
+		}
 	}
 
 	void Geometry::setMesh(const std::string& fileName)
@@ -205,7 +211,11 @@ public:
 		std::string imagePath = Buddha::FileSystem::getInstancePtr()->getParent(fileName);
 		imagePath = Buddha::FileSystem::getInstancePtr()->getParent(imagePath);
 		imagePath += "/";
-		mMaterial->setTexture(textureVariableName, imagePath + textureFileName);
+		if (textureFileName.find('.') != std::string::npos)
+		{
+			mMaterial->setTexture(textureVariableName, imagePath + textureFileName);
+		}
+		
 		mMaterial->_zEnable = (Euclid::eZBufferType)r->IntAttribute("zEnable");
 		mMaterial->_zWriteEnable = r->BoolAttribute("zWriteEnable");
 		mMaterial->_alphaTestEnable = r->BoolAttribute("alphaTestEnable");
@@ -963,6 +973,7 @@ public:
 	}
 	LRESULT onDestroy(UINT, WPARAM, LPARAM, BOOL&) 
 	{
+		gTerrain.destroy();
 		delete EventManager::getInstancePtr();
 		if (RenderEngineImp::getInstancePtr()->isInitialized())
 		{
@@ -1016,10 +1027,15 @@ public:
 	}
 	void _render()
 	{
+		_renderTerrain();
 		_renderModel();
 		//_renderSphere();
 		_renderLight();
 		_renderFont();
+	}
+	void _renderTerrain()
+	{
+		gTerrain.render();
 	}
 	void _renderSphere()
 	{
@@ -1587,6 +1603,9 @@ public:
 		{
 			//
 			EndDialog(0);
+			//
+			gTerrain.destroy();
+			gTerrain.create(mWidth, mHeight, 3);
 		}
 		return 0;
 	}
@@ -1807,6 +1826,17 @@ void CViewWindow::onIdle()
 		fx->setMatrix("g_mWorldViewProjection", m);
 	}
 
+	//
+	{
+		if (gTerrain.getMaterial())
+		{
+			Euclid::Effect* fx = gTerrain.getMaterial()->getEffect();
+			if (fx)
+			{
+				fx->setMatrix("g_mViewProjection", m);
+			}
+		}
+	}
 	_calcFPS();
 	//
 	RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);

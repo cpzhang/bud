@@ -20,7 +20,7 @@
 //
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <windowsx.h>
+//#include <windowsx.h>
 #include <MMSystem.h>
 #include <DbgHelp.h>
 //
@@ -79,6 +79,9 @@ typedef unsigned int u32;
 
 typedef signed __int64 s64;
 typedef unsigned __int64 u64;
+
+//
+typedef float Real;
 
 //# pragma pack(pop)
 

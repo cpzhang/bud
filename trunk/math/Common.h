@@ -21,11 +21,6 @@
 #include "base/Buddha.h"
 
 //
-typedef float Real;
-
-
-
-//
 namespace Euler
 {
 	//

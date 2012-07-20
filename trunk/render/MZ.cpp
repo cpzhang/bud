@@ -695,7 +695,7 @@ namespace Euclid
 			}
 			k.boneKFs.push_back(bkf);
 		}
-		if (!mLoadFBs && mSkins.empty())
+		if (nBones != 0 && !mLoadFBs && mSkins.empty())
 		{
 			mSkins.push_back(k);
 		}

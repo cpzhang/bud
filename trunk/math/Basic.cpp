@@ -13,14 +13,14 @@ namespace Euler
 
 	}
 	//-----------------------------------------------------------------------
-	Vector3 Basic::calculateBasicFaceNormalWithoutNormalize(const Vector3& v1, const Vector3& v2, const Vector3& v3)
+	Vector3 calculateBasicFaceNormalWithoutNormalize(const Vector3& v1, const Vector3& v2, const Vector3& v3)
 	{
 		Vector3 normal = (v2 - v1).crossProduct(v3 - v1);
 		return normal;
 	}
 
 	//-----------------------------------------------------------------------
-	std::pair<bool, Real> Basic::intersects(const Ray& ray, const Vector3& a,
+	std::pair<bool, Real> intersects(const Ray& ray, const Vector3& a,
 		const Vector3& b, const Vector3& c,
 		bool positiveSide, bool negativeSide)
 	{
@@ -28,7 +28,7 @@ namespace Euler
 		return intersects(ray, a, b, c, normal, positiveSide, negativeSide);
 	}
 	//-----------------------------------------------------------------------
-	std::pair<bool, Real> Basic::intersects(const Ray& ray, const Vector3& a,
+	std::pair<bool, Real> intersects(const Ray& ray, const Vector3& a,
 		const Vector3& b, const Vector3& c, const Vector3& normal,
 		bool positiveSide, bool negativeSide)
 	{
@@ -119,5 +119,26 @@ namespace Euler
 		}
 
 		return std::pair<bool, Real>(true, t);
+	}
+
+	bool isInsideTriangle( const Vec3& a, const Vec3& b, const Vec3& c, const Vec3& p )
+	{
+		if (p == a || p == b || p == c)
+		{
+			return true;
+		}
+		Vec3 n0 = (p - a).crossProduct(b - a);
+		Vec3 n1 = (p - b).crossProduct(c - b);
+		Vec3 n2 = (p - c).crossProduct(a - c);
+		Vec3 n = (b - a).crossProduct(c - a);
+		bool s0 = n0.dotProduct(n) > 0;
+		bool s1 = n1.dotProduct(n) > 0;
+		bool s2 = n2.dotProduct(n) > 0;
+		if (s0 == s1 && s1 == s2)
+		{
+			return true;
+		}
+
+		return false;
 	}
 }

@@ -132,6 +132,7 @@ include_directories(
 # add_subdirectory(wtl_40_CSplitterImpl)
 # add_subdirectory(wtl_41_CPaneContainer)
 # add_subdirectory(wtl_42_CPropertySheetWindow)
+# add_subdirectory(wtl_43_PropertyList)
 
 # add_subdirectory(ModelViewer_00_hello)
 # add_subdirectory(ModelViewer_01_travel)
@@ -160,8 +161,10 @@ include_directories(
 # add_subdirectory(Model_05_preview)
 # add_subdirectory(Model_06_property)
 # add_subdirectory(Model_07_propertyTree)
-add_subdirectory(Model_08_terrain_chunk)
-
+# add_subdirectory(Model_08_terrain_chunk)
+# add_subdirectory(Model_09_terrain_chunk_mesh)
+# add_subdirectory(Model_10_terrain_chunk_height)
+add_subdirectory(Model_11_terrain_chunk_painter)
 # fmod
 # add_subdirectory(fmod_00_hello)
 # add_subdirectory(fmod_01_new)

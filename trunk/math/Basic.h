@@ -18,6 +18,61 @@
 //
 namespace Euler
 {
+	bool _MATH_EXPORT_ isInsideTriangle(const Vec3& a, const Vec3& b, const Vec3& c, const Vec3& p);
+	  /** Ray / triangle intersection, returns boolean result and distance.
+        @param
+            ray The ray.
+        @param
+            a The triangle's first vertex.
+        @param
+            b The triangle's second vertex.
+        @param
+            c The triangle's third vertex.
+		@param 
+			normal The triangle plane's normal (passed in rather than calculated
+				on demand since the caller may already have it), doesn't need
+                normalised since we don't care.
+        @param
+            positiveSide Intersect with "positive side" of the triangle
+        @param
+            negativeSide Intersect with "negative side" of the triangle
+        @returns
+            If the ray is intersects the triangle, a pair of <b>true</b> and the
+            distance between intersection point and ray origin returned.
+        @par
+            If the ray isn't intersects the triangle, a pair of <b>false</b> and
+            <b>0</b> returned.
+        */
+        std::pair<bool, Real> intersects(const Ray& ray, const Vector3& a,
+            const Vector3& b, const Vector3& c, const Vector3& normal,
+            bool positiveSide = true, bool negativeSide = true);
+
+		 /** Ray / triangle intersection, returns boolean result and distance.
+        @param
+            ray The ray.
+        @param
+            a The triangle's first vertex.
+        @param
+            b The triangle's second vertex.
+        @param
+            c The triangle's third vertex.
+        @param
+            positiveSide Intersect with "positive side" of the triangle
+        @param
+            negativeSide Intersect with "negative side" of the triangle
+        @returns
+            If the ray is intersects the triangle, a pair of <b>true</b> and the
+            distance between intersection point and ray origin returned.
+        @par
+            If the ray isn't intersects the triangle, a pair of <b>false</b> and
+            <b>0</b> returned.
+        */
+        std::pair<bool, Real> _MATH_EXPORT_ intersects(const Ray& ray, const Vector3& a,
+            const Vector3& b, const Vector3& c,
+            bool positiveSide = true, bool negativeSide = true);
+		/** Calculate a face normal without normalize, no w-information. */
+		Vector3 calculateBasicFaceNormalWithoutNormalize(const Vector3& v1, const Vector3& v2, const Vector3& v3);
+
 	class _MATH_EXPORT_ Basic
 	{
 	public:
@@ -105,59 +160,6 @@ namespace Euler
 		{
 			return pow(b, e);
 		}
-		  /** Ray / triangle intersection, returns boolean result and distance.
-        @param
-            ray The ray.
-        @param
-            a The triangle's first vertex.
-        @param
-            b The triangle's second vertex.
-        @param
-            c The triangle's third vertex.
-		@param 
-			normal The triangle plane's normal (passed in rather than calculated
-				on demand since the caller may already have it), doesn't need
-                normalised since we don't care.
-        @param
-            positiveSide Intersect with "positive side" of the triangle
-        @param
-            negativeSide Intersect with "negative side" of the triangle
-        @returns
-            If the ray is intersects the triangle, a pair of <b>true</b> and the
-            distance between intersection point and ray origin returned.
-        @par
-            If the ray isn't intersects the triangle, a pair of <b>false</b> and
-            <b>0</b> returned.
-        */
-        static std::pair<bool, Real> intersects(const Ray& ray, const Vector3& a,
-            const Vector3& b, const Vector3& c, const Vector3& normal,
-            bool positiveSide = true, bool negativeSide = true);
-
-		 /** Ray / triangle intersection, returns boolean result and distance.
-        @param
-            ray The ray.
-        @param
-            a The triangle's first vertex.
-        @param
-            b The triangle's second vertex.
-        @param
-            c The triangle's third vertex.
-        @param
-            positiveSide Intersect with "positive side" of the triangle
-        @param
-            negativeSide Intersect with "negative side" of the triangle
-        @returns
-            If the ray is intersects the triangle, a pair of <b>true</b> and the
-            distance between intersection point and ray origin returned.
-        @par
-            If the ray isn't intersects the triangle, a pair of <b>false</b> and
-            <b>0</b> returned.
-        */
-        static std::pair<bool, Real> intersects(const Ray& ray, const Vector3& a,
-            const Vector3& b, const Vector3& c,
-            bool positiveSide = true, bool negativeSide = true);
-		/** Calculate a face normal without normalize, no w-information. */
-		static Vector3 calculateBasicFaceNormalWithoutNormalize(const Vector3& v1, const Vector3& v2, const Vector3& v3);
 	};
 }
 

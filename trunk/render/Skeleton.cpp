@@ -105,7 +105,11 @@ namespace Euclid
 						//
 						node->attachObject(bone);
 					}
-					_relate();
+					if (nBones != 0)
+					{
+						_relate();
+					}
+					
 				}break;
 			default:
 				{

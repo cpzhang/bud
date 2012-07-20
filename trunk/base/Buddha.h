@@ -24,6 +24,7 @@
 #include "DataChunk.h"
 #include "Exception.h"
 #include "StackWalker.h"
+#include "ConstBaseIterator.h"
 //#define ALIGN(size, boundary)  (((size) + ((boundary) - 1)) & ~((boundary) - 1))
 
 #endif // __Buddha_h__
