@@ -3,7 +3,7 @@
 
 #include "Common.h"
 #include "KeyFrames.h"
-namespace Euclid
+namespace Zen
 {	
 	struct sBoneKFs
 	{
@@ -131,7 +131,7 @@ namespace Euclid
 		char mVersion;
 		std::vector<sBoneKFs> boneKFs;
 	};
-	class _EuclidExport_ Bone
+	class _ZenExport_ Bone
 	{
 	public:
 		Bone()
@@ -154,7 +154,7 @@ namespace Euclid
 	};
 
 	class Skeleton;
-	class _EuclidExport_ BoneNode
+	class _ZenExport_ BoneNode
 	{
 	public:
 		BoneNode(Skeleton* ske, const std::string& name);

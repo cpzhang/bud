@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
 #include "RenderEngineCreationParameters.h"
-namespace Euclid
+namespace Zen
 {
 	struct sVDTNull
 	{
@@ -76,7 +76,7 @@ namespace Euclid
 		sPositionTextureBoneWeightColorNormal mData;
 	};
 	typedef std::vector<sVDTNull*> VDTLayoutMap;
-	class _EuclidExport_ VDTManager: public Buddha::SingletonEx<VDTManager>
+	class _ZenExport_ VDTManager: public Zen::SingletonEx<VDTManager>
 	{
 	public:
 		VDTManager();

@@ -6,7 +6,7 @@
 //#include "Effect.h"
 #include "MZ.h"
 //
-namespace Euclid
+namespace Zen
 {
 	Terrain::Terrain()
 	{
@@ -117,14 +117,14 @@ namespace Euclid
 	{
 		{
 			_vertexBuffer = BufferManager::getInstancePtr()->createVertexBuffer(_vertices.size() * sizeof(sPositionTexture), eUsage_Null, ePool_Manager);
-			void* data = _vertexBuffer->lock(0, 0, Euclid::eLock_Null);
+			void* data = _vertexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_vertices[0], _vertices.size() * sizeof(sPositionTexture));
 			_vertexBuffer->unLock();
 		}
 		//
 		{
 			_indexBuffer = BufferManager::getInstancePtr()->createIndexBuffer(_faces.size() * sizeof(Mesh::sFace), eUsage_Null, eFormat_Index16, ePool_Manager);
-			void* data = _indexBuffer->lock(0, 0, Euclid::eLock_Null);
+			void* data = _indexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_faces[0], _faces.size() * sizeof(Mesh::sFace));
 			_indexBuffer->unLock();
 		}

@@ -1,6 +1,6 @@
 #include "Thread.h"
 #include "Exception.h"
-namespace Buddha
+namespace Zen
 {
 	DWORD TLSThreadPointer = 0xFFFFFFFF;
 	static unsigned long __stdcall ProxyFunc (void *arg)

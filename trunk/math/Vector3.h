@@ -15,7 +15,7 @@
 #include "Vector4.h"
 
 //
-namespace Euler
+namespace Zen
 {
 	class _MATH_EXPORT_ Vector3
 	{
@@ -267,6 +267,5 @@ namespace Euler
 		static const Vector3 UNIT_SCALE;
 	};
 }
-
 #endif // __Vector3_h__
  

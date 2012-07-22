@@ -14,7 +14,7 @@ namespace Shannon
 	* \author Nevrax France
 	* \date 2000
 	*/
-	class ESocket : public Buddha::Exception
+	class ESocket : public Zen::Exception
 	{
 	public:
 		/** Constructor

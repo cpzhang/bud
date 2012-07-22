@@ -5,7 +5,7 @@
 #ifndef __Exception_h__
 #define __Exception_h__
 #include "Common.h"
-namespace Buddha
+namespace Zen
 {
 	bool _BUHHDA_EXPORT_ IsRealEqual(const float& a, const float& b);
 

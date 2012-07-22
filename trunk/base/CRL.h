@@ -7,7 +7,7 @@
 #ifndef __CRL_h__
 #define __CRL_h__
 
-namespace Buddha
+namespace Zen
 {
 	template <class T = BYTE>
 	class /*_BUHHDA_EXPORT_*/ CRL

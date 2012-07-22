@@ -92,7 +92,7 @@ LRESULT CPropertyDlg::OnNMThemeChangedSlider( UINT uMsg, WPARAM wParam, LPARAM l
 			std::vector<COLORREF> cs;
 			// 0x00bbggrr
 			Real c = float(nPercent)/100.0f;
-			Euclid::Color col;
+			Zen::Color col;
 			col.a = 1.0f;
 			size_t width = 120;
 			size_t height = 120;
@@ -102,7 +102,7 @@ LRESULT CPropertyDlg::OnNMThemeChangedSlider( UINT uMsg, WPARAM wParam, LPARAM l
 				{
 					float distanceSquare = (x - width * 0.5f) * (x - width * 0.5f) + (y - height * 0.5f) * (y - height * 0.5f);
 					float norm = distanceSquare / (float)(width * width);
-					float v = Euler::Basic::Cos(norm * Euler::HalfPI);
+					float v = Zen::Basic::Cos(norm * Zen::HalfPI);
 					if (c == 0.0f)
 					{
 						v = 1.0f;
@@ -294,4 +294,22 @@ bool CPropertyDlg::updateChunTextureSelected( const EventArgs& e )
 		}
 	}
 	return true;
+}
+
+LRESULT CPropertyDlg::OnBnClickedCheckFillmode(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (gTerrain.getMaterial() == NULL)
+	{
+		return 0;
+	}
+	if (gTerrain.getMaterial()->mFillMode == Zen::eFillMode_WireFrame)
+	{
+		gTerrain.getMaterial()->mFillMode = Zen::eFillMode_Solid;
+	} 
+	else
+	{
+		gTerrain.getMaterial()->mFillMode = Zen::eFillMode_WireFrame;
+	}
+	return 0;
 }

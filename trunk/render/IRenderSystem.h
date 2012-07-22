@@ -10,7 +10,7 @@
 #include "Common.h"
 #include "Color.h"
 #include "RenderEngineCreationParameters.h"
-namespace Euclid
+namespace Zen
 {
 	struct IRenderSystem
 	{

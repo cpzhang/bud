@@ -1,6 +1,6 @@
 #include "Mute.h"
 #include "Logger.h"
-namespace Buddha
+namespace Zen
 {
 	CFairMutex::CFairMutex( const std::string &name )
 	{

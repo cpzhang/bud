@@ -19,7 +19,7 @@
 #include "Quaternion.h"
 
 //
-namespace Euler
+namespace Zen
 {
 	/** Class encapsulating a standard 4x4 homogeneous matrix.
         @remarks

@@ -23,13 +23,13 @@ private:
 public:
 	std::string mName;
 	std::string mMeshFile;
-	Euclid::Mesh* mMesh;
-	Euclid::IMaterial* mMaterial;
-	Euclid::Skeleton* mSkeleton;
-	Euclid::IMaterial* mSkeletonMaterial;
-	Euclid::Skin* mSkin;
+	Zen::Mesh* mMesh;
+	Zen::IMaterial* mMaterial;
+	Zen::Skeleton* mSkeleton;
+	Zen::IMaterial* mSkeletonMaterial;
+	Zen::Skin* mSkin;
 	AniMap mAnimations;
-	Euclid::AnimationTime mAniTime;
+	Zen::AnimationTime mAniTime;
 	bool mHardwareSkin;
 	Mat4 mUVMatrix; 
 	bool mStopAimation;

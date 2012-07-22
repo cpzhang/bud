@@ -9,9 +9,9 @@
 
 #include "Common.h"
 #include "RenderEngineCreationParameters.h"
-namespace Euclid
+namespace Zen
 {
-	class _EuclidExport_ IRenderEngine
+	class _ZenExport_ IRenderEngine
 	{
 	public:
 		IRenderEngine()
@@ -36,7 +36,7 @@ namespace Euclid
 	};
 
 	// Factory function that creates instances of the IRenderEngine object.
-	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine();
+	extern "C" _ZenExport_ IRenderEngine* APIENTRY createRenderEngine();
 }
 
 #endif // __IRenderEngine_h__

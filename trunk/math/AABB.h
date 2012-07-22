@@ -13,7 +13,7 @@
 #include "Common.h"
 #include "Vector3.h"
 
-namespace Euler
+namespace Zen
 {
 	 /** A 3D box aligned with the x/y/z axes.
 	    @remarks

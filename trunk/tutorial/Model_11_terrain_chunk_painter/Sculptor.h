@@ -21,6 +21,6 @@ public:
 	Real mRadius;
 	Vec3 mOrigion;
 	Real mParaA;
-	Euclid::IMaterial* mMaterial;
+	Zen::IMaterial* mMaterial;
 	std::vector<Vec3> mVertices;
 };

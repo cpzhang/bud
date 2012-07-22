@@ -11,7 +11,7 @@
 #include "Common.h"
 #include "ITexture.h"
 //
-namespace Euclid
+namespace Zen
 {
 	class Texture : public ITexture
 	{
@@ -33,7 +33,7 @@ namespace Euclid
 		virtual void					addReference();
 		virtual void onInvalidateDevice();
 		virtual void onRestoreDevice();
-		virtual bool update(IFlashDXPlayer* p);
+	//	virtual bool update(IFlashDXPlayer* p);
 		//
 	private:
 		IDirect3DTexture9*		_texture;

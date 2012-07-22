@@ -1,7 +1,7 @@
 #include "WindowHelper.h" 
 
 //
-namespace Buddha
+namespace Zen
 {
 	int WindowHelper::getWindowHeight( HWND hwnd )
 	{

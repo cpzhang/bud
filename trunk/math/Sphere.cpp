@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-namespace Euler
+namespace Zen
 {
 
 }

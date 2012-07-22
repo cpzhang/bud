@@ -8,10 +8,10 @@
 #define __Camera_h__
 #include "Common.h"
 
-namespace Euclid
+namespace Zen
 {
 #define New_PitchYaw
-	class _EuclidExport_ Camera
+	class _ZenExport_ Camera
 	{
 	public:
 		Camera();

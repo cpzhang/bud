@@ -5,7 +5,7 @@
 #ifndef __Thread_h__
 #define __Thread_h__
 #include "Common.h"
-namespace Buddha
+namespace Zen
 {
 	class IRunnable
 	{

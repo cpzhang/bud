@@ -1,6 +1,6 @@
 #include "Mouse.h"
 
-namespace Buddha
+namespace Zen
 {
 
 

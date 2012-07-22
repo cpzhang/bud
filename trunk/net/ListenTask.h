@@ -9,7 +9,7 @@
 #include "ListenSock.h"
 namespace Shannon
 {
-	class _NET_EXPORT_ ListenTask: public Buddha::IRunnable
+	class _NET_EXPORT_ ListenTask: public Zen::IRunnable
 	{
 	public:
 		virtual void run();

@@ -46,13 +46,13 @@ public:
 	void _destroymodel();
 	void changeModelFile( const std::string& fileName );
 private:
-	Euclid::IMaterial*		_material;
-	Euclid::IBuffer*		_vb;
-	Euclid::FreeType*		_font[Euclid::eFontProperty_Size];
+	Zen::IMaterial*		_material;
+	Zen::IBuffer*		_vb;
+	Zen::FreeType*		_font[Zen::eFontProperty_Size];
 	float					_fps;
 	IPrimitive*				_model;
 	std::string				_modelFileName;
-	Euclid::Camera			_camera;
+	Zen::Camera			_camera;
 	bool					_painted;
 	sSphereCoordination		_cameraRelativeShpereCoordination;// relative position of the camera in Shpere Coordination
 	Light					_light;

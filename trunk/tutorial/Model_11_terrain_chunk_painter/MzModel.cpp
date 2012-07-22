@@ -11,61 +11,61 @@ MzModel::~MzModel()
 }
 void MzModel::saveFile(const std::string& fileName)
 {
-	Euclid::MZ::saveAnimation(fileName);
+	Zen::MZ::saveAnimation(fileName);
 }
 
 void MzModel::decode(const std::string& fileName)
 {
-	std::string exportPath = Buddha::FileSystem::getInstancePtr()->getDataDirectory();
-	std::string fileFinalName = Buddha::FileSystem::getInstancePtr()->removeParent(fileName);
-	fileFinalName = Buddha::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
+	std::string exportPath = Zen::FileSystem::getInstancePtr()->getDataDirectory();
+	std::string fileFinalName = Zen::FileSystem::getInstancePtr()->removeParent(fileName);
+	fileFinalName = Zen::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
 	exportPath += "/mzNew/";
 	exportPath += fileFinalName;
-	Euclid::MZ::load(fileName);
-	Euclid::Mesh m;
+	Zen::MZ::load(fileName);
+	Zen::Mesh m;
 	std::string skeletonPath;
 	std::string skinPath;
-	for (int i = 0; i < Euclid::MZ::getSubMeshNumber(); ++i)
+	for (int i = 0; i < Zen::MZ::getSubMeshNumber(); ++i)
 	{
-		Euclid::MZ::create(i, &m);
-		std::string path = exportPath + "/mesh/" + Euclid::MZ::getSubMeshName(i) + ".mesh";
-		Buddha::FileSystem::getInstancePtr()->createFolder(path);
+		Zen::MZ::create(i, &m);
+		std::string path = exportPath + "/mesh/" + Zen::MZ::getSubMeshName(i) + ".mesh";
+		Zen::FileSystem::getInstancePtr()->createFolder(path);
 		m.save(path);
 		//
 		if(i == 0)
 		{
 			skeletonPath = exportPath + "/skeleton/" + fileFinalName + ".skeleton";
-			Buddha::FileSystem::getInstancePtr()->createFolder(skeletonPath);
-			Euclid::MZ::saveSkeleton(skeletonPath);
+			Zen::FileSystem::getInstancePtr()->createFolder(skeletonPath);
+			Zen::MZ::saveSkeleton(skeletonPath);
 			//
 			std::string materialPath = exportPath + "/material/";
-			Buddha::FileSystem::getInstancePtr()->createFolder(materialPath);
-			materialPath = Buddha::FileSystem::getInstancePtr()->standardFilePath(materialPath);
-			Euclid::MZ::saveMaterial(materialPath);
+			Zen::FileSystem::getInstancePtr()->createFolder(materialPath);
+			materialPath = Zen::FileSystem::getInstancePtr()->standardFilePath(materialPath);
+			Zen::MZ::saveMaterial(materialPath);
 			//
 			{
 				std::string animationsPath = exportPath + "/animation/";
-				Buddha::FileSystem::getInstancePtr()->createFolder(animationsPath);
+				Zen::FileSystem::getInstancePtr()->createFolder(animationsPath);
 				animationsPath += fileFinalName;
 				animationsPath += ".animation";
-				animationsPath = Buddha::FileSystem::getInstancePtr()->standardFilePath(animationsPath);
-				Euclid::MZ::saveAnimation(animationsPath);
+				animationsPath = Zen::FileSystem::getInstancePtr()->standardFilePath(animationsPath);
+				Zen::MZ::saveAnimation(animationsPath);
 			}
 			//
 			{
 				std::string animationsPath = exportPath + "/subEntity/";
-				Buddha::FileSystem::getInstancePtr()->createFolder(animationsPath);
-				Euclid::MZ::saveSubEntity(animationsPath);
+				Zen::FileSystem::getInstancePtr()->createFolder(animationsPath);
+				Zen::MZ::saveSubEntity(animationsPath);
 			}
 			//
 			{
 				skinPath = exportPath + "/skin/";
-				Buddha::FileSystem::getInstancePtr()->createFolder(skinPath);
-				Euclid::MZ::saveSkin(skinPath);
+				Zen::FileSystem::getInstancePtr()->createFolder(skinPath);
+				Zen::MZ::saveSkin(skinPath);
 			}
 		}
-		std::string bmPath = exportPath + "/mesh/" + Euclid::MZ::getSubMeshName(i) + ".boneMapping";
-		Buddha::FileSystem::getInstancePtr()->createFolder(bmPath);
+		std::string bmPath = exportPath + "/mesh/" + Zen::MZ::getSubMeshName(i) + ".boneMapping";
+		Zen::FileSystem::getInstancePtr()->createFolder(bmPath);
 		m.saveBoneMapping(bmPath);
 
 		m.destroy();		
@@ -81,12 +81,12 @@ void MzModel::decode(const std::string& fileName)
 		tinyxml2::XMLElement* ele = doc.NewElement("entity");
 		ele->SetAttribute("name", fileFinalName.c_str());
 
-		for (int i = 0; i < Euclid::MZ::getSubMeshNumber(); ++i)
+		for (int i = 0; i < Zen::MZ::getSubMeshNumber(); ++i)
 		{
 			tinyxml2::XMLElement* a = doc.NewElement("subEntity");
 			std::string meshPath;
 			meshPath = "subEntity/";
-			meshPath += Euclid::MZ::getSubMeshName(i);
+			meshPath += Zen::MZ::getSubMeshName(i);
 			meshPath += ".subEntity";
 			a->SetAttribute("file", meshPath.c_str());
 			ele->LinkEndChild(a);
@@ -95,7 +95,7 @@ void MzModel::decode(const std::string& fileName)
 		doc.LinkEndChild(ele);
 		//
 		std::string path = exportPath + "/entity/" + fileFinalName + ".entity";
-		Buddha::FileSystem::getInstancePtr()->createFolder(path);
+		Zen::FileSystem::getInstancePtr()->createFolder(path);
 		doc.SaveFile(path.c_str());
 		//
 		{

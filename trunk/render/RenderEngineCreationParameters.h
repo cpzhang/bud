@@ -6,12 +6,14 @@
 *********************************************************************/
 #ifndef __RenderEngineCreationParameters_h__
 #define __RenderEngineCreationParameters_h__
-#include "base/Buddha.h"
-#include "external/directx/Include/d3d9.h"
-#include "math/Euler.h"
-namespace Euclid
+#include "Common.h"
+//#include "base/Buddha.h"
+//#include "external/directx/Include/d3d9.h"
+//#include "math/Euler.h"
+
+namespace Zen
 {
-	struct RenderEngineCreationParameters : public Buddha::SingletonEx<RenderEngineCreationParameters>
+	struct RenderEngineCreationParameters : public Zen::SingletonEx<RenderEngineCreationParameters>
 	{
 		RenderEngineCreationParameters()
 		{
@@ -324,7 +326,7 @@ namespace Euclid
 		
 	};
 	//
-	class EDX : public Buddha::Exception
+	class EDX : public Zen::Exception
 	{
 	public:
 		/** Constructor

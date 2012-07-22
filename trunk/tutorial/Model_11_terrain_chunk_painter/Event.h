@@ -235,7 +235,7 @@ private:
     //! Points to the internal functor object to which we are bound
     SlotFunctorBase* d_functor_impl;
 };
-class EventManager: public Buddha::SingletonEx<EventManager>
+class EventManager: public Zen::SingletonEx<EventManager>
 {
 public:
 	void subscribeEvent(eEvent e, SubscriberSlot slot)

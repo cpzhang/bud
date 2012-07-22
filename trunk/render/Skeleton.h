@@ -5,12 +5,12 @@
 #include "KeyFrames.h"
 #include "base/ConstBaseIterator.h"
 #include "BoneNode.h"
-namespace Euclid
+namespace Zen
 {
 	class BoneNode;
 	typedef stdext::hash_map<std::string, BoneNode*> BoneNodeMap;
 	typedef	ConstBaseIterator<BoneNodeMap>	BoneNodeMapIterator;
-	class _EuclidExport_ Skeleton
+	class _ZenExport_ Skeleton
 	{
 	public:
 		virtual BoneNode* createBoneNode(const std::string& name);

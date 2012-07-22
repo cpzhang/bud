@@ -8,7 +8,7 @@
 #define __Material_h__
 #include "IMaterial.h"
 #include "base\Buddha.h"
-namespace Euclid
+namespace Zen
 {
 	class MaterialVertex: public IMaterial
 	{
@@ -18,7 +18,7 @@ namespace Euclid
 		virtual u32 getStride();
 	};
 
-	class _EuclidExport_ MaterialVertexTexture: public IMaterial
+	class _ZenExport_ MaterialVertexTexture: public IMaterial
 	{
 	public:
 		virtual void apply();
@@ -35,7 +35,7 @@ namespace Euclid
 		TexturePairVec _textures;
 	};
 
-	class MaterialManager: public IMaterialManager, public Buddha::SingletonEx<MaterialManager>
+	class MaterialManager: public IMaterialManager, public Zen::SingletonEx<MaterialManager>
 	{
 		//
 	public:

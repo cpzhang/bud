@@ -1,11 +1,11 @@
 /********************************************************************
-**	file: 		Euclid.h
+**	file: 		Zen.h
 **	author:		cpzhang <chengpengzhang@gmail.com>
 **	created:	2011-12-8
 **	purpose:	
 *********************************************************************/
-#ifndef __Euclid_h__
-#define __Euclid_h__
+#ifndef __EuclidCommon_h__
+#define __EuclidCommon_h__
 
 //
 #include "IRenderSystem.h"
@@ -26,4 +26,4 @@
 #include "Mesh.h"
 #include "Skeleton.h"
 #include "VDTManager.h"
-#endif // __Euclid_h__
+#endif // __EuclidCommon_h__

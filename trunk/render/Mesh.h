@@ -1,10 +1,10 @@
 #ifndef __Mesh_h__
 #define __Mesh_h__
 #include "Common.h"
-namespace Euclid
+namespace Zen
 {
 	typedef std::map<u8, int> BoneIDReferenceMap;
-	class _EuclidExport_ Mesh
+	class _ZenExport_ Mesh
 	{
 	public:
 		Mesh();

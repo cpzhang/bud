@@ -46,6 +46,8 @@
 #define IDC_BUTTON5                     1021
 #define IDC_BUTTON_Texture3             1021
 #define IDC_BUTTON_Texture2             1022
+#define IDC_CHECK1                      1023
+#define IDC_CHECK_FillMode              1023
 #define ID_FILE_NEW40001                40001
 #define ID_FILE_OPEN40002               40002
 #define ID_FILE_SAVE40003               40003
@@ -65,7 +67,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        114
 #define _APS_NEXT_COMMAND_VALUE         40013
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

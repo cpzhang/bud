@@ -7,7 +7,7 @@
 #include "tinyXML2/tinyxml2.h"
 #include "VDTManager.h"
 //
-namespace Euclid
+namespace Zen
 {
 	Mesh::Mesh()
 	{
@@ -116,14 +116,14 @@ namespace Euclid
 		if (mVDT == eVertexDeclarationType_PositionTexture)
 		{
 			_vertexBuffer = BufferManager::getInstancePtr()->createVertexBuffer(_verticesPT.size() * vdt->size(), eUsage_Null, ePool_Manager);
-			void* data = _vertexBuffer->lock(0, 0, Euclid::eLock_Null);
+			void* data = _vertexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_verticesPT[0], _verticesPT.size() * vdt->size());
 			_vertexBuffer->unLock();
 		} 
 		else if(mVDT == eVertexDeclarationType_PositionTextureBoneWeightColorNormal)
 		{
 			_vertexBuffer = BufferManager::getInstancePtr()->createVertexBuffer(_vertices.size() * vdt->size(), eUsage_Null, ePool_Manager);
-			void* data = _vertexBuffer->lock(0, 0, Euclid::eLock_Null);
+			void* data = _vertexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_vertices[0], _vertices.size() * vdt->size());
 			_vertexBuffer->unLock();
 		}
@@ -135,7 +135,7 @@ namespace Euclid
 		//
 		{
 			_indexBuffer = BufferManager::getInstancePtr()->createIndexBuffer(_faces.size() * sizeof(sFace), eUsage_Null, eFormat_Index16, ePool_Manager);
-			void* data = _indexBuffer->lock(0, 0, Euclid::eLock_Null);
+			void* data = _indexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_faces[0], _faces.size() * sizeof(sFace));
 			_indexBuffer->unLock();
 		}
@@ -177,7 +177,7 @@ namespace Euclid
 	{
 		//============================================================================
 		// 开始写入数据
-		Buddha::ChunkSet cs;
+		Zen::ChunkSet cs;
 
 		//============================================================================
 		// 版本号
@@ -209,7 +209,7 @@ namespace Euclid
 	{
 		//============================================================================
 		// 开始写入数据
-		Buddha::ChunkSet cs;
+		Zen::ChunkSet cs;
 
 		//============================================================================
 		// 版本号
@@ -263,7 +263,7 @@ namespace Euclid
 			Skin& s = MZ::mSkins[i];
 			//============================================================================
 			// 开始写入数据
-			Buddha::ChunkSet cs;
+			Zen::ChunkSet cs;
 
 			//============================================================================
 			// 版本号
@@ -365,7 +365,7 @@ namespace Euclid
 	{
 		//============================================================================
 		// 开始写入数据
-		Buddha::ChunkSet cs;
+		Zen::ChunkSet cs;
 
 		//============================================================================
 		// 版本号
@@ -537,7 +537,7 @@ namespace Euclid
 		for (int i = 0; i != height; ++i)
 		for (int j = 0; j != width; ++j)
 		{
-			Euclid::sPositionTexture p;
+			Zen::sPositionTexture p;
 			static float sfScale = 50.0f;
 			static float sfHeightScale = 5.0f;
 			p.position.x = (j - half_width) * sfScale;
@@ -573,7 +573,7 @@ namespace Euclid
 	{
 		if(b <= 1)
 			return a;
-		return Euler::Basic::power(a, b) + getSeriesSum(a, b - 1);
+		return Zen::Basic::power(a, b) + getSeriesSum(a, b - 1);
 	}
 
 	void Mesh::geomipmapping( u32 lod )
@@ -584,7 +584,7 @@ namespace Euclid
 		}
 		// 更新三角形索引
 		_faces.clear();
-		int offset = 1<<lod;//Euler::Basic::power(2, lod);
+		int offset = 1<<lod;//Zen::Basic::power(2, lod);
 		if (offset >= mTerrainWidth)
 		{
 			return;
@@ -602,7 +602,7 @@ namespace Euclid
 
 		// 更新IB
 		{
-			void* data = _indexBuffer->lock(0, 0, Euclid::eLock_Null);
+			void* data = _indexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_faces[0], _faces.size() * sizeof(sFace));
 			_indexBuffer->unLock();
 		}
@@ -649,7 +649,7 @@ namespace Euclid
 			n.normalise();
 			Vec3 s = r._origin - p1;
 			Real a = n.dotProduct(r._direction);
-			if (Buddha::IsRealEqual(a, 0.0f))
+			if (Zen::IsRealEqual(a, 0.0f))
 			{
 				continue;
 			}
@@ -657,7 +657,7 @@ namespace Euclid
 			Real t = - b / a;
 			// step 1, check if the intersectin point is inside the triangle
 			Vec3 q = r.getPoint(t);	
-			if (Euler::isInsideTriangle(p0, p1, p2, q))
+			if (Zen::isInsideTriangle(p0, p1, p2, q))
 			{
 				ts.push_back(t);
 			}

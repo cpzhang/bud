@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include "DXMapping.h"
 #include "RenderSystem.h"
-namespace Euclid
+namespace Zen
 {
 	Camera::Camera()
 	{
@@ -9,7 +9,7 @@ namespace Euclid
 		m_qtnOrientation = Quaternion::IDENTITY;
 		m_fNearDistance = 1.0f;
 		m_fFarDistance = 10000.0;
-		m_radFOVy = Radian(Euler::PI / 2.0f);
+		m_radFOVy = Radian(Zen::PI / 2.0f);
 		m_dirty = true;
 		m_mtxView = Mat4::IDENTITY;
 		m_mtxProjection = Mat4::IDENTITY;
@@ -272,7 +272,7 @@ namespace Euclid
 		float centeredScreenX = (screenX - 0.5f);
 		float centeredScreenY = (0.5f - screenY);
 
-		float normalizedSlope = Euler::Basic::Tan(m_radFOVy / 2);
+		float normalizedSlope = Zen::Basic::Tan(m_radFOVy / 2);
 		float viewportYToWorldY = normalizedSlope * m_fNearDistance * 2;
 		float viewportXToWorldX = viewportYToWorldY * (width / height);
 

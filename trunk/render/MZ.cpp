@@ -3,7 +3,7 @@
 #include "Color.h"
 #include "tinyXML2/tinyxml2.h"
 //
-namespace Euclid
+namespace Zen
 {
 	MZ::MZ()
 	{
@@ -1032,8 +1032,8 @@ namespace Euclid
 		doc.LinkEndChild(dec);
 		//
 		tinyxml2::XMLElement* ele = doc.NewElement("animations");
-		std::string fileFinalName = Buddha::FileSystem::getInstancePtr()->removeParent(mFilePath);
-		fileFinalName = Buddha::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
+		std::string fileFinalName = Zen::FileSystem::getInstancePtr()->removeParent(mFilePath);
+		fileFinalName = Zen::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
 
 		ele->SetAttribute("name", fileFinalName.c_str());
 		for (size_t i = 0; i != mAnimations.size(); ++i)
@@ -1215,7 +1215,7 @@ namespace Euclid
 
 		//============================================================================
 		// 开始写入数据
-		Buddha::ChunkSet cs;
+		Zen::ChunkSet cs;
 
 		//============================================================================
 		// 版本号
@@ -1258,7 +1258,7 @@ namespace Euclid
 			Skin& s = mSkins[i];
 			//============================================================================
 			// 开始写入数据 
-			Buddha::ChunkSet cs;
+			Zen::ChunkSet cs;
 
 			//============================================================================
 			// 版本号
@@ -1298,15 +1298,15 @@ namespace Euclid
 
 	void MZ::saveMaterial( const std::string& fileName )
 	{
-		std::string parentPath = Buddha::FileSystem::getInstancePtr()->getParent(fileName);
-		std::string parentPathOld = Buddha::FileSystem::getInstancePtr()->getParent(mFilePath);
+		std::string parentPath = Zen::FileSystem::getInstancePtr()->getParent(fileName);
+		std::string parentPathOld = Zen::FileSystem::getInstancePtr()->getParent(mFilePath);
 		for (size_t i = 0; i != mMaterials.size(); ++i)
 		{
 			sMat& s = mMaterials[i];
 			std::string path = fileName + "/" + s.mName + ".material";
 			std::string imagePathOld = parentPathOld + "/" + s.mTextureName;
 			std::string imagePathNew = parentPath + "/image/" + s.mTextureName;
-			Buddha::FileSystem::getInstancePtr()->createFolder(imagePathNew);
+			Zen::FileSystem::getInstancePtr()->createFolder(imagePathNew);
 			CopyFile(imagePathOld.c_str(), imagePathNew.c_str(), false);
 			//============================================================================
 			tinyxml2::XMLDocument doc;
@@ -1344,7 +1344,7 @@ namespace Euclid
 				std::string path = fileName + "/" + s.mName + ".ma";
 				//============================================================================
 				// 开始写入数据 
-				Buddha::ChunkSet cs;
+				Zen::ChunkSet cs;
 
 				//============================================================================
 				// 版本号
@@ -1424,8 +1424,8 @@ namespace Euclid
 				tinyxml2::XMLElement* a = doc.NewElement("skeleton");
 				std::string meshPath;
 				meshPath = "skeleton/";
-				std::string fileFinalName = Buddha::FileSystem::getInstancePtr()->removeParent(mFilePath);
-				fileFinalName = Buddha::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
+				std::string fileFinalName = Zen::FileSystem::getInstancePtr()->removeParent(mFilePath);
+				fileFinalName = Zen::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
 				meshPath += fileFinalName;
 				meshPath += ".skeleton";
 				a->SetAttribute("file", meshPath.c_str());
@@ -1435,8 +1435,8 @@ namespace Euclid
 				tinyxml2::XMLElement* a = doc.NewElement("animation");
 				std::string meshPath;
 				meshPath = "animation/";
-				std::string fileFinalName = Buddha::FileSystem::getInstancePtr()->removeParent(mFilePath);
-				fileFinalName = Buddha::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
+				std::string fileFinalName = Zen::FileSystem::getInstancePtr()->removeParent(mFilePath);
+				fileFinalName = Zen::FileSystem::getInstancePtr()->removeFileExtension(fileFinalName);
 				meshPath += fileFinalName;
 				meshPath += ".animation";
 				a->SetAttribute("file", meshPath.c_str());

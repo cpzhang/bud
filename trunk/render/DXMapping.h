@@ -13,7 +13,7 @@
 #include "Common.h"
 
 //
-namespace Euclid
+namespace Zen
 {
 	class DXMapping
 	{

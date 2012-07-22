@@ -7,7 +7,7 @@
 #ifndef __Rect_h__
 #define __Rect_h__
 
-namespace Euclid
+namespace Zen
 {
 	struct Rect
 	{

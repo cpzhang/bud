@@ -33,7 +33,7 @@ CViewWindow::CViewWindow()
 	}
 	LRESULT CViewWindow::onCreate(UINT, WPARAM, LPARAM, BOOL&) 
 	{
-		new Buddha::Logger;
+		new Zen::Logger;
 		new RenderEngineImp(m_hWnd);
 		//
 		return 1;
@@ -141,7 +141,7 @@ CViewWindow::CViewWindow()
 		//
 		RenderEngineImp::getInstancePtr()->getRenderEngine()->getEffectManager()->onInvalidateDevice();
 		//
-		Euclid::sViewPort vp;
+		Zen::sViewPort vp;
 		vp.X = 0;
 		vp.Y = 0;
 		vp.Width = LOWORD(lParam);
@@ -181,32 +181,32 @@ CViewWindow::CViewWindow()
 			delete RenderEngineImp::getInstancePtr();
 		}
 
-		delete Buddha::Logger::getInstancePtr();
+		delete Zen::Logger::getInstancePtr();
 		//
 		return 1;
 	}
 	void CViewWindow::_create()
 	{
 		//
-		_material = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_Vertex);
+		_material = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Zen::eMaterialType_Vertex);
 		_material->setEffect("shader\\Position.fx");
 		//
-		Euclid::sPosition vertices[3];
+		Zen::sPosition vertices[3];
 		vertices[0].position = Vec3(-1.0f, 0.0f, 0.0f);
 		vertices[1].position = Vec3(0.0f, 1.0f, 0.0f);
 		vertices[2].position = Vec3(1.0f, 0.0f, 0.0f);
-		_vb = RenderEngineImp::getInstancePtr()->getRenderEngine()->getBufferManager()->createVertexBuffer(3 * _material->getStride(), Euclid::eUsage_WriteOnly, Euclid::ePool_Manager);
-		void* data = _vb->lock(0, 0, Euclid::eLock_Null);
+		_vb = RenderEngineImp::getInstancePtr()->getRenderEngine()->getBufferManager()->createVertexBuffer(3 * _material->getStride(), Zen::eUsage_WriteOnly, Zen::ePool_Manager);
+		void* data = _vb->lock(0, 0, Zen::eLock_Null);
 		memcpy(data, vertices, 3 * _material->getStride());
 		_vb->unLock();
 		//
 		//
-		RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\LuYaHeiMb.TTF"), 16, Euclid::eFontProperty_Normal, "freeNormal");
-		RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\LuYaHeiMb.TTF"), 28, Euclid::eFontProperty_Offset_1, "freeOffset1");
-		RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\LuYaHeiMb.TTF"), 28, Euclid::eFontProperty_BG_1, "freeBG1");
-		_font[Euclid::eFontProperty_Normal] = RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont(std::string("freeNormal"));
-		_font[Euclid::eFontProperty_Offset_1] = RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont(std::string("freeOffset1"));
-		_font[Euclid::eFontProperty_BG_1] = RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont(std::string("freeBG1"));
+		RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\LuYaHeiMb.TTF"), 16, Zen::eFontProperty_Normal, "freeNormal");
+		RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\LuYaHeiMb.TTF"), 28, Zen::eFontProperty_Offset_1, "freeOffset1");
+		RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->createFont(std::string("freetype\\LuYaHeiMb.TTF"), 28, Zen::eFontProperty_BG_1, "freeBG1");
+		_font[Zen::eFontProperty_Normal] = RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont(std::string("freeNormal"));
+		_font[Zen::eFontProperty_Offset_1] = RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont(std::string("freeOffset1"));
+		_font[Zen::eFontProperty_BG_1] = RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont(std::string("freeBG1"));
 		//	
 		_sphere.create();
 		//
@@ -246,12 +246,12 @@ CViewWindow::CViewWindow()
 	}
 	void CViewWindow::_renderLight()
 	{
-		Euclid::sPosition p[2];
+		Zen::sPosition p[2];
 		p[0].position = _light.mPosition.getPosition();
 		p[1].position = Vec3::ZERO;
 
 		//
-		Euclid::Effect* fx = _material->getEffect();
+		Zen::Effect* fx = _material->getEffect();
 		if (NULL == fx)
 		{
 			return;
@@ -264,7 +264,7 @@ CViewWindow::CViewWindow()
 			fx->beginPass(i);
 			if (i == 0)
 			{
-				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Euclid::ePrimitive_PointList, 2, p, sizeof(Euclid::sPosition));
+				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Zen::ePrimitive_PointList, 2, p, sizeof(Zen::sPosition));
 			}
 			fx->endPass();
 		}
@@ -280,11 +280,11 @@ CViewWindow::CViewWindow()
 	void CViewWindow::_renderFont()
 	{
 		// 文字最后画
-		if (_font[Euclid::eFontProperty_Normal])
+		if (_font[Zen::eFontProperty_Normal])
 		{
 			std::ostringstream ss;
 			ss<<"FPS = "<<int(_fps);
-			_font[Euclid::eFontProperty_Normal]->render(Vec3(10, 10, 0), Vec3(1, 0, 0), Euclid::Color::Red, ss.str());
+			_font[Zen::eFontProperty_Normal]->render(Vec3(10, 10, 0), Vec3(1, 0, 0), Zen::Color::Red, ss.str());
 		}
 	}
 	void CViewWindow::_clear()
@@ -292,7 +292,7 @@ CViewWindow::CViewWindow()
 		_painted = false;
 		_material = NULL;
 		_vb = NULL;
-		for (size_t i = 0; i != Euclid::eFontProperty_Size; ++i)
+		for (size_t i = 0; i != Zen::eFontProperty_Size; ++i)
 		{
 			_font[i] = NULL;
 		}
@@ -366,7 +366,7 @@ CViewWindow::CViewWindow()
 		{
 			return;
 		}
-		std::string name = Buddha::FileSystem::getInstancePtr()->standardFilePath(fileName);	
+		std::string name = Zen::FileSystem::getInstancePtr()->standardFilePath(fileName);	
 		_model->decode(name);
 		//
 		args.mPrimitive = _model;
@@ -386,7 +386,7 @@ void CViewWindow::onIdle()
 	//_camera.lookAt(Vec3::ZERO);
 	Vec3 pos = _cameraRelativeShpereCoordination.getPosition();
 	_camera.setPosition(pos);
-	float s = Euler::Basic::Sin(_cameraRelativeShpereCoordination.mAngleUpFromXZ);
+	float s = Zen::Basic::Sin(_cameraRelativeShpereCoordination.mAngleUpFromXZ);
 	//进入球的背面
 	Vec3 lookTaTarget = _cameraRelativeShpereCoordination.mOrigion;
 	if (s < 0)
@@ -409,7 +409,7 @@ void CViewWindow::onIdle()
 		_model->setMatrix("gProjection", _camera.getProjectionMatrix());
 		//
 		{
-			Euclid::Effect* fx = RenderEngineImp::getInstancePtr()->getRenderEngine()->getEffectManager()->getEffectByFile("shader/aPTSkin.fx");
+			Zen::Effect* fx = RenderEngineImp::getInstancePtr()->getRenderEngine()->getEffectManager()->getEffectByFile("shader/aPTSkin.fx");
 			if (fx)
 			{
 				Vec3 l = _light.mPosition.getPosition();
@@ -421,7 +421,7 @@ void CViewWindow::onIdle()
 		//
 		_model->update(delta);
 	}
-	Euclid::Effect* fx = _material->getEffect();
+	Zen::Effect* fx = _material->getEffect();
 	if (fx)
 	{
 		fx->setMatrix("g_mWorldViewProjection", m);
@@ -431,7 +431,7 @@ void CViewWindow::onIdle()
 	{
 		if (gTerrain.getMaterial())
 		{
-			Euclid::Effect* fx = gTerrain.getMaterial()->getEffect();
+			Zen::Effect* fx = gTerrain.getMaterial()->getEffect();
 			if (fx)
 			{
 				fx->setMatrix("g_mViewProjection", m);
@@ -442,7 +442,7 @@ void CViewWindow::onIdle()
 	{
 		if (mSculptor.mMaterial)
 		{
-			Euclid::Effect* fx = mSculptor.mMaterial->getEffect();
+			Zen::Effect* fx = mSculptor.mMaterial->getEffect();
 			if (fx)
 			{
 				fx->setMatrix("g_mViewProjection", m);
@@ -451,7 +451,7 @@ void CViewWindow::onIdle()
 	}
 	_calcFPS();
 	//
-	RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->clear(0, NULL, Euclid::eClearFlags_Target | Euclid::eClearFlags_ZBuffer, Euclid::Color::Black, 1.0f, 0L);
+	RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->clear(0, NULL, Zen::eClearFlags_Target | Zen::eClearFlags_ZBuffer, Zen::Color::Black, 1.0f, 0L);
 	RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->beginScene();
 	//
 	_render();

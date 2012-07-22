@@ -8,9 +8,9 @@
 #define __Effect_h__
 
 #include "Common.h"
-namespace Euclid
+namespace Zen
 {
-	class _EuclidExport_ Effect
+	class _ZenExport_ Effect
 	{
 	public:
 		Effect()

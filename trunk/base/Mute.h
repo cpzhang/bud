@@ -5,7 +5,7 @@
 #ifndef __Mute_h__
 #define __Mute_h__
 #include "Common.h"
-namespace Buddha
+namespace Zen
 {
 	class CFairMutex
 	{

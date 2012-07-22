@@ -12,7 +12,7 @@
 #include "Basic.h"
 
 //
-namespace Euler
+namespace Zen
 {
 	class _MATH_EXPORT_ Polynomial
 	{

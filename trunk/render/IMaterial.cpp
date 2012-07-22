@@ -2,7 +2,7 @@
 #include "RenderSystem.h"
 #include "Effect.h"
 #include "EffectManager.h"
-namespace Euclid
+namespace Zen
 {
 	//
 	void IMaterial::setVertexDeclaration(eVertexDeclarationType e)

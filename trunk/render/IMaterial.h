@@ -11,7 +11,7 @@
 #include "Color.h"
 #include "math/Quaternion.h"
 #include "KeyFrames.h"
-namespace Euclid
+namespace Zen
 {
 	enum eMaterialType
 	{
@@ -22,7 +22,7 @@ namespace Euclid
 		eMaterialType_Size,
 	};
 
-	class _EuclidExport_ IMaterial
+	class _ZenExport_ IMaterial
 	{
 	public:
 		IMaterial()

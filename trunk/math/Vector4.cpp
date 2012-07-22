@@ -1,7 +1,7 @@
 #include "Vector4.h"
 
 //
-namespace Euler
+namespace Zen
 {
 
 }

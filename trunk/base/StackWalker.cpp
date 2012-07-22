@@ -1,5 +1,5 @@
 #include "StackWalker.h"
-namespace Buddha
+namespace Zen
 {
 
 	StackWalker::StackWalker()

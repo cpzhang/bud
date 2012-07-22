@@ -3,7 +3,7 @@
 #include "Logger.h"
 #include "WindowHelper.h"
 //
-namespace Buddha
+namespace Zen
 {
 	Game*	gGameClient = NULL;
 
@@ -316,7 +316,7 @@ namespace Buddha
 		_inputMessageHandler->_game = this;
 	}
 
-	Buddha::eProcess Game::getProcess()
+	Zen::eProcess Game::getProcess()
 	{
 		return _process;
 	}

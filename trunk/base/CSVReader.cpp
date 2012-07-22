@@ -1,6 +1,6 @@
 #include "CSVReader.h" 
 
-namespace Buddha
+namespace Zen
 {
 	/*template<class T>
 	CSVReader<T>::CSVReader( const std::string& fileName )

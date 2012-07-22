@@ -10,7 +10,7 @@
 #include "IRenderEngine.h"
 
 
-namespace Euclid
+namespace Zen
 {
 	class RenderEngine: public IRenderEngine
 	{

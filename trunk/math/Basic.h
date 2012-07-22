@@ -16,7 +16,7 @@
 #include "Vector3.h"
 #include "Ray.h"
 //
-namespace Euler
+namespace Zen
 {
 	bool _MATH_EXPORT_ isInsideTriangle(const Vec3& a, const Vec3& b, const Vec3& c, const Vec3& p);
 	  /** Ray / triangle intersection, returns boolean result and distance.

@@ -33,7 +33,7 @@
 #include "Vector2.h"
 
 //
-namespace Euler
+namespace Zen
 {
 	class _MATH_EXPORT_ Matrix3
 	{

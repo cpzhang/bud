@@ -2,7 +2,7 @@
 #include "Skeleton.h"
 #include "DXMapping.h"
 
-namespace Euclid
+namespace Zen
 {
 	BoneNode::BoneNode( Skeleton* ske, const std::string& name )
 		: _bone(NULL), _skeleton(ske), _name(name), _parent(NULL)

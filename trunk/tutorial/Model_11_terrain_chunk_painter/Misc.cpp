@@ -39,10 +39,10 @@ HBITMAP generateHBitMap(const std::string& fileName, int width, int height, bool
 						memset(&c, 0, sizeof(RGBQUAD));
 						c.rgbRed = 255;
 						float radius = width / 4.0f;
-						for (float alpha = 0.0f; alpha < Euler::TwoPI; alpha += 0.05f)
+						for (float alpha = 0.0f; alpha < Zen::TwoPI; alpha += 0.05f)
 						{
-							int x = width * 0.5f + radius * Euler::Basic::Cos(alpha);
-							int y = height * 0.5f + radius * Euler::Basic::Sin(alpha);
+							int x = width * 0.5f + radius * Zen::Basic::Cos(alpha);
+							int y = height * 0.5f + radius * Zen::Basic::Sin(alpha);
 							FreeImage_SetPixelColor(newDIB, x, y, &c);
 						}
 					}

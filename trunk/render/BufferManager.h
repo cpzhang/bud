@@ -10,9 +10,9 @@
 #include "Common.h"
 #include "RenderEngineCreationParameters.h"
 
-namespace Euclid
+namespace Zen
 {
-	class _EuclidExport_ BufferManager : public Buddha::SingletonEx<BufferManager>
+	class _ZenExport_ BufferManager : public Zen::SingletonEx<BufferManager>
 	{
 	public:
 		BufferManager();

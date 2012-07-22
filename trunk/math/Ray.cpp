@@ -1,6 +1,6 @@
 #include "Ray.h" 
 
-namespace Euler
+namespace Zen
 {
 	Ray::Ray()
 		:	_origin(Vector3::ZERO), _direction(Vector3::UNIT_Z)

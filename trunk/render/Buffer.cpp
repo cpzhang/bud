@@ -1,7 +1,7 @@
 #include "Buffer.h"
 #include "RenderSystem.h"
 //
-namespace Euclid
+namespace Zen
 {
 	IndexBuffer::IndexBuffer()
 		:	_ib(0)

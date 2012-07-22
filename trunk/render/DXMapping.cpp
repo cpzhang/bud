@@ -1,7 +1,7 @@
 #include "DXMapping.h"
 
 //
-namespace Euclid
+namespace Zen
 {
 	//---------------------------------------------------------------------
 	D3DXMATRIX DXMapping::toDXMatrix( const Mat4& mat )

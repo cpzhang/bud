@@ -8,8 +8,8 @@
 #define __ITextureManager_h__
 
 #include "Common.h"
-
-namespace Euclid
+#include "RenderEngineCreationParameters.h"
+namespace Zen
 {
 	class ITextureManager
 	{

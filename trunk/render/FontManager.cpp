@@ -2,7 +2,7 @@
 #include "FreeType.h"
 
 //
-namespace Euclid
+namespace Zen
 {
 	FontManager::FontManager()
 	{

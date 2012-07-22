@@ -8,9 +8,9 @@
 #define __Buffer_h__
 #include "Common.h"
 #include "RenderEngineCreationParameters.h"
-namespace Euclid
+namespace Zen
 {
-	class EBuffer : public Buddha::Exception
+	class EBuffer : public Zen::Exception
 	{
 	public:
 		/** Constructor
@@ -25,7 +25,7 @@ namespace Euclid
 			_reason = ss.str();
 		}
 	};
-	class EReleaseLeak : public Buddha::Exception
+	class EReleaseLeak : public Zen::Exception
 	{
 	public:
 		/** Constructor

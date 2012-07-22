@@ -11,9 +11,9 @@
 #include "base/Buddha.h"
 #include "external/directx/Include/d3d9.h"
 #include "RenderEngineCreationParameters.h"
-namespace Euclid
+namespace Zen
 {
-	class RenderSystem: public IRenderSystem, public Buddha::SingletonEx<RenderSystem>
+	class RenderSystem: public IRenderSystem, public Zen::SingletonEx<RenderSystem>
 	{
 		// IRenderSystem
 		RenderSystem_Derived

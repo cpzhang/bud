@@ -1,6 +1,6 @@
 #include "AABB.h"
 
-namespace Euler
+namespace Zen
 {
 
 }

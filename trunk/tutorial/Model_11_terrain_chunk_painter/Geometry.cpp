@@ -25,7 +25,7 @@ void Geometry::setSkin(const std::string& fileName)
 		delete mSkin;
 		mSkin = NULL;
 	}
-	mSkin = new Euclid::Skin;
+	mSkin = new Zen::Skin;
 	mSkin->create(fileName);
 }
 void Geometry::setAnimation( const std::string& fileName )
@@ -52,8 +52,8 @@ void Geometry::setAnimation( const std::string& fileName )
 	}
 
 	//
-	std::string parentPath = Buddha::FileSystem::getInstancePtr()->getParent(fileName);
-	parentPath = Buddha::FileSystem::getInstancePtr()->getParent(parentPath);
+	std::string parentPath = Zen::FileSystem::getInstancePtr()->getParent(fileName);
+	parentPath = Zen::FileSystem::getInstancePtr()->getParent(parentPath);
 	if (!mAnimations.empty())
 	{
 		setSkin(parentPath + "/" + mAnimations.begin()->second.skinFile);
@@ -66,11 +66,11 @@ void Geometry::setAnimation( const std::string& fileName )
 void Geometry::setMesh(const std::string& fileName)
 {
 	mMeshFile = fileName;
-	mMesh = new Euclid::Mesh;
-	std::string filetype = Buddha::FileSystem::getInstancePtr()->getFileExtension(fileName);
+	mMesh = new Zen::Mesh;
+	std::string filetype = Zen::FileSystem::getInstancePtr()->getFileExtension(fileName);
 	if (filetype == "terrain")
 	{
-		Euclid::Terrain t;
+		Zen::Terrain t;
 		t.create(fileName);
 		mMesh->createFromTerrain(&t);
 	} 
@@ -86,7 +86,7 @@ void Geometry::setMesh(const std::string& fileName)
 }
 void Geometry::setSkeleton(const std::string& fileName)
 {
-	mSkeleton = new Euclid::Skeleton;
+	mSkeleton = new Zen::Skeleton;
 	mSkeleton->create(fileName);
 }
 
@@ -117,29 +117,29 @@ void Geometry::setMaterial(const std::string& fileName)
 		textureFileName = mat->Attribute("file");
 	}
 
-	mMaterial = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_VertexTexture);
+	mMaterial = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Zen::eMaterialType_VertexTexture);
 	mMaterial->setEffect(shaderFileName);
-	mMaterial->setVertexDeclaration(Euclid::eVertexDeclarationType_PositionTextureBoneWeightColor);
-	std::string imagePath = Buddha::FileSystem::getInstancePtr()->getParent(fileName);
-	imagePath = Buddha::FileSystem::getInstancePtr()->getParent(imagePath);
+	mMaterial->setVertexDeclaration(Zen::eVertexDeclarationType_PositionTextureBoneWeightColor);
+	std::string imagePath = Zen::FileSystem::getInstancePtr()->getParent(fileName);
+	imagePath = Zen::FileSystem::getInstancePtr()->getParent(imagePath);
 	imagePath += "/";
 	if (textureFileName.find('.') != std::string::npos)
 	{
 		mMaterial->setTexture(textureVariableName, imagePath + textureFileName);
 	}
 
-	mMaterial->_zEnable = (Euclid::eZBufferType)r->IntAttribute("zEnable");
+	mMaterial->_zEnable = (Zen::eZBufferType)r->IntAttribute("zEnable");
 	mMaterial->_zWriteEnable = r->BoolAttribute("zWriteEnable");
 	mMaterial->_alphaTestEnable = r->BoolAttribute("alphaTestEnable");
-	mMaterial->_srcBlend = (Euclid::eBlend)r->IntAttribute("srcBlend");
-	mMaterial->_destBlend = (Euclid::eBlend)r->IntAttribute("destBlend");
-	mMaterial->mAlphaCmpFunc = (Euclid::eCmpFunc)r->IntAttribute("cmpFunc");
+	mMaterial->_srcBlend = (Zen::eBlend)r->IntAttribute("srcBlend");
+	mMaterial->_destBlend = (Zen::eBlend)r->IntAttribute("destBlend");
+	mMaterial->mAlphaCmpFunc = (Zen::eCmpFunc)r->IntAttribute("cmpFunc");
 	mMaterial->mAlphaRef = r->IntAttribute("alphaRef");
 	mMaterial->mDiffuse.setRGBA(r->IntAttribute("diffuse"));
 	mMaterial->mUseVertexColor = r->BoolAttribute("useVertexColor");
 	//
 	{
-		std::string aniPath = Buddha::FileSystem::getInstancePtr()->removeFileExtension(fileName) + ".ma";
+		std::string aniPath = Zen::FileSystem::getInstancePtr()->removeFileExtension(fileName) + ".ma";
 		mMaterial->loadAnimation(aniPath);
 	}
 }
@@ -167,7 +167,7 @@ void Geometry::_renderMesh()
 		return;
 	}
 
-	Euclid::Effect* fx = mMaterial->getEffect();
+	Zen::Effect* fx = mMaterial->getEffect();
 	if (NULL == fx)
 	{
 		return;
@@ -180,7 +180,7 @@ void Geometry::_renderMesh()
 	{
 		//
 		std::vector<Mat4> matrices;
-		for(Euclid::BoneIDReferenceMap::iterator it = mMesh->_bones.begin(); it != mMesh->_bones.end(); ++it)
+		for(Zen::BoneIDReferenceMap::iterator it = mMesh->_bones.begin(); it != mMesh->_bones.end(); ++it)
 		{
 			if (it->first < 255 && it->first < mSkeleton->_matrices.size())
 			{
@@ -202,8 +202,8 @@ void Geometry::_renderMesh()
 	fx->setMatrix("gUVMatrix", &mUVMatrix);
 	float alpha = mMaterial->mAlphaKFs.getFrame(&mMaterial->mAlphaAnimationTime);
 	mMaterial->mDiffuse.a *= alpha;
-	Euclid::AnimationTime at;
-	Euclid::Color3 c = mMaterial->mColorKFs.getFrame(&at);
+	Zen::AnimationTime at;
+	Zen::Color3 c = mMaterial->mColorKFs.getFrame(&at);
 	mMaterial->mDiffuse.r *= c.r;
 	mMaterial->mDiffuse.g *= c.g;
 	mMaterial->mDiffuse.b *= c.b;
@@ -232,7 +232,7 @@ void Geometry::renderSkeleton()
 	{
 		return;
 	}
-	Euclid::Effect* fx = mSkeletonMaterial->getEffect();
+	Zen::Effect* fx = mSkeletonMaterial->getEffect();
 	if (NULL == fx)
 	{
 		return;
@@ -240,17 +240,17 @@ void Geometry::renderSkeleton()
 	//
 	mSkeletonMaterial->apply();
 
-	Euclid::BoneNodeMapIterator it = mSkeleton->getCommandMapIterator();
+	Zen::BoneNodeMapIterator it = mSkeleton->getCommandMapIterator();
 	while(!it.isAtEnd())
 	{
-		Euclid::BoneNode* n = it.getCurrentValue();
-		Euclid::BoneNode* p = n->getParentNode();
+		Zen::BoneNode* n = it.getCurrentValue();
+		Zen::BoneNode* p = n->getParentNode();
 		if (NULL != p)
 		{
-			Euclid::Bone* b = n->getBone();
-			Euclid::Bone* f = p->getBone();
+			Zen::Bone* b = n->getBone();
+			Zen::Bone* f = p->getBone();
 			//
-			Euclid::sPosition p[2];
+			Zen::sPosition p[2];
 			p[0].position = mSkeleton->_matricesFull[b->id] * p[0].position;
 			p[1].position = mSkeleton->_matricesFull[f->id] * p[1].position;
 
@@ -262,9 +262,9 @@ void Geometry::renderSkeleton()
 				{
 					fx->beginPass(i);
 
-					RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Euclid::ePrimitive_LineList, 1, p, sizeof(Euclid::sPosition));
+					RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Zen::ePrimitive_LineList, 1, p, sizeof(Zen::sPosition));
 					//
-					RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Euclid::ePrimitive_PointList, 2, p, sizeof(Euclid::sPosition));
+					RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Zen::ePrimitive_PointList, 2, p, sizeof(Zen::sPosition));
 
 					fx->endPass();
 				}
@@ -282,15 +282,15 @@ void Geometry::renderSkeleton()
 	fx->getMatrix("gProjection", &pm);
 	while(!it.isAtEnd())
 	{
-		Euclid::BoneNode* n = it.getCurrentValue();
+		Zen::BoneNode* n = it.getCurrentValue();
 		{
-			Euclid::Bone* b = n->getBone();
+			Zen::Bone* b = n->getBone();
 			//
 			Vec3 p;
 			RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->objectSpace2ScreenSpace(&p, &p, NULL, &pm, &vm, &mSkeleton->_matricesFull[b->id]);
 			//
 			{
-				RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont("freeNormal")->render(p, Vec3(1, 0, 0), Euclid::Color::Red, b->name);
+				RenderEngineImp::getInstancePtr()->getRenderEngine()->getFontManager()->getFont("freeNormal")->render(p, Vec3(1, 0, 0), Zen::Color::Red, b->name);
 			}
 		}
 		//
@@ -349,7 +349,7 @@ if (NULL == mMaterial)
 {
 	return;
 }
-Euclid::Effect* fx = mMaterial->getEffect();
+Zen::Effect* fx = mMaterial->getEffect();
 if (NULL == fx)
 {
 	return;
@@ -361,7 +361,7 @@ fx->setMatrix(name, pMatrix);
 	{
 		return;
 	}
-	Euclid::Effect* fx = mSkeletonMaterial->getEffect();
+	Zen::Effect* fx = mSkeletonMaterial->getEffect();
 	if (NULL == fx)
 	{
 		return;

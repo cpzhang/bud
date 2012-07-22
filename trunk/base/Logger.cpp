@@ -1,7 +1,7 @@
 #include "Logger.h" 
 #include "FileSystem.h"
 
-namespace Buddha
+namespace Zen
 {
 	Logger::Logger()
 	{

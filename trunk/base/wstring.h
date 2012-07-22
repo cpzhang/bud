@@ -12,7 +12,7 @@
 
 #include "Common.h"
 
-namespace Buddha
+namespace Zen
 {
 	class _BUHHDA_EXPORT_ Wstring : public std::string
 	{

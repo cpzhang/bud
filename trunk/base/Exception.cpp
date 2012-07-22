@@ -1,6 +1,6 @@
 #include "Exception.h"
 
-namespace Buddha
+namespace Zen
 {
 	bool IsRealEqual(const float& a, const float& b)
 	{

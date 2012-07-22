@@ -2,9 +2,9 @@
 #include "Effect.h"
 
 //
-namespace Euclid
+namespace Zen
 {
-	Effect* Euclid::EffectManager::createEffectFromFile( const std::string& f )
+	Effect* Zen::EffectManager::createEffectFromFile( const std::string& f )
 	{
 		NameEffectMap::iterator it = _effects.find(f);
 		if (it != _effects.end())
@@ -23,7 +23,7 @@ namespace Euclid
 		return pEffect;
 	}
 
-	Effect* Euclid::EffectManager::createEffectFromMemory( const u8 *pBuffer,u8 len )
+	Effect* Zen::EffectManager::createEffectFromMemory( const u8 *pBuffer,u8 len )
 	{
 		Effect *pEffect = new Effect;
 		if(!pEffect->loadFromMemory(pBuffer, len))

@@ -14,10 +14,10 @@
 #include "Common.h"
 #include "FreeType.h"
 //
-namespace Euclid
+namespace Zen
 {
 	//
-	class _EuclidExport_ FontManager :public Buddha::SingletonEx<FontManager>
+	class _ZenExport_ FontManager :public Zen::SingletonEx<FontManager>
 	{
 		//
 	public:

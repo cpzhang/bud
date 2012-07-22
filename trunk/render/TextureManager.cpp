@@ -1,7 +1,7 @@
 #include "TextureManager.h"
 #include "Texture.h"
 //
-namespace Euclid
+namespace Zen
 {
 	TextureManager::TextureManager()
 	{

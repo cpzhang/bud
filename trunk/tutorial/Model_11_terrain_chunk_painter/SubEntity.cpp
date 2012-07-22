@@ -55,8 +55,8 @@ void SubEntity::decode(const std::string& fileName)
 	{
 		return;
 	}
-	std::string parentPath = Buddha::FileSystem::getInstancePtr()->getParent(fileName);
-	parentPath = Buddha::FileSystem::getInstancePtr()->getParent(parentPath);
+	std::string parentPath = Zen::FileSystem::getInstancePtr()->getParent(fileName);
+	parentPath = Zen::FileSystem::getInstancePtr()->getParent(parentPath);
 	parentPath += "/";
 	mName = r->Attribute("name");
 	{

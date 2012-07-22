@@ -12,7 +12,7 @@
 //
 #include "Common.h"
 //
-namespace Euler
+namespace Zen
 {
 	class _MATH_EXPORT_ Vector2
 	{

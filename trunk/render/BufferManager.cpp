@@ -1,7 +1,7 @@
 #include "BufferManager.h"
 #include "Buffer.h"
 //
-namespace Euclid
+namespace Zen
 {
 	BufferManager::BufferManager()
 	{

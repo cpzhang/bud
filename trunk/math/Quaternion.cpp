@@ -1,7 +1,7 @@
 #include "Quaternion.h" 
 #include "Matrix3.h"
 //
-namespace Euler
+namespace Zen
 {
 	const Quaternion Quaternion::ZERO(0.0, 0.0, 0.0, 0.0);
 
@@ -167,12 +167,12 @@ namespace Euler
 
 			// Vector3(1.0-(fTyy+fTzz), fTxy+fTwz, fTxz-fTwy);
 
-			return Radian(Euler::Basic::ATan2(fTxy+fTwz, 1.0f-(fTyy+fTzz)));
+			return Radian(Zen::Basic::ATan2(fTxy+fTwz, 1.0f-(fTyy+fTzz)));
 
 		}
 		else
 		{
-			return Radian(Euler::Basic::ATan2(2*(_x*_y + _w*_z), _w*_w + _x*_x - _y*_y - _z*_z));
+			return Radian(Zen::Basic::ATan2(2*(_x*_y + _w*_z), _w*_w + _x*_x - _y*_y - _z*_z));
 		}
 	}
 

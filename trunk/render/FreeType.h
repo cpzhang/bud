@@ -18,7 +18,7 @@
 #include FT_FREETYPE_H
 
 //
-namespace Euclid
+namespace Zen
 {
 	//
 	enum eFontProperty
@@ -48,7 +48,7 @@ namespace Euclid
 		Real			_height;
 	};
 
-	class _EuclidExport_ FreeType
+	class _ZenExport_ FreeType
 	{
 	public:
 		FreeType(Vec3);

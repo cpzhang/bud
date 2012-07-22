@@ -4,7 +4,7 @@
 #include "ITexture.h"
 #include "EffectManager.h"
 //
-namespace Euclid
+namespace Zen
 {
 	Effect::~Effect()
 	{
@@ -174,7 +174,7 @@ namespace Euclid
 		if (FAILED(r = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, &error)))
 		{
 			data.clear();
-			Buddha::FileSystem::getInstancePtr()->getDataDirectory(data);
+			Zen::FileSystem::getInstancePtr()->getDataDirectory(data);
 			data += filename;
 			if (FAILED(r = D3DXCreateEffectFromFile(RenderSystem::getInstancePtr()->getDevice(), data.c_str(), NULL, NULL, dwShaderFlags, NULL, &_effect, &error)))
 			{

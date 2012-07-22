@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 #include "RenderSystem.h"
 #include "tool/flash/IFlashDX.h"
-namespace Euclid
+namespace Zen
 {
 	Texture::Texture()
 	{
@@ -27,7 +27,7 @@ namespace Euclid
 		if (FAILED(hr))
 		{
 			std::string dataFile;
-			Buddha::FileSystem::getInstancePtr()->getDataDirectory(dataFile);
+			Zen::FileSystem::getInstancePtr()->getDataDirectory(dataFile);
 			dataFile += TEXT("\\");
 			//
 			std::string path(fileName);
@@ -174,24 +174,24 @@ namespace Euclid
 
 	}
 
-	bool Texture::update( IFlashDXPlayer* p )
-	{
-		IDirect3DSurface9* pSrcSurface;
-		HRESULT hr = _texture->GetSurfaceLevel(0, &pSrcSurface);
+	//bool Texture::update( IFlashDXPlayer* p )
+	//{
+	//	IDirect3DSurface9* pSrcSurface;
+	//	HRESULT hr = _texture->GetSurfaceLevel(0, &pSrcSurface);
 
-		HDC surfaceDC;
-		hr = pSrcSurface->GetDC(&surfaceDC);
-		assert(SUCCEEDED(hr));
+	//	HDC surfaceDC;
+	//	hr = pSrcSurface->GetDC(&surfaceDC);
+	//	assert(SUCCEEDED(hr));
 
-		// Draw flash frame
-		p->DrawFrame(surfaceDC);
+	//	// Draw flash frame
+	//	p->DrawFrame(surfaceDC);
 
-		hr = pSrcSurface->ReleaseDC(surfaceDC);
+	//	hr = pSrcSurface->ReleaseDC(surfaceDC);
 
-		//RenderSystem::getInstancePtr()->getDevice()->UpdateTexture()		
-		pSrcSurface->Release();
-		
-		return true;
-	}
+	//	//RenderSystem::getInstancePtr()->getDevice()->UpdateTexture()		
+	//	pSrcSurface->Release();
+	//	
+	//	return true;
+	//}
 
 }

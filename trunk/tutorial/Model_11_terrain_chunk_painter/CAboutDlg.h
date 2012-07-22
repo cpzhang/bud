@@ -173,7 +173,7 @@ public:
 			//如何插入子节点
 			{
 				HANDLE hFind = INVALID_HANDLE_VALUE;
-				std::string dataPath = Buddha::FileSystem::getInstancePtr()->getDataDirectory();
+				std::string dataPath = Zen::FileSystem::getInstancePtr()->getDataDirectory();
 				//如何插入根节点
 				{
 					t = m_tvCtrl.InsertItem ( NULL, TVI_ROOT, TVI_LAST);

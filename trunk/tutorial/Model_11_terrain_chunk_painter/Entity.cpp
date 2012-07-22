@@ -27,9 +27,9 @@ void Entity::decode(const std::string& fileName)
   mName = r->Attribute("name");
   tinyxml2::XMLElement* tex= r->FirstChildElement("subEntity");
 
-  std::string parentPath = Buddha::FileSystem::getInstancePtr()->standardFilePath(fileName);
-  parentPath = Buddha::FileSystem::getInstancePtr()->getParent(parentPath);
-  parentPath = Buddha::FileSystem::getInstancePtr()->getParent(parentPath);
+  std::string parentPath = Zen::FileSystem::getInstancePtr()->standardFilePath(fileName);
+  parentPath = Zen::FileSystem::getInstancePtr()->getParent(parentPath);
+  parentPath = Zen::FileSystem::getInstancePtr()->getParent(parentPath);
   parentPath += "/";
   while (tex)
     {

@@ -8,8 +8,9 @@
 #define __ITexture_h__
 
 #include "Common.h"
-class IFlashDXPlayer;
-namespace Euclid
+#include "RenderEngineCreationParameters.h"
+//class IFlashDXPlayer;
+namespace Zen
 {
 	class ITexture
 	{
@@ -34,7 +35,7 @@ namespace Euclid
 		virtual void					release() = 0;
 		virtual void onInvalidateDevice() = 0;
 		virtual void onRestoreDevice() = 0;
-		virtual bool update(IFlashDXPlayer* p) = 0;
+//		virtual bool update(IFlashDXPlayer* p) = 0;
 	};
 }
 

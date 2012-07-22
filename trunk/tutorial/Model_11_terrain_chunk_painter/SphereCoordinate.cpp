@@ -24,23 +24,23 @@ sSphereCoordination::sSphereCoordination()
 	{
 		mOrigion = Vec3(0.0f, 2.0f, 0.0f);
 		mDistance = 5.0f;
-		mAngleAroundY = Euler::HalfPI;
-		mAngleUpFromXZ = Euler::HalfPI * 0.63f;
+		mAngleAroundY = Zen::HalfPI;
+		mAngleUpFromXZ = Zen::HalfPI * 0.63f;
 	}
 	Vec3 sSphereCoordination::getPosition()
 	{
 		Vec3 p;
-		p.y = mDistance * Euler::Basic::Cos(mAngleUpFromXZ);
-		float s = Euler::Basic::Sin(mAngleUpFromXZ);
+		p.y = mDistance * Zen::Basic::Cos(mAngleUpFromXZ);
+		float s = Zen::Basic::Sin(mAngleUpFromXZ);
 		Radian angle = mAngleAroundY;
 		//进入球的背面
 		if (s < 0)
 		{
 			s = -s;
-			angle += Euler::PI;
+			angle += Zen::PI;
 		}
-		p.x = mDistance * s * Euler::Basic::Cos(angle);
-		p.z = mDistance * s * Euler::Basic::Sin(angle);
+		p.x = mDistance * s * Zen::Basic::Cos(angle);
+		p.z = mDistance * s * Zen::Basic::Sin(angle);
 		return p + mOrigion;
 	}
 	
@@ -89,7 +89,7 @@ void SphereMesh::clear()
 	}
 	void SphereMesh::render()
 	{
-		Euclid::Effect* fx = _material->getEffect();
+		Zen::Effect* fx = _material->getEffect();
 		if (NULL == fx)
 		{
 			return;
@@ -104,11 +104,11 @@ void SphereMesh::clear()
 			fx->beginPass(i);
 			if (i == 0)
 			{
-				Euclid::sVDTNull* vdt = Euclid::VDTManager::getInstancePtr()->mLayouts[_VDT];
+				Zen::sVDTNull* vdt = Zen::VDTManager::getInstancePtr()->mLayouts[_VDT];
 				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->setStreamSource(0, _vertexBuffer, 0, vdt->size());
 				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->setIndices(_indexBuffer);
 				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->setVertexDeclaration(_VDT);
-				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawIndexedPrimitive(Euclid::ePrimitive_TriangleList, 0, 0, _vertices.size(), 0, _indices.size() / 3);
+				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawIndexedPrimitive(Zen::ePrimitive_TriangleList, 0, 0, _vertices.size(), 0, _indices.size() / 3);
 			}
 			fx->endPass();
 		}
@@ -116,18 +116,18 @@ void SphereMesh::clear()
 	}
 	bool SphereMesh::_initBuffer()
 	{
-		Euclid::sVDTNull* vdt = Euclid::VDTManager::getInstancePtr()->mLayouts[_VDT];
+		Zen::sVDTNull* vdt = Zen::VDTManager::getInstancePtr()->mLayouts[_VDT];
 		{
-			_vertexBuffer = Euclid::BufferManager::getInstancePtr()->createVertexBuffer(_vertices.size() * vdt->size(), Euclid::eUsage_Null, Euclid::ePool_Manager);
-			void* data = _vertexBuffer->lock(0, 0, Euclid::eLock_Null);
+			_vertexBuffer = Zen::BufferManager::getInstancePtr()->createVertexBuffer(_vertices.size() * vdt->size(), Zen::eUsage_Null, Zen::ePool_Manager);
+			void* data = _vertexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_vertices[0], _vertices.size() * vdt->size());
 			_vertexBuffer->unLock();
 		} 
 		
 		//
 		{
-			_indexBuffer = Euclid::BufferManager::getInstancePtr()->createIndexBuffer(_indices.size() * sizeof(u16), Euclid::eUsage_Null, Euclid::eFormat_Index16, Euclid::ePool_Manager);
-			void* data = _indexBuffer->lock(0, 0, Euclid::eLock_Null);
+			_indexBuffer = Zen::BufferManager::getInstancePtr()->createIndexBuffer(_indices.size() * sizeof(u16), Zen::eUsage_Null, Zen::eFormat_Index16, Zen::ePool_Manager);
+			void* data = _indexBuffer->lock(0, 0, Zen::eLock_Null);
 			memcpy(data, &_indices[0], _indices.size() * sizeof(u16));
 			_indexBuffer->unLock();
 		}
@@ -136,25 +136,25 @@ void SphereMesh::clear()
 	}
 	void SphereMesh::create()
 	{
-		_VDT = Euclid::eVertexDeclarationType_PositionTexture;
-		_material = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_Vertex);
+		_VDT = Zen::eVertexDeclarationType_PositionTexture;
+		_material = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Zen::eMaterialType_Vertex);
 		_material->setEffect("shader\\Position.fx");
-		_material->mFillMode = Euclid::eFillMode_WireFrame;
+		_material->mFillMode = Zen::eFillMode_WireFrame;
 
 		u32 segment_skydome = 16;
 		float radius = 500.0f;
 		for (s32 beta = segment_skydome; beta >= 0; --beta)
 		{
-			float step_beta = beta * Euler::HalfPI / segment_skydome;
+			float step_beta = beta * Zen::HalfPI / segment_skydome;
 
-			Euclid::sPositionTexture vertex;
-			vertex.position.y = radius * Euler::Basic::Sin(step_beta);
+			Zen::sPositionTexture vertex;
+			vertex.position.y = radius * Zen::Basic::Sin(step_beta);
 			vertex.texcoord.y = (float)beta / (float)segment_skydome;
 			for (s32 alpha = segment_skydome; alpha >= 0; --alpha)
 			{
-				float step_alpha = alpha * Euler::TwoPI / segment_skydome;	
-				vertex.position.x = radius * Euler::Basic::Cos(step_beta) * Euler::Basic::Cos(step_alpha);
-				vertex.position.z = radius * Euler::Basic::Cos(step_beta) * Euler::Basic::Sin(step_alpha);
+				float step_alpha = alpha * Zen::TwoPI / segment_skydome;	
+				vertex.position.x = radius * Zen::Basic::Cos(step_beta) * Zen::Basic::Cos(step_alpha);
+				vertex.position.z = radius * Zen::Basic::Cos(step_beta) * Zen::Basic::Sin(step_alpha);
 				vertex.texcoord.x = (float)alpha / (float)segment_skydome;
 				_vertices.push_back(vertex);
 			}

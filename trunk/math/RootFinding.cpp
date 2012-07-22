@@ -1,5 +1,5 @@
 #include "RootFinding.h"
-namespace Euler
+namespace Zen
 {
 
 }

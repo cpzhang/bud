@@ -7,7 +7,7 @@
 #include "FontManager.h"
 #include "Common.h"
 #include "VDTManager.h"
-namespace Euclid
+namespace Zen
 {
 	bool RenderEngine::create()
 	{
@@ -117,7 +117,7 @@ namespace Euclid
 		return FontManager::getInstancePtr();
 	}
 
-	extern "C" _EuclidExport_ IRenderEngine* APIENTRY createRenderEngine()
+	extern "C" _ZenExport_ IRenderEngine* APIENTRY createRenderEngine()
 	{
 		IRenderEngine* renderEngine = new RenderEngine;
 		if (NULL == renderEngine)

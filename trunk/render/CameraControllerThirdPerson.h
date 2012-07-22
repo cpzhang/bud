@@ -9,9 +9,9 @@
 
 #include "Common.h"
 
-namespace Euclid
+namespace Zen
 {
-	class _EuclidExport_ CameraControllerThirdPerson
+	class _ZenExport_ CameraControllerThirdPerson
 	{
 	public:
 		CameraControllerThirdPerson();

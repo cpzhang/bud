@@ -2,7 +2,7 @@
 #include "Matrix4.h"
 #include "Quaternion.h"
 //
-namespace Euler
+namespace Zen
 {
 	const Matrix4 Matrix4::ZERO(
 		0, 0, 0, 0,

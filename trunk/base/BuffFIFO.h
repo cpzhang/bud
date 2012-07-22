@@ -5,7 +5,7 @@
 #ifndef __BuffFIFO_h__
 #define __BuffFIFO_h__
 #include "Common.h"
-namespace Buddha
+namespace Zen
 {
 	class CBufFIFO
 	{

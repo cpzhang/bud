@@ -1,6 +1,6 @@
 #include "FileSystem.h"
 //
-namespace Buddha
+namespace Zen
 {
 	FileSystem::FileSystem()
 	{

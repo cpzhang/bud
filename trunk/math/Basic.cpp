@@ -1,7 +1,7 @@
 #include "Basic.h" 
 
 //
-namespace Euler
+namespace Zen
 {
 	Basic::Basic()
 	{

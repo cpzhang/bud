@@ -4,7 +4,7 @@
 #include "Common.h"
 #include "Interpolate.h"
 
-namespace Euclid
+namespace Zen
 {
 	struct AnimationTime
 	{

@@ -14,7 +14,7 @@
 #include "Common.h"
 
 //
-namespace Buddha
+namespace Zen
 {
 	enum eProcess
 	{

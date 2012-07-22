@@ -7,8 +7,8 @@
 */
 //==========================================================================
 
-#ifndef __EuclidCommon_h__
-#define __EuclidCommon_h__
+#ifndef __RenderCommon_h__
+#define __RenderCommon_h__
 
 //
 #include "base/Buddha.h"
@@ -27,13 +27,13 @@
 #endif
 #include "RenderEngineCreationParameters.h"
 //
-namespace Euclid
+namespace Zen
 {
 	//
 #if defined(render_EXPORTS) // inside DLL
-#   define _EuclidExport_   __declspec(dllexport)
+#   define _ZenExport_   __declspec(dllexport)
 #else // outside DLL
-#   define _EuclidExport_   __declspec(dllimport)
+#   define _ZenExport_   __declspec(dllimport)
 #endif
 
 	// declearation classes
@@ -62,4 +62,4 @@ namespace Euclid
 const int MODEL_NAME_NODE_SIZE             = 80;
 
 //
-#endif // __EuclidCommon_h__
+#endif // __RenderCommon_h__

@@ -1,6 +1,6 @@
 #include "Color.h"
 
-namespace Euclid
+namespace Zen
 {
 
 	Color::Color( Real red /*= 1.0f*/, Real green /*= 1.0f*/, Real blue /*= 1.0f*/, Real alpha /*= 1.0f*/ )
@@ -65,10 +65,10 @@ namespace Euclid
 
 	void Color::random()
 	{
-		r = Euler::Basic::randomReal(0.0f, 1.0f);
-		g = Euler::Basic::randomReal(0.0f, 1.0f);
-		b = Euler::Basic::randomReal(0.0f, 1.0f);
-		a = Euler::Basic::randomReal(0.0f, 1.0f);
+		r = Zen::Basic::randomReal(0.0f, 1.0f);
+		g = Zen::Basic::randomReal(0.0f, 1.0f);
+		b = Zen::Basic::randomReal(0.0f, 1.0f);
+		a = Zen::Basic::randomReal(0.0f, 1.0f);
 	}
 
 	void Color::setABGR( u32 val32 )
@@ -146,9 +146,9 @@ namespace Euclid
 
 	void Color3::random()
 	{
-		r = Euler::Basic::randomReal(0.0f, 1.0f);
-		g = Euler::Basic::randomReal(0.0f, 1.0f);
-		b = Euler::Basic::randomReal(0.0f, 1.0f);
+		r = Zen::Basic::randomReal(0.0f, 1.0f);
+		g = Zen::Basic::randomReal(0.0f, 1.0f);
+		b = Zen::Basic::randomReal(0.0f, 1.0f);
 	}
 
 	const Color3 Color3::Blue = Color3(0.0f, 0.0f, 1.0f); 

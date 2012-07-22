@@ -20,7 +20,7 @@ Sculptor::Sculptor()
 	void Sculptor::create()
 	{
 		//
-		mMaterial = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_Vertex);
+		mMaterial = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Zen::eMaterialType_Vertex);
 		mMaterial->setEffect("shader\\Position.fx");
 		//
 		generateMesh(mRadius, NULL);
@@ -46,7 +46,7 @@ Sculptor::Sculptor()
 		{
 			return;
 		}
-		Euclid::Effect* fx = mMaterial->getEffect();
+		Zen::Effect* fx = mMaterial->getEffect();
 		if (NULL == fx)
 		{
 			return;
@@ -68,7 +68,7 @@ Sculptor::Sculptor()
 			fx->beginPass(i);
 			if (i == 0)
 			{
-				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Euclid::ePrimitive_LineStrip, mVertices.size() - 1,&mVertices[0], sizeof(Vec3));
+				RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawPrimitiveUP(Zen::ePrimitive_LineStrip, mVertices.size() - 1,&mVertices[0], sizeof(Vec3));
 			}
 			fx->endPass();
 		}
@@ -83,12 +83,12 @@ Sculptor::Sculptor()
 			radius = 1.0f;
 		}
 		mRadius = radius;
-		Real step = Euler::TwoPI/ radius;
-		for (Real alpha = 0.0f; alpha < Euler::TwoPI; alpha += step)
+		Real step = Zen::TwoPI/ radius;
+		for (Real alpha = 0.0f; alpha < Zen::TwoPI; alpha += step)
 		{
 			Vec3 p;
-			p.x = mRadius * Euler::Basic::Cos(alpha);
-			p.z = mRadius * Euler::Basic::Sin(alpha);
+			p.x = mRadius * Zen::Basic::Cos(alpha);
+			p.z = mRadius * Zen::Basic::Sin(alpha);
 			p.y = 0.0f;
 			//射线拾取高度
 			if (cks)

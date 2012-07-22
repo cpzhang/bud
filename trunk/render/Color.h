@@ -12,11 +12,11 @@
 
 #include "Common.h"
 
-namespace Euclid
+namespace Zen
 {
 	typedef u32 RGBA;
 
-	class _EuclidExport_ Color
+	class _ZenExport_ Color
 	{
 	public:
 		Real r, g, b, a;
@@ -40,7 +40,7 @@ namespace Euclid
 		static const Color Blue;
 	};
 
-	class _EuclidExport_ Color3
+	class _ZenExport_ Color3
 	{
 	public:
 		Real r, g, b;

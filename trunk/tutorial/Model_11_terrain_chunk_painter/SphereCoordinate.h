@@ -29,12 +29,12 @@ public:
 class SphereMesh
 {
 public:
-	Euclid::IMaterial*		_material;
-	std::vector<Euclid::sPositionTexture> _vertices;
+	Zen::IMaterial*		_material;
+	std::vector<Zen::sPositionTexture> _vertices;
 	std::vector<u16>		_indices;
-	Euclid::eVertexDeclarationType _VDT;
-	Euclid::IBuffer* _vertexBuffer;
-	Euclid::IBuffer* _indexBuffer;
+	Zen::eVertexDeclarationType _VDT;
+	Zen::IBuffer* _vertexBuffer;
+	Zen::IBuffer* _indexBuffer;
 	void clear();
 	void destroy();
 	SphereMesh();

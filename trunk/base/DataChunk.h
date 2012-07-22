@@ -8,7 +8,7 @@
 #define __DataChunk_h__
 #include "Common.h"
 
-namespace Buddha
+namespace Zen
 {
 	class MemoryFileWriter
 	{

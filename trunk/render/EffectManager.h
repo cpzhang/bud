@@ -8,9 +8,9 @@
 #define __EffectManager_h__
 #include "Common.h"
 //
-namespace Euclid
+namespace Zen
 {
-	class _EuclidExport_ EffectManager : public Buddha::SingletonEx<EffectManager>
+	class _ZenExport_ EffectManager : public Zen::SingletonEx<EffectManager>
 	{
 	public:
 		//

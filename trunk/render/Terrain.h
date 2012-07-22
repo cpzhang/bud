@@ -6,9 +6,9 @@
 #define __Terrain_h__
 #include "Common.h"
 #include "Mesh.h"
-namespace Euclid
+namespace Zen
 {
-	class _EuclidExport_ Terrain
+	class _ZenExport_ Terrain
 	{
 	public:
 		Terrain();

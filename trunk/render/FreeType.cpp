@@ -6,7 +6,7 @@
 #include "Effect.h"
 #include "VDTManager.h"
 //
-namespace Euclid
+namespace Zen
 {
 	FreeType::FreeType(Vec3 a)
 		: _activeTex(0), _baseX(0), _renderSystem(0), _fx(0)
@@ -33,7 +33,7 @@ namespace Euclid
 		err = FT_New_Face(_library, faceFile.c_str(), 0, &_face);
 		if (err != 0)
 		{
-			std::string data = Buddha::FileSystem::getInstancePtr()->getDataDirectory();
+			std::string data = Zen::FileSystem::getInstancePtr()->getDataDirectory();
 			data += faceFile;
 			err = FT_New_Face(_library, data.c_str(), 0, &_face);
 			if (err != 0)

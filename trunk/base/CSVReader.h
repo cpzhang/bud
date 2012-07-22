@@ -12,7 +12,7 @@
 
 #include "Common.h"
 
-namespace Buddha
+namespace Zen
 {
 	template<class T> 
 	class /*_BUHHDA_EXPORT_*/ CSVReader
@@ -40,7 +40,7 @@ namespace Buddha
 	};
 
 	template<class T>
-	Buddha::CSVReader<T>::~CSVReader()
+	Zen::CSVReader<T>::~CSVReader()
 	{
 
 	}

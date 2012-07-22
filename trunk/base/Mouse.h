@@ -13,7 +13,7 @@
 //
 #include "Common.h"
 #include "Singleton.h"
- namespace Buddha
+ namespace Zen
  {
 	 class _BUHHDA_EXPORT_ Mouse : public SingletonEx<Mouse>
 	 {

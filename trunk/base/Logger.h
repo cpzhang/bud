@@ -13,7 +13,7 @@
 #include "Common.h"
 #include "Singleton.h"
 
-namespace Buddha
+namespace Zen
 {
 	class _BUHHDA_EXPORT_ Logger : public SingletonEx<Logger>
 	{
@@ -41,24 +41,24 @@ namespace Buddha
 	};
 
 #define Record(content)\
-	Buddha::Logger::getInstancePtr()->addDate();\
-	Buddha::Logger::getInstancePtr()->add(__FILE__, Buddha::Logger::eLevel_Record, false);\
-	Buddha::Logger::getInstancePtr()->add(__LINE__, Buddha::Logger::eLevel_Record);\
-	Buddha::Logger::getInstancePtr()->add(content, Buddha::Logger::eLevel_Record);
+	Zen::Logger::getInstancePtr()->addDate();\
+	Zen::Logger::getInstancePtr()->add(__FILE__, Zen::Logger::eLevel_Record, false);\
+	Zen::Logger::getInstancePtr()->add(__LINE__, Zen::Logger::eLevel_Record);\
+	Zen::Logger::getInstancePtr()->add(content, Zen::Logger::eLevel_Record);
 
 
 #define Warning(content)\
-	Buddha::Logger::getInstancePtr()->addDate();\
-	Buddha::Logger::getInstancePtr()->add(__FILE__, Buddha::Logger::eLevel_Warning, false);\
-	Buddha::Logger::getInstancePtr()->add(__LINE__, Buddha::Logger::eLevel_Warning);\
-	Buddha::Logger::getInstancePtr()->add(content, Buddha::Logger::eLevel_Warning);
+	Zen::Logger::getInstancePtr()->addDate();\
+	Zen::Logger::getInstancePtr()->add(__FILE__, Zen::Logger::eLevel_Warning, false);\
+	Zen::Logger::getInstancePtr()->add(__LINE__, Zen::Logger::eLevel_Warning);\
+	Zen::Logger::getInstancePtr()->add(content, Zen::Logger::eLevel_Warning);
 
 
 #define Error(content)\
-	Buddha::Logger::getInstancePtr()->addDate();\
-	Buddha::Logger::getInstancePtr()->add(__FILE__, Buddha::Logger::eLevel_Error, false);\
-	Buddha::Logger::getInstancePtr()->add(__LINE__, Buddha::Logger::eLevel_Error);\
-	Buddha::Logger::getInstancePtr()->add(content, Buddha::Logger::eLevel_Error);
+	Zen::Logger::getInstancePtr()->addDate();\
+	Zen::Logger::getInstancePtr()->add(__FILE__, Zen::Logger::eLevel_Error, false);\
+	Zen::Logger::getInstancePtr()->add(__LINE__, Zen::Logger::eLevel_Error);\
+	Zen::Logger::getInstancePtr()->add(content, Zen::Logger::eLevel_Error);
 }
 #endif // __Logger_h__
  

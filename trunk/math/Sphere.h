@@ -14,7 +14,7 @@
 #include "Vector3.h"
 #include "AABB.h"
 
-namespace Euler
+namespace Zen
 {
 	/** A sphere primitive, mostly used for bounds checking. 
     @remarks

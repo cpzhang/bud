@@ -13,7 +13,7 @@
 #include "Common.h"
 
 //
-namespace Euler
+namespace Zen
 {
 	class Radian
 	{

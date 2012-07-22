@@ -10,9 +10,9 @@
 #include "Common.h"
 #include "ITextureManager.h"
 //
-namespace Euclid
+namespace Zen
 {
-	class TextureManager : public ITextureManager, public Buddha::SingletonEx<TextureManager>
+	class TextureManager : public ITextureManager, public Zen::SingletonEx<TextureManager>
 	{
 	public:
 		TextureManager();

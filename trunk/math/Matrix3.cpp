@@ -1,7 +1,7 @@
 #include "Matrix3.h"
 
 //
-namespace Euler
+namespace Zen
 {
 	//-----------------------------------------------------------------------
 	Matrix3 Matrix3::Transpose () const

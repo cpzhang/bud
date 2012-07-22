@@ -7,8 +7,8 @@
 */
 //==========================================================================
 
-#ifndef __EulerCommon_h__
-#define __EulerCommon_h__
+#ifndef __MathCommon_h__
+#define __MathCommon_h__
 
 //
 #if defined(math_EXPORTS) // inside DLL
@@ -21,7 +21,7 @@
 #include "base/Buddha.h"
 
 //
-namespace Euler
+namespace Zen
 {
 	//
 	class Basic;
@@ -41,17 +41,17 @@ namespace Euler
 }
 
 //
-typedef Euler::Vector2 Vec2;
-typedef Euler::Vector3 Vec3;
-typedef Euler::Vector4 Vec4;
-typedef Euler::Radian  Radian;
-typedef Euler::Matrix4 Mat4;
-typedef Euler::Matrix3 Mat3;
-typedef Euler::AABB AABB;
-typedef Euler::Sphere Sphere;
-typedef Euler::Quaternion Quaternion;
-typedef Euler::Ray Ray;
+typedef Zen::Vector2 Vec2;
+typedef Zen::Vector3 Vec3;
+typedef Zen::Vector4 Vec4;
+typedef Zen::Radian  Radian;
+typedef Zen::Matrix4 Mat4;
+typedef Zen::Matrix3 Mat3;
+typedef Zen::AABB AABB;
+typedef Zen::Sphere Sphere;
+typedef Zen::Quaternion Quaternion;
+typedef Zen::Ray Ray;
 
 //
-#endif // __EulerCommon_h__
+#endif // __MathCommon_h__
  

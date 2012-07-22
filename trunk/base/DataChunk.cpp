@@ -1,7 +1,7 @@
 #include "DataChunk.h"
 #include "StlHelper.h"
 
-namespace Buddha
+namespace Zen
 {
 	MemoryFileWriter::MemoryFileWriter()
 	{

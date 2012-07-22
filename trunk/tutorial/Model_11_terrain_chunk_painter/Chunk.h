@@ -43,7 +43,7 @@ public:
 	void save(const std::string& fileName);
 	void create(size_t xNum, size_t yNum, size_t lod);
 	Chunk* getChunk(size_t x, size_t y);
-	Euclid::IMaterial* getMaterial();
+	Zen::IMaterial* getMaterial();
 	void destroy();
 	
 	//地形圆掠过，高度变化
@@ -57,6 +57,6 @@ public:
 	size_t mYNum;
 	ChunkVec mChunks;
 	Vec3 mPosition;
-	Euclid::IMaterial* mMaterial;
+	Zen::IMaterial* mMaterial;
 	static const float scChunkSize;
 };

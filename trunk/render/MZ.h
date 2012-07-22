@@ -4,11 +4,11 @@
 #include "Terrain.h"
 #include "BoneNode.h"
 #include "Color.h"
-namespace Euclid
+namespace Zen
 {
-	class Buddha::MemoryFileWriter;
+	class Zen::MemoryFileWriter;
 	template<class T>
-	void writeSequence(Buddha::ChunkSet& cs, T &t)
+	void writeSequence(Zen::ChunkSet& cs, T &t)
 	{
 		T::iterator i = t.begin();
 		for(; i != t.end(); ++i)
@@ -17,7 +17,7 @@ namespace Euclid
 		}
 	}
 
-	class _EuclidExport_ MZ
+	class _ZenExport_ MZ
 	{
 	public:
 		MZ();

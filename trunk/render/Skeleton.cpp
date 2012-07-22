@@ -2,7 +2,7 @@
 #include "Skeleton.h"
 #include "BoneNode.h"
 #include "MZ.h"
-namespace Euclid
+namespace Zen
 {
 	BoneNode* Skeleton::createBoneNode( const std::string& name )
 	{
@@ -243,7 +243,7 @@ namespace Euclid
 		}
 		if (_roots.empty())
 		{
-			throw Buddha::Exception("no bone root found!");
+			throw Zen::Exception("no bone root found!");
 		}
 // 		if (roots.size() > 1)
 // 		{
@@ -273,7 +273,7 @@ namespace Euclid
 		_matricesFull.resize(_boneNodes.size());
 	}
 
-	Euclid::BoneNodeMapIterator Skeleton::getCommandMapIterator( void ) const
+	Zen::BoneNodeMapIterator Skeleton::getCommandMapIterator( void ) const
 	{
 		return BoneNodeMapIterator(_boneNodes.begin(), _boneNodes.end());
 	}

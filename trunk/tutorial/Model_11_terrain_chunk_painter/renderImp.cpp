@@ -12,7 +12,7 @@ RenderEngineImp::RenderEngineImp( HWND h )
 bool RenderEngineImp::create()
 {
 	_initialized = true;
-	_render = Euclid::createRenderEngine();
+	_render = Zen::createRenderEngine();
 	//
 	if (NULL == _render)
 	{
@@ -30,7 +30,7 @@ bool RenderEngineImp::create()
 	return true;
 }
 
-Euclid::IRenderEngine* RenderEngineImp::getRenderEngine()
+Zen::IRenderEngine* RenderEngineImp::getRenderEngine()
 {
 	return _render;
 }

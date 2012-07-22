@@ -4,7 +4,7 @@
 #include "Buffer.h"
 #include "ITexture.h"
 #include "EffectManager.h"
-namespace Euclid
+namespace Zen
 {
 	bool RenderSystem::create()
 	{

@@ -90,7 +90,7 @@ typedef float Real;
 
 #define safeDeleteArray(x) if((x)!=NULL){delete[] (x); (x) = NULL;}
 
-namespace Buddha
+namespace Zen
 {
 	//
 #define breakable switch(1) case 1: default:

@@ -1,6 +1,6 @@
 #include "CameraControllerThirdPerson.h"
 #include "Camera.h"
-namespace Euclid
+namespace Zen
 {
 	CameraControllerThirdPerson::CameraControllerThirdPerson( Camera *pCamera )
 	{

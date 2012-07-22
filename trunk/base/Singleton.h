@@ -12,7 +12,7 @@
 //
 #include "Common.h"
 
-namespace Buddha
+namespace Zen
 {
 	/// 扩展的单实体模板，不关心对象的创建和销毁
 	/// 采用外部new和delete，这种单实体的好处是外部能控制构造和析构的顺序

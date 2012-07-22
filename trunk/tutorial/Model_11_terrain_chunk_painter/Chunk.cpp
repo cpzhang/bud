@@ -10,15 +10,15 @@ Chunk::~Chunk()
 }
 void Chunk::render()
 {
-	RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawIndexedPrimitiveUP(Euclid::ePrimitive_TriangleList, 0,
-		mVertices.size(), mIndices.size()/3, &mIndices[0], Euclid::eFormat_Index16, &mVertices[0], sizeof(Vec3));
+	RenderEngineImp::getInstancePtr()->getRenderEngine()->getRenderSystem()->drawIndexedPrimitiveUP(Zen::ePrimitive_TriangleList, 0,
+		mVertices.size(), mIndices.size()/3, &mIndices[0], Zen::eFormat_Index16, &mVertices[0], sizeof(Vec3));
 }
 //根据最大LOD，生成chunk几何信息
 void Chunk::generateMesh(size_t lod)
 {
 	mMaxLOD = lod;
 	mLOD = lod;
-	mNum = Euler::Basic::power(2, lod) + 1;
+	mNum = Zen::Basic::power(2, lod) + 1;
 	float r = 1.0f / ((float)mNum - 1.0f);
 	//
 	for (int i = 0; i != mNum; ++i)
@@ -84,15 +84,15 @@ void Chunks::create(size_t xNum, size_t yNum, size_t lod)
 		mChunks[i]->generateMesh(lod);
 	}
 	//
-	mMaterial = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Euclid::eMaterialType_Vertex);
+	mMaterial = RenderEngineImp::getInstancePtr()->getRenderEngine()->getMaterialManager()->createMaterial(Zen::eMaterialType_Vertex);
 	mMaterial->setEffect("shader\\Position.fx");
-	mMaterial->mFillMode = Euclid::eFillMode_WireFrame;
+	mMaterial->mFillMode = Zen::eFillMode_Solid;
 }
 Chunk* Chunks::getChunk(size_t x, size_t y)
 {
 	return mChunks[x + y * mXNum];	
 }
-Euclid::IMaterial* Chunks::getMaterial()
+Zen::IMaterial* Chunks::getMaterial()
 {
 	return mMaterial;
 }
@@ -151,7 +151,7 @@ void Chunks::raise(Sculptor* s, bool heigher)
 			Real distanceSquare = deltaX * deltaX + deltaZ * deltaZ;
 			if (distanceSquare <= radiusSquare)
 			{
-				Real delta = Euler::Basic::Sqrt(radiusSquare - distanceSquare);
+				Real delta = Zen::Basic::Sqrt(radiusSquare - distanceSquare);
 				delta *= s->mParaA;
 				
 				//选中，处理高度变化
@@ -174,7 +174,7 @@ void Chunks::render()
 	{
 		return;
 	}
-	Euclid::Effect* fx = mMaterial->getEffect();
+	Zen::Effect* fx = mMaterial->getEffect();
 	if (NULL == fx)
 	{
 		return;
@@ -274,7 +274,7 @@ Real Chunks::getHeight( Real x, Real z )
 			Vec3 p0 = m * c->mVertices[c->mIndices[k]];
 			Vec3 p1 = m * c->mVertices[c->mIndices[k + 1]];
 			Vec3 p2 = m * c->mVertices[c->mIndices[k + 2]];
-			std::pair<bool, Real> result = Euler::intersects(r, p0, p1, p2);
+			std::pair<bool, Real> result = Zen::intersects(r, p0, p1, p2);
 			if (result.first)
 			{
 				height = r.getPoint(result.second).y;

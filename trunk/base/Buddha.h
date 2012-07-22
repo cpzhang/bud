@@ -7,8 +7,8 @@
 */
 //==========================================================================
 
-#ifndef __Buddha_h__
-#define __Buddha_h__
+#ifndef __BuddhaCommon_h__
+#define __BuddhaCommon_h__
 
 //
 #include "Game.h"
@@ -27,5 +27,5 @@
 #include "ConstBaseIterator.h"
 //#define ALIGN(size, boundary)  (((size) + ((boundary) - 1)) & ~((boundary) - 1))
 
-#endif // __Buddha_h__
+#endif // __BuddhaCommon_h__
  

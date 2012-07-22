@@ -1,7 +1,7 @@
 //
 #include "Wstring.h" 
 
-namespace Buddha
+namespace Zen
 {
 	Wstring::Wstring()
 		:	std::string(),

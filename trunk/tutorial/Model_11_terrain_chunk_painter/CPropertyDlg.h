@@ -16,6 +16,7 @@ public:
 		COMMAND_ID_HANDLER(ID_MATERIAL_MESH, OnMaterialMesh)
 		COMMAND_ID_HANDLER(ID_MATERIAL_MATERIAL, OnMaterialMaterial)
 		COMMAND_HANDLER(IDC_BUTTON_ColorPicker, BN_CLICKED, OnBnClickedButtonColorpicker)
+		COMMAND_HANDLER(IDC_CHECK_FillMode, BN_CLICKED, OnBnClickedCheckFillmode)
 	END_MSG_MAP()
 
 	LRESULT OnNMThemeChangedSlider( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled );
@@ -42,4 +43,6 @@ private:
 	eChunkTextureLayer mChunkTextureLayer;
 private:
 	LRESULT OnBnClickedButtonColorpicker(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+public:
+	LRESULT OnBnClickedCheckFillmode(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 };

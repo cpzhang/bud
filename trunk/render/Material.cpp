@@ -3,7 +3,7 @@
 #include "TextureManager.h"
 #include "ITexture.h"
 #include "Effect.h"
-namespace Euclid
+namespace Zen
 {
 	IMaterial* MaterialManager::createMaterial( eMaterialType e )
 	{
@@ -69,7 +69,7 @@ namespace Euclid
 
 	u32 MaterialVertexTexture::getStride()
 	{
-		return sizeof(Euclid::sPositionTexture);
+		return sizeof(Zen::sPositionTexture);
 	}
 
 
@@ -80,7 +80,7 @@ namespace Euclid
 
 	u32 MaterialVertex::getStride()
 	{
-		return sizeof(Euclid::sPosition);
+		return sizeof(Zen::sPosition);
 	}
 
 }
