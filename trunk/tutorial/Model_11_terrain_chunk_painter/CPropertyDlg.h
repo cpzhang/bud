@@ -16,10 +16,6 @@ public:
 		COMMAND_ID_HANDLER(ID_MATERIAL_MESH, OnMaterialMesh)
 		COMMAND_ID_HANDLER(ID_MATERIAL_MATERIAL, OnMaterialMaterial)
 		COMMAND_HANDLER(IDC_BUTTON_ColorPicker, BN_CLICKED, OnBnClickedButtonColorpicker)
-		COMMAND_HANDLER(IDC_BUTTON_Texture0, BN_CLICKED, OnBnClickedButtonTexture0)
-		COMMAND_HANDLER(IDC_BUTTON_Texture1, BN_CLICKED, OnBnClickedButtonTexture1)
-		COMMAND_HANDLER(IDC_BUTTON_Texture2, BN_CLICKED, OnBnClickedButtonTexture2)
-		COMMAND_HANDLER(IDC_BUTTON_Texture3, BN_CLICKED, OnBnClickedButtonTexture3)
 	END_MSG_MAP()
 
 	LRESULT OnNMThemeChangedSlider( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled );
@@ -32,22 +28,18 @@ public:
 	LRESULT OnMaterialMesh(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 
 	LRESULT OnMaterialMaterial(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-	bool updateName(const EventArgs& e);
 private:
 	void selectPainterTexture(int nID);
+	bool updateName(const EventArgs& e);
+	bool updateChunTextureSelected(const EventArgs& e);
 private:
 	CTreeViewCtrlEx m_tvCtrl;
 	CMenu mMenu;
 	CTrackBarCtrl mTrackBarSculptorRadius;
 	CTrackBarCtrl mTrackBarSculptorStrength;
 	CTrackBarCtrl mTrackBarPainterAlpha;
-	CPainterTextureButton mPainterTextureButton0;
+	CPainterTextureButton mPainterTextureButton[eChunkTextureLayer_Size];
+	eChunkTextureLayer mChunkTextureLayer;
 private:
 	LRESULT OnBnClickedButtonColorpicker(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-	LRESULT OnBnClickedButtonTexture0(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-	LRESULT OnBnClickedButtonTexture1(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-
-	LRESULT OnBnClickedButtonTexture2(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-
-	LRESULT OnBnClickedButtonTexture3(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 };

@@ -1,10 +1,12 @@
 #pragma once
 #include "base/singleton.h"
+#include "Chunk.h"
 enum eEvent
 {
 	eEvent_CTreeDlgChangeFile,
 	eEvent_SculptorRadiusChanged,
 	eEvent_SculptorStrengthChanged,
+	eEvent_ChunkTextureLayerSelected,
 	eEvent_Size,
 };
 
@@ -36,6 +38,16 @@ public:
 	}
 public:
 	Real mStrength;
+};
+class EventArgsChunTextureSelected: public EventArgs
+{
+public:
+	EventArgsChunTextureSelected()
+	{
+		mChunkTextureLayer = eChunkTextureLayer_0;;
+	}
+public:
+	eChunkTextureLayer mChunkTextureLayer;
 };
 
 class SlotFunctorBase

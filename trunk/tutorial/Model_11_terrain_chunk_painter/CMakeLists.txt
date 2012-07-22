@@ -18,6 +18,7 @@ link_directories(
 include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/external/wtl81/Include
+  ${CMAKE_SOURCE_DIR}/external/directx/Include
 )
 
 add_executable(${ItemName} WIN32

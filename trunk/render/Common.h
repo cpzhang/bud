@@ -19,7 +19,12 @@
 
 #include "external/directx/Include/d3d9.h"
 #include "external/directx/Include/d3dx9.h"
-#include "external/directx/Include/DxErr.h"
+//DXerr跟vs兼容性有问题
+//#include "external/directx/Include/DxErr.h"
+#ifndef _DXERR_H_
+	#define DXGetErrorString
+	#define DXGetErrorDescription
+#endif
 #include "RenderEngineCreationParameters.h"
 //
 namespace Euclid

@@ -35,10 +35,9 @@ add_library(${ItemName} SHARED
 
 # Add dependent external Libraries
 target_link_libraries(${ItemName}
-  "dxerr.lib"
+#  "dxerr.lib"
   "d3d9.lib"
   "d3dx9.lib"
-  "dxerr.lib"
   "winmm"
   "freetype.lib"
   "Math.lib"

@@ -657,7 +657,7 @@ namespace Euclid
 			Real t = - b / a;
 			// step 1, check if the intersectin point is inside the triangle
 			Vec3 q = r.getPoint(t);	
-			if (isInsideTriangle(p0, p1, p2, q))
+			if (Euler::isInsideTriangle(p0, p1, p2, q))
 			{
 				ts.push_back(t);
 			}

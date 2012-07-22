@@ -30,7 +30,7 @@ target_link_libraries(${ItemName}
   )
 
 set_target_properties(${ItemName} PROPERTIES 
-DEFINE_SYMBOL "${ItemName}_EXPORTS;DEBUG"
+DEFINE_SYMBOL ${ItemName}_EXPORTS
 COMPILE_DEFINITIONS "_CRT_SECURE_NO_DEPRECATE;"
 #COMPILE_FLAGS "/Zp1"
 )

@@ -130,13 +130,18 @@ LRESULT CPropertyDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lP
 
 	//
 	EventManager::getInstancePtr()->subscribeEvent(eEvent_CTreeDlgChangeFile, SubscriberSlot(&CPropertyDlg::updateName, this));
+	EventManager::getInstancePtr()->subscribeEvent(eEvent_ChunkTextureLayerSelected, SubscriberSlot(&CPropertyDlg::updateChunTextureSelected, this));
 	//
 	m_tvCtrl = GetDlgItem(IDC_TREE1);
 	//
 	CenterWindow();
 	ShowWindow(SW_NORMAL);
 	//
-	mPainterTextureButton0.SubclassWindow(GetDlgItem(IDC_BUTTON_Texture0));
+	for (size_t i = 0; i != eChunkTextureLayer_Size; ++i)
+	{
+		mPainterTextureButton[i].SubclassWindow(GetDlgItem(IDC_BUTTON_Texture0 + i));
+		mPainterTextureButton[i].mID = (eChunkTextureLayer)i;
+	}
 	
 	//
 	return TRUE;
@@ -276,31 +281,17 @@ LRESULT CPropertyDlg::OnBnClickedButtonColorpicker(WORD /*wNotifyCode*/, WORD /*
 	}
 	return 0;
 }
-LRESULT CPropertyDlg::OnBnClickedButtonTexture0(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& bHandled)
-{
-	// TODO: 在此添加控件通知处理程序代码
-	bHandled = FALSE;
-	selectPainterTexture(IDC_BUTTON_Texture0);
-	return 0;
-}
 
-LRESULT CPropertyDlg::OnBnClickedButtonTexture1(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+bool CPropertyDlg::updateChunTextureSelected( const EventArgs& e )
 {
-	// TODO: 在此添加控件通知处理程序代码
-	selectPainterTexture(IDC_BUTTON_Texture1);
-	return 0;
-}
-
-LRESULT CPropertyDlg::OnBnClickedButtonTexture2(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-{
-	// TODO: 在此添加控件通知处理程序代码
-	selectPainterTexture(IDC_BUTTON_Texture2);
-	return 0;
-}
-
-LRESULT CPropertyDlg::OnBnClickedButtonTexture3(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-{
-	// TODO: 在此添加控件通知处理程序代码
-	selectPainterTexture(IDC_BUTTON_Texture3);
-	return 0;
+	EventArgsChunTextureSelected* args = (EventArgsChunTextureSelected*)&e;
+	mChunkTextureLayer = args->mChunkTextureLayer;
+	for (size_t i = 0; i != eChunkTextureLayer_Size; ++i)
+	{
+		if (mChunkTextureLayer != i)
+		{
+			mPainterTextureButton[i].selected(false);
+		}
+	}
+	return true;
 }

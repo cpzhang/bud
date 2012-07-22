@@ -7,6 +7,14 @@ public:
 	std::string mTexture;
 	std::string mAlphaMap;
 };
+enum eChunkTextureLayer
+{
+	eChunkTextureLayer_0,
+	eChunkTextureLayer_1,
+	eChunkTextureLayer_2,
+	eChunkTextureLayer_3,
+	eChunkTextureLayer_Size = 4,
+};
 class Chunk
 {
 public:

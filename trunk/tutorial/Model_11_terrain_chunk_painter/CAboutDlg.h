@@ -1,4 +1,6 @@
 #pragma once
+#include "atlHeaders.h"
+#include "EventArgs.h"
 #include "Chunk.h"
 #include "SubEntity.h"
 #include "Entity.h"
@@ -320,41 +322,21 @@ class CPainterTextureButton : public CWindowImpl<CPainterTextureButton, CButton>
 public:
 	BEGIN_MSG_MAP(CPainterTextureButton)
 		MESSAGE_HANDLER( WM_CONTEXTMENU, OnContextMenu)
+		MESSAGE_HANDLER( WM_LBUTTONUP, OnLeftButtonUp)
 	END_MSG_MAP()
-	LRESULT OnContextMenu (UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	LRESULT OnContextMenu(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled);
+	LRESULT OnLeftButtonUp(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled);
+public:
+	bool selected(bool b, bool forced = false);
+private:
+	void _clear()
 	{
-		HBITMAP hbmp = GetBitmap();
-		// ...
-		if (1)
-		{
-			BITMAP bm;
-			GetObject(hbmp, sizeof(BITMAP), (LPSTR) &bm);
-
-		} 
-		else
-		{
-			// the following code assumes that you have a valid HBITMAP loaded into the memory
-			FIBITMAP *dib = NULL;
-			if(hbmp) 
-			{
-				BITMAP bm;
-				GetObject(hbmp, sizeof(BITMAP), (LPSTR) &bm);
-				dib = FreeImage_Allocate(bm.bmWidth, bm.bmHeight, bm.bmBitsPixel);
-				// The GetDIBits function clears the biClrUsed and biClrImportant BITMAPINFO members (dont't know why) 
-				// So we save these infos below. This is needed for palettized images only. 
-				int nColors = FreeImage_GetColorsUsed(dib);
-				HDC dc = GetDC();
-				int Success = GetDIBits(dc, hbmp, 0, FreeImage_GetHeight(dib), 
-					FreeImage_GetBits(dib), FreeImage_GetInfo(dib), DIB_RGB_COLORS);
-				ReleaseDC(dc);
-				// restore BITMAPINFO members
-				FreeImage_GetInfoHeader(dib)->biClrUsed = nColors;
-				FreeImage_GetInfoHeader(dib)->biClrImportant = nColors;
-			}
-			// don't forget to call FreeImage_Unload when you no longer need the dib
-			FreeImage_Unload(dib);
-		}
-		
-		return TRUE;
+		mTextureName.clear();
+		mID = eChunkTextureLayer_Size;
+		mSelected = false;
 	}
+public:
+	std::string mTextureName;
+	eChunkTextureLayer mID;
+	bool mSelected;
 };
